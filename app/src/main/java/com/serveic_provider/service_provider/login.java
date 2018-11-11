@@ -41,15 +41,14 @@ public class login extends AppCompatActivity {
         });
     }
     private void login() {
-        String url ="http://192.168.100.2/ss.php";
+        String url ="http://192.168.100.2/login.php";
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         // Display the first 500 characters of the response string.
-                        result = "Response is: "+ response;
-                        resTxt.append(result);
+                        resTxt.setText(response);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -62,6 +61,7 @@ public class login extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<>();
                 params.put("username",username.getText().toString().trim());
+                params.put("password",password.getText().toString().trim());
                 return params;
             }
         };
