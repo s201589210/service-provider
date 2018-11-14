@@ -41,31 +41,6 @@ public class login extends AppCompatActivity {
         });
     }
     private void login() {
-        String url ="http://192.168.100.2/login.php";
-        // Request a string response from the provided URL.
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        // Display the first 500 characters of the response string.
-                        resTxt.setText(response);
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                result = "That didn't work!";
-                resTxt.append(error.getMessage());
-            }
-        }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String> params = new HashMap<>();
-                params.put("username",username.getText().toString().trim());
-                params.put("password",password.getText().toString().trim());
-                return params;
-            }
-        };
-        RequestQueue queue = Volley.newRequestQueue(this);
-        queue.add(stringRequest);
+        
     }
 }
