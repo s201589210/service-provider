@@ -16,7 +16,10 @@ public class User {
 		this.phone_number = phone_number;
 		this.user_name = user_name;
 	}
+	public User(){}
+	public void login(){
 
+	}
 	public void create() {
 	}
 
