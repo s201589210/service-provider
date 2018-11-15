@@ -6,17 +6,19 @@ public class User {
 	private int is_baned;
 	private String password;
 	private String phone_number;
-	private String user_name;
+	private String username;
 
 	public User(String email, int id, int is_baned, String password, String phone_number, String user_name) {
-		this.email = email;
+	    this.email = email;
 		this.id = id;
 		this.is_baned = is_baned;
 		this.password = password;
 		this.phone_number = phone_number;
-		this.user_name = user_name;
+		this.username = user_name;
 	}
-	public User(){}
+	public User(){
+
+    }
 	public void login(){
 
 	}
@@ -75,11 +77,11 @@ public class User {
 		this.phone_number = phone_number;
 	}
 
-	public String getUser_name() {
-		return user_name;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setUser_name(String user_name) {
-		this.user_name = user_name;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 }

@@ -42,5 +42,16 @@ public class FireBaseCon {
         };
         mUserRef.addValueEventListener(userListner);
     }
+    public void insertObj(String table,Object obj){
+        table = table.toLowerCase().trim();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference mUserRef = database.getReference();
+
+        if(table=="user"){
+            user = (User) obj;
+            mUserRef.child(table).child(user.getUsername()).setValue(obj);
+        }
+
+    }
 
 }

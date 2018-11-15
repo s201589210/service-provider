@@ -15,6 +15,8 @@ public class login extends AppCompatActivity {
     private EditText username, password;
     private Button btnLogin;
     AlertDialog alertDialog;
+    String usernameInp ;
+    String passwordInp ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,25 +31,30 @@ public class login extends AppCompatActivity {
             @Override
             public void onClick(View v){
                // resTxt.setText(username.getText());
-                if(username.getText().toString()!="")
+                if(username.getText().toString()!=null && password.getText().toString()!=null){
+                    usernameInp = username.getText().toString().trim();
+                    passwordInp = password.getText().toString().trim();
                     login();
+                }
             }
         });
     }
 
     public void login() {
         // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! warning any special character input will cause a crash !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
         FireBaseCon fbc = new FireBaseCon();
-        //retrieve user object from data base
-        fbc.getObj("user",username.getText()+"",new fireBaseCallBack() {
+        //retrieve user object from data base with id=> username == input username
+        fbc.getObj("user",usernameInp,new fireBaseCallBack() {
             @Override
             public void onCallback(Object user) {
                 User u = (User)user;
-                if(user==null)
-                    alertDialog.setMessage("Error");
+                if(u==null)
+                    alertDialog.setMessage("user doesn't exist");
+                else if((u.getPassword()).equals(passwordInp))
+                    alertDialog.setMessage("successfully logged in with email"+u.getEmail());
                 else
-                    alertDialog.setMessage("loged in with email");
-
+                    alertDialog.setMessage("wrong password");
                 alertDialog.show();
             }
         });
