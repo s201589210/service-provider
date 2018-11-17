@@ -1,13 +1,9 @@
 package com.serveic_provider.service_provider;
 
-
-import android.graphics.drawable.Drawable;
-import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
 
 

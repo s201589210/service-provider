@@ -11,12 +11,14 @@ import com.serveic_provider.service_provider.classes.java.FireBaseCon;
 import com.serveic_provider.service_provider.classes.java.User;
 import com.serveic_provider.service_provider.classes.java.fireBaseCallBack;
 
+
 public class login extends AppCompatActivity {
     private EditText username, password;
     private Button btnLogin;
     AlertDialog alertDialog;
     String usernameInp ;
     String passwordInp ;
+    boolean isValid = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +43,7 @@ public class login extends AppCompatActivity {
     }
 
     public void login() {
-        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! warning any special character input will cause a crash !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! warning any special character input will cause a crash !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         FireBaseCon fbc = new FireBaseCon();
         //retrieve user object from data base with id=> username == input username
         fbc.getObj("user",usernameInp,new fireBaseCallBack() {
@@ -51,13 +52,22 @@ public class login extends AppCompatActivity {
                 User u = (User)user;
                 if(u==null)
                     alertDialog.setMessage("user doesn't exist");
-                else if((u.getPassword()).equals(passwordInp))
-                    alertDialog.setMessage("successfully logged in with email"+u.getEmail());
-                else
+                else if((u.getPassword()).equals(passwordInp)) {
+                    alertDialog.setMessage("successfully logged in with email " + u.getEmail());
+                    isValid = true;
+                }
+                else {
                     alertDialog.setMessage("wrong password");
+                }
                 alertDialog.show();
             }
         });
+
+
+        if(isValid){
+            startActivity(new Intent(this,ServiceProviderHomePage.class));
+        }
+
     }
 
     public void newUser(View view) {
