@@ -53,19 +53,19 @@ public class login extends AppCompatActivity {
                 if(u==null)
                     alertDialog.setMessage("user doesn't exist");
                 else if((u.getPassword()).equals(passwordInp)) {
-                    alertDialog.setMessage("successfully logged in with email " + u.getEmail());
                     isValid = true;
                 }
                 else {
                     alertDialog.setMessage("wrong password");
                 }
-                alertDialog.show();
             }
         });
 
 
         if(isValid){
             startActivity(new Intent(this,ServiceProviderHomePage.class));
+        }else{
+            alertDialog.show();
         }
 
     }
