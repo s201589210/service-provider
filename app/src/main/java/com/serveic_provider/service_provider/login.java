@@ -1,5 +1,6 @@
 package com.serveic_provider.service_provider;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,7 @@ public class login extends AppCompatActivity {
     String usernameInp ;
     String passwordInp ;
     boolean isValid = false;
+    Activity content = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,7 @@ public class login extends AppCompatActivity {
         // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! warning any special character input will cause a crash !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         FireBaseCon fbc = new FireBaseCon();
         //retrieve user object from data base with id=> username == input username
+        btnLogin.setClickable(false);
         fbc.getObj("user",usernameInp,new fireBaseCallBack() {
             @Override
             public void onCallback(Object user) {
@@ -58,16 +61,16 @@ public class login extends AppCompatActivity {
                 else {
                     alertDialog.setMessage("wrong password");
                 }
+
+                if(isValid){
+                    startActivity(new Intent(content ,ServiceProviderHomePage.class));
+                }else{
+                    alertDialog.show();
+                }
             }
         });
 
-
-        if(isValid){
-            startActivity(new Intent(this,ServiceProviderHomePage.class));
-        }else{
-            alertDialog.show();
-        }
-
+        btnLogin.setClickable(true);
     }
 
     public void newUser(View view) {
