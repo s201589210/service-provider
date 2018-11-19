@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,13 +32,13 @@ public class login extends AppCompatActivity {
         btnLogin = (Button)findViewById(R.id.btnLogin);
         alertDialog = alertDialog = new AlertDialog.Builder(this).create();
         alertDialog.setTitle("login result");
+       // boolean tst = usernameInp.length() == 0 && passwordInp.length() == 0;
         btnLogin.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-               // resTxt.setText(username.getText());
-                if(username.getText().toString()!=null && password.getText().toString()!=null){
-                    usernameInp = username.getText().toString().trim();
-                    passwordInp = password.getText().toString().trim();
+                usernameInp = username.getText().toString().trim();
+                passwordInp = password.getText().toString().trim();
+                if(usernameInp.length() != 0 && passwordInp.length() != 0){
                     login();
                 }
             }
