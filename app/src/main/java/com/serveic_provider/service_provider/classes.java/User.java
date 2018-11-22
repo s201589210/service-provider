@@ -1,5 +1,9 @@
 package com.serveic_provider.service_provider.classes.java;
 
+import android.content.Intent;
+
+import com.serveic_provider.service_provider.ServiceProviderHomePage;
+
 public class User {
 	private String email;
 	private int id;
@@ -19,7 +23,24 @@ public class User {
 	public User(){
 
     }
-	public void login(){
+	public void login( final ActionOnDataChange onChange){
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! warning any special character input will cause a crash !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		FireBaseCon fbc = new FireBaseCon();
+		//retrieve user object from data base with id=> username == this username
+		fbc.getObj("user",this.username,new fireBaseCallBack() {
+			@Override
+			public void onCallback(Object user) {
+				User u = (User)user;
+				if(u==null)
+					onChange.onCallbackString("user doesn't exist");
+				else if((u.getPassword()).equals(password)) {
+					onChange.onCallbackString("successful");
+				}
+				else {
+					onChange.onCallbackString("wrong password");
+				}
+			}
+		});
 
 	}
 	public void create() {

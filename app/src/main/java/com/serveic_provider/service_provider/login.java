@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.serveic_provider.service_provider.classes.java.ActionOnDataChange;
 import com.serveic_provider.service_provider.classes.java.FireBaseCon;
 import com.serveic_provider.service_provider.classes.java.User;
 import com.serveic_provider.service_provider.classes.java.fireBaseCallBack;
@@ -46,31 +48,27 @@ public class login extends AppCompatActivity {
     }
 
     public void login() {
-        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! warning any special character input will cause a crash !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        FireBaseCon fbc = new FireBaseCon();
-        //retrieve user object from data base with id=> username == input username
         btnLogin.setClickable(false);
-        fbc.getObj("user",usernameInp,new fireBaseCallBack() {
+        User u = new User();
+        u.setUsername(usernameInp);
+        u.setPassword(passwordInp);
+        u.login(new ActionOnDataChange() {
             @Override
-            public void onCallback(Object user) {
-                User u = (User)user;
-                if(u==null)
-                    alertDialog.setMessage("user doesn't exist");
-                else if((u.getPassword()).equals(passwordInp)) {
-                    isValid = true;
-                }
-                else {
-                    alertDialog.setMessage("wrong password");
-                }
-
-                if(isValid){
+            public void onCallbackObj(Object value) {
+            }
+            @Override
+            public void onCallbackString(String value) {
+                alertDialog.setMessage(value);
+              //  Log.w("potatos",value);
+                if(value.equals("successful"))
                     startActivity(new Intent(content ,ServiceProviderHomePage.class));
-                }else{
+                else
                     alertDialog.show();
-                }
+            }
+            @Override
+            public void onCallbackInt(int value) {
             }
         });
-
         btnLogin.setClickable(true);
     }
 
