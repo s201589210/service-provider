@@ -3,10 +3,12 @@ package com.serveic_provider.service_provider;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.constraint.ConstraintSet;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Switch;
 
 import com.serveic_provider.service_provider.classes.java.FireBaseCon;
@@ -16,11 +18,37 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SignUp extends AppCompatActivity {
+
+    Switch typeSwitch;
+    AlertDialog alertDialog;
+    String userType;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+        userType = "requester";
+        typeSwitch = (Switch) findViewById(R.id.typeSwitch);
+        //setSwitchLogic();
 
+    }
+
+    private void setSwitchLogic() {
+        typeSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (userType.equals("requester")) {
+                    userType = "provider";
+                    (findViewById(R.id.spinner)).setVisibility(View.VISIBLE);
+                    (findViewById(R.id.editText2)).setVisibility(View.VISIBLE);
+                }
+                else {
+                    userType = "requester";
+                    (findViewById(R.id.spinner)).setVisibility(View.INVISIBLE);
+                    (findViewById(R.id.editText2)).setVisibility(View.INVISIBLE);
+                }
+
+            }
+        });
     }
 
     public void signup(View view) {

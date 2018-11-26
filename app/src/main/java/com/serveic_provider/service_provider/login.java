@@ -19,7 +19,7 @@ public class login extends AppCompatActivity {
     AlertDialog alertDialog;
     String usernameInp ;
     String passwordInp ;
-    boolean isValid = false;
+    String userType;
     Activity content = this;
 
     @Override
@@ -28,8 +28,9 @@ public class login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         username = (EditText)findViewById(R.id.edtUsername);
         password = (EditText)findViewById(R.id.edtPassword);
+        userType = "";
         btnLogin = (Button)findViewById(R.id.btnLogin);
-        alertDialog = alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog = new AlertDialog.Builder(this).create();
         alertDialog.setTitle("login result");
         btnLogin.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -53,19 +54,22 @@ public class login extends AppCompatActivity {
             @Override
             public void onCallback(Object user) {
                 User u = (User)user;
-                if(u==null)
+                if(u==null) {
                     alertDialog.setMessage("user doesn't exist");
+                    alertDialog.show();
+                }
                 else if((u.getPassword()).equals(passwordInp)) {
-                    isValid = true;
+                    userType = u.getType();
                 }
                 else {
                     alertDialog.setMessage("wrong password");
+                    alertDialog.show();
                 }
 
-                if(isValid){
+                if(userType.equals("provider")){
                     startActivity(new Intent(content ,ServiceProviderHomePage.class));
-                }else{
-                    alertDialog.show();
+                } else if (userType.equals("requester")){
+                    startActivity(new Intent(content ,RequesterHomePage.class));
                 }
             }
         });

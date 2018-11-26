@@ -7,14 +7,17 @@ public class User {
 	private String password;
 	private String phone_number;
 	private String username;
+	private String type;
+	private String profissin;
 
-	public User(String email, int id, int is_baned, String password, String phone_number, String user_name) {
-	    this.email = email;
+	public User(String email, int id, int is_baned, String password, String phone_number, String user_name, String type) {
+		this.email = email;
 		this.id = id;
 		this.is_baned = is_baned;
 		this.password = password;
 		this.phone_number = phone_number;
 		this.username = user_name;
+		this.type = type;
 	}
 	public User(){
 
@@ -37,6 +40,15 @@ public class User {
 	public void logout() {
 	}
 
+	public void setProfissin(String profissin) {
+		if (this.type.equals("provider"))
+			this.profissin = profissin;
+	}
+
+	public String getProfissin() {
+		return profissin;
+	}
+
 	public String getEmail() {
 		return email;
 	}
@@ -51,6 +63,14 @@ public class User {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public int getIs_baned() {
