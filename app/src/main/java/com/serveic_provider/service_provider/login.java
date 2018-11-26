@@ -67,7 +67,7 @@ public class login extends AppCompatActivity {
                 }
 
                 if(userType.equals("provider")){
-                    startActivity(new Intent(content ,ServiceProviderHomePage.class));
+                    startActivity(new Intent(content ,ProviderHomePage.class));
                 } else if (userType.equals("requester")){
                     startActivity(new Intent(content ,RequesterHomePage.class));
                 }
