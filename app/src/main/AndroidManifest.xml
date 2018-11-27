@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".MyServicesActivity">
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,7 +22,7 @@
         <activity android:name=".SignUpActivity" />
         <activity android:name=".ProviderHomeActivity" />
         <activity android:name=".RequesterHomeActivity" />
-        <!-- <activity android:name=".MyServicesActivity"></activity> -->
+         <activity android:name=".MyServicesActivity"></activity>
     </application>
 
 </manifest>
