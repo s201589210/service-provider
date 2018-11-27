@@ -12,16 +12,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".login">
+        <activity android:name=".MyServicesActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SignUp" />
-        <activity android:name=".ProviderHomePage" />
-        <activity android:name=".RequesterHomePage"></activity>
+        <activity android:name=".SignUpActivity" />
+        <activity android:name=".ProviderHomeActivity" />
+        <activity android:name=".RequesterHomeActivity" />
+        <!-- <activity android:name=".MyServicesActivity"></activity> -->
     </application>
 
 </manifest>
