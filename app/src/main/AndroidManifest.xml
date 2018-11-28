@@ -19,16 +19,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
         <activity android:name=".SignUpActivity" />
         <activity android:name=".ProviderHomeActivity" />
         <activity android:name=".RequesterHomeActivity" />
-         <activity android:name=".MyServicesActivity"></activity>
-=======
-        <activity android:name=".SignUp" />
-        <activity android:name=".ServiceProviderHomePage" />
-        <activity android:name=".RequesterHomePage"></activity>
->>>>>>> parent of 32859e1... login as provider/requester works
+         <activity android:name=".MyServicesActivity">
+         </activity>
     </application>
-
 </manifest>
