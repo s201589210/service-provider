@@ -1,187 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 package com.serveic_provider.service_provider;
 
 import android.app.Activity;
@@ -196,7 +12,7 @@ import android.widget.EditText;
 import com.serveic_provider.service_provider.serviceProvider.FireBaseCon;
 import com.serveic_provider.service_provider.serviceProvider.User;
 import com.serveic_provider.service_provider.serviceProvider.fireBaseCallBack;
-
+import com.serveic_provider.service_provider.FirebaseUIActivity;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText username, password;
@@ -243,9 +59,9 @@ public class LoginActivity extends AppCompatActivity {
                     alertDialog.setMessage("user doesn't exist");
                     alertDialog.show();
                 }
-                else if((u.getPassword()).equals(passwordInp)) {
-                    userType = u.getType();
-                }
+//                else if((u.getPassword()).equals(passwordInp)) {
+//                    userType = u.getType();
+//                }
                 else {
                     alertDialog.setMessage("wrong password");
                     alertDialog.show();

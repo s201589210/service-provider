@@ -1,24 +1,28 @@
 package com.serveic_provider.service_provider.serviceProvider;
 
 public class User {
-	private String email;
-	private int id;
+	//private String email;
 	private int is_baned;
-	private String password;
+	//private String password;
 	private String phone_number;
 	private String username;
 	private String type;
-	private String profissin;
+	private String profession;
+	private int age;
+	private int available;
+	private String image;
+	private int serviceCounter;
 
-	public User(String email, int id, int is_baned, String password, String phone_number, String user_name, String type) {
-		this.email = email;
-		this.id = id;
+	public User(int is_baned, String phone_number, String user_name, String type, String profession) {
+
 		this.is_baned = is_baned;
-		this.password = password;
 		this.phone_number = phone_number;
 		this.username = user_name;
 		this.type = type;
+		this.profession = profession;
+		this.serviceCounter = serviceCounter;
 	}
+
 	public User(){
 
     }
@@ -40,30 +44,22 @@ public class User {
 	public void logout() {
 	}
 
-	public void setProfissin(String profissin) {
+	public void setProfession(String profession) {
 		if (this.type.equals("provider"))
-			this.profissin = profissin;
+			this.profession = profession;
 	}
 
-	public String getProfissin() {
-		return profissin;
+	public String getProfession() {
+		return profession;
 	}
 
-	public String getEmail() {
+	/*public String getEmail() {
 		return email;
-	}
+	}*/
 
-	public void setEmail(String email) {
+	/*public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
+	}*/
 
 	public String getType() {
 		return type;
@@ -81,13 +77,13 @@ public class User {
 		this.is_baned = is_baned;
 	}
 
-	public String getPassword() {
+	/*public String getPassword() {
 		return password;
 	}
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
+	}*/
 
 	public String getPhone_number() {
 		return phone_number;
@@ -103,5 +99,30 @@ public class User {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
+	public int getAvailable() {
+		return available;
+	}
+
+	public void setAvailable(int available) {
+		this.available = available;
+	}
+
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 }

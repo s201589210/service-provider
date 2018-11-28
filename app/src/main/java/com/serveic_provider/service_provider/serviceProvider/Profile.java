@@ -1,21 +1,13 @@
 package com.serveic_provider.service_provider.serviceProvider;
 
 public class Profile {
-	private int age;
-	private int available;
-	private int id;
-	private String image;
 	private String location;
 	private String name;
 	private int status;
 	private int user_id;
 
-	public Profile(int age, int available, int id, String image, String location, String name, int status,
+	public Profile(String location, String name, int status,
 			int user_id) {
-		this.age = age;
-		this.available = available;
-		this.id = id;
-		this.image = image;
 		this.location = location;
 		this.name = name;
 		this.status = status;
@@ -38,38 +30,6 @@ public class Profile {
 	}
 
 	public void updateInformation() {
-	}
-
-	public int getAge() {
-		return age;
-	}
-
-	public void setAge(int age) {
-		this.age = age;
-	}
-
-	public int getAvailable() {
-		return available;
-	}
-
-	public void setAvailable(int available) {
-		this.available = available;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getImage() {
-		return image;
-	}
-
-	public void setImage(String image) {
-		this.image = image;
 	}
 
 	public String getLocation() {

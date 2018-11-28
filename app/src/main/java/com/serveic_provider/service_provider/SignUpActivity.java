@@ -21,6 +21,7 @@ public class SignUpActivity extends AppCompatActivity {
     Switch typeSwitch;
     AlertDialog alertDialog;
     String userType;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,8 +91,8 @@ public class SignUpActivity extends AppCompatActivity {
                     User user = new User();
                     //set all attribute
                     user.setUsername(inputs[1]);
-                    user.setEmail(inputs[0]);
-                    user.setPassword(inputs[2]);
+                   // user.setEmail(inputs[0]);
+                   // user.setPassword(inputs[2]);
                     // create new firebase connection
                     FireBaseCon fbc = new FireBaseCon();
                     //pass user object to be inserted

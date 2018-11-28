@@ -1,27 +1,26 @@
 package com.serveic_provider.service_provider.serviceProvider;
 
 public class Service {
-	private int date;
+	private String date;
 	private String description;
-	private int id;
 	private int location;
-	private int provider_id;
+	private String provider_id;
 	private int rate;
-	private int requester_id;
+	//private int requester_id;
 	private String status;
-	private int time;
+	//private int time;
+	private int providersCounter;
 
-	public Service(int date, String description, int id, int location, int provider_id, int rate, int requester_id,
-			String status, int time) {
+	public Service(String date, String description, int location, String provider_id, int rate,
+			String status) {
 		this.date = date;
 		this.description = description;
-		this.id = id;
+
 		this.location = location;
 		this.provider_id = provider_id;
 		this.rate = rate;
-		this.requester_id = requester_id;
+
 		this.status = status;
-		this.time = time;
 	}
 
 	public void addLovcation() {
@@ -45,11 +44,11 @@ public class Service {
 	public void update() {
 	}
 
-	public int getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(int date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 
@@ -61,14 +60,6 @@ public class Service {
 		this.description = description;
 	}
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
 	public int getLocation() {
 		return location;
 	}
@@ -77,11 +68,11 @@ public class Service {
 		this.location = location;
 	}
 
-	public int getProvider_id() {
+	public String getProvider_id() {
 		return provider_id;
 	}
 
-	public void setProvider_id(int provider_id) {
+	public void setProvider_id(String provider_id) {
 		this.provider_id = provider_id;
 	}
 
@@ -93,13 +84,13 @@ public class Service {
 		this.rate = rate;
 	}
 
-	public int getRequester_id() {
+/*	public int getRequester_id() {
 		return requester_id;
 	}
 
 	public void setRequester_id(int requester_id) {
 		this.requester_id = requester_id;
-	}
+	}*/
 
 	public String getStatus() {
 		return status;
@@ -109,11 +100,11 @@ public class Service {
 		this.status = status;
 	}
 
-	public int getTime() {
+	/*public int getTime() {
 		return time;
 	}
 
 	public void setTime(int time) {
 		this.time = time;
-	}
+	}*/
 }
