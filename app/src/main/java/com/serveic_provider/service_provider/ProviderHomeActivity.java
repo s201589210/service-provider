@@ -77,7 +77,10 @@ public class ProviderHomeActivity extends AppCompatActivity {
         });
 
     }
+    // Not allowing back button
+    @Override
+    public void onBackPressed() {
 
-
+    }
 
 }

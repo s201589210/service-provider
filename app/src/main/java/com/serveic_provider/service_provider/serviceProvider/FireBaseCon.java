@@ -2,6 +2,8 @@ package com.serveic_provider.service_provider.serviceProvider;
 
 import android.util.Log;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -13,6 +15,7 @@ fireBaseCon class controls all communication of the system to the firebase data 
 public class FireBaseCon {
     //list of all system objects;
     User user;
+
     public FireBaseCon(){
 
     }
@@ -49,7 +52,7 @@ public class FireBaseCon {
 
         if(table=="user"){
             user = (User) obj;
-            mUserRef.child(table).child(user.getUsername()).setValue(obj);
+          //      mUserRef.child(table).child(user.getUsername()).setValue(obj);
         }
 
     }

@@ -1,11 +1,8 @@
 package com.serveic_provider.service_provider.serviceProvider;
 
 public class User {
-	//private String email;
 	private int is_baned;
-	//private String password;
 	private String phone_number;
-	private String username;
 	private String type;
 	private String profession;
 	private int age;
@@ -13,11 +10,10 @@ public class User {
 	private String image;
 	private int serviceCounter;
 
-	public User(int is_baned, String phone_number, String user_name, String type, String profession) {
+	public User(int is_baned, String phone_number, String type, String profession, int serviceCounter) {
 
 		this.is_baned = is_baned;
 		this.phone_number = phone_number;
-		this.username = user_name;
 		this.type = type;
 		this.profession = profession;
 		this.serviceCounter = serviceCounter;
@@ -53,14 +49,6 @@ public class User {
 		return profession;
 	}
 
-	/*public String getEmail() {
-		return email;
-	}*/
-
-	/*public void setEmail(String email) {
-		this.email = email;
-	}*/
-
 	public String getType() {
 		return type;
 	}
@@ -77,28 +65,12 @@ public class User {
 		this.is_baned = is_baned;
 	}
 
-	/*public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}*/
-
 	public String getPhone_number() {
 		return phone_number;
 	}
 
 	public void setPhone_number(String phone_number) {
 		this.phone_number = phone_number;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
 	}
 
 	public int getAge() {
@@ -116,7 +88,6 @@ public class User {
 	public void setAvailable(int available) {
 		this.available = available;
 	}
-
 
 	public String getImage() {
 		return image;

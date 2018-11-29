@@ -10,4 +10,12 @@ public class RequesterHomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_requester_home_page);
     }
+
+
+
+    // Not allowing back button
+    @Override
+    public void onBackPressed() {
+
+    }
 }
