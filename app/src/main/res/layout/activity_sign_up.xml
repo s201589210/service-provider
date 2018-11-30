@@ -52,6 +52,19 @@
     </android.support.design.widget.TextInputLayout>
 
     <TextView
+        android:id="@+id/location_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/location"
+        android:textAppearance="?android:textAppearanceMedium"/>
+
+    <Spinner
+        android:id="@+id/location_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+    </Spinner>
+    <TextView
         android:id="@+id/type_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
