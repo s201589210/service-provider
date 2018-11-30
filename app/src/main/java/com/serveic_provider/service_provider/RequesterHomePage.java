@@ -1,18 +1,20 @@
 package com.serveic_provider.service_provider;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
-public class RequesterHomeActivity extends AppCompatActivity {
+public class RequesterHomePage extends AppCompatActivity {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_requester_home_page);
-
 
 
 
@@ -22,9 +24,9 @@ public class RequesterHomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent myIntent = new Intent(RequesterHomeActivity.this, ListProviders.class);
+                Intent myIntent = new Intent(RequesterHomePage.this, ListProviders.class);
                 //myIntent.putExtra("key", value); //Optional parameters
-                RequesterHomeActivity.this.startActivity(myIntent);
+                RequesterHomePage.this.startActivity(myIntent);
 
 
             }
@@ -37,10 +39,5 @@ public class RequesterHomeActivity extends AppCompatActivity {
 
     }
 
-
-    // Not allowing back button
-    @Override
-    public void onBackPressed() {
-
-    }
 }
+

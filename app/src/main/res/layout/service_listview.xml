@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Layout for a single list item -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/list_item_height"
+    android:background="@color/colorPrimary"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="@dimen/list_item_height"
+        android:layout_height="@dimen/list_item_height" />
+
+    <LinearLayout
+        android:id="@+id/text_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/list_item_height"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@id/image"
+        android:orientation="vertical"
+        android:paddingLeft="8dp"
+        android:background="#bbb">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:id="@+id/proider_name_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                android:text=" provider Name" />
+
+
+
+            <TextView
+                android:id="@+id/profission_text_view"
+                android:gravity="end"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@android:color/black"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:text=" profission" />
+
+
+
+
+            <TextView
+                android:id="@+id/city_text_view"
+                android:gravity="end"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@android:color/black"
+                android:layout_marginRight="10dp"
+
+                android:text=" city" />
+
+        </LinearLayout>
+
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            >
+
+            <RatingBar
+                android:id="@+id/rating_bar"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="5"
+                android:rating="2.5"
+                android:stepSize="0.5"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="5dp"
+                />
+
+            <TextView
+                android:id="@+id/number_of_reviews"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:textAppearance="?android:textAppearanceSmall"
+                android:textColor="@android:color/black"
+                android:layout_marginLeft="5dp"
+
+                tools:text="11" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:textAppearance="?android:textAppearanceSmall"
+                android:textColor="@android:color/black"
+                android:text=" reviws" />
+
+
+        </LinearLayout>
+
+        <TextView
+
+            android:id="@+id/company_name"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:textSize="12sp"
+            android:textColor="@android:color/black"
+            android:text="company name" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.5"
+            android:orientation="horizontal"
+            >
+
+
+
+            <TextView
+                android:id="@+id/loacation"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingRight="5dp"
+                android:textSize="12sp"
+                android:textColor="@android:color/black"
+                android:text="lacation " />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="7" />
+
+
+
+
+
+            <CheckBox xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/txt_title"
+                android:layout_height="30dp"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:layout_marginBottom="5dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                />
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?android:attr/selectableItemBackground"/>
+
+</RelativeLayout>
