@@ -8,6 +8,7 @@ public class User {
 	private int age;
 	private int available;
 	private String image;
+	private String location;
 	private int serviceCounter;
 
 	public User(int is_baned, String phone_number, String type, String profession, int serviceCounter) {
@@ -95,5 +96,21 @@ public class User {
 
 	public void setImage(String image) {
 		this.image = image;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public int getServiceCounter() {
+		return serviceCounter;
+	}
+
+	public void setServiceCounter(int serviceCounter) {
+		this.serviceCounter = serviceCounter;
 	}
 }

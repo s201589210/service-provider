@@ -8,9 +8,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +25,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.serveic_provider.service_provider.serviceProvider.User;
 
 import java.util.regex.Pattern;
 
@@ -44,6 +47,13 @@ public class SignUpActivity extends AppCompatActivity {
     // The userId of the authenticated user
     private String userId;
 
+    //Very important to understand
+    // User object to bind the return node in teh Firebase to the User class. So the user.type will
+    // be connected to user_profiles/$userId/type/value of type. The same for the others
+    //  so user.location
+    // will be connected to user_profiles/$userId/location/value of location
+    User user = new User();
+
     // Password pattern
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^" +
@@ -62,6 +72,8 @@ public class SignUpActivity extends AppCompatActivity {
     EditText passwordText;
     @BindView(R.id.password_confirm_edit_text)
     EditText passwordConfirmText;
+    @BindView(R.id.location_spinner)
+    Spinner locationSpinner;
     @BindView(R.id.group_radio_button)
     RadioGroup radioGroup;
     @BindView(R.id.type_text_view)
@@ -74,6 +86,13 @@ public class SignUpActivity extends AppCompatActivity {
 
         // Binding the UI elements
         ButterKnife.bind(this);
+
+        // Putting the locations array in the string.xml into the spinner
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter
+                .createFromResource(this, R.array.locations, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        locationSpinner.setAdapter(adapter);
+
     }
     // Assigning onClick for the sign up using Butterknife instead of the onClick on the XML file
     @OnClick(R.id.sign_up_button)
@@ -87,28 +106,34 @@ public class SignUpActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d(TAG, "createUserWithEmail:success");
-                                FirebaseUser user = mAuth.getCurrentUser();
+                                FirebaseUser FBuser = mAuth.getCurrentUser();
                                 // The userId of the authenticated user, the unique id for all of the users used in the Firebase Database
                                 // user.getEmail() return the email in String
-                                userId = user.getUid();
-                                // Getting the type from the radio buttons
+                                userId = FBuser.getUid();
+
+                                // Getting the location form the spinner and assigning to user.location
+                                String location = locationSpinner.getSelectedItem().toString();
+                                user.setLocation(location);
+
+                                // Getting the type from the radio buttons and assigning to user,type
                                 int selectedRadioButtonId = radioGroup.getCheckedRadioButtonId();
                                 RadioButton selectedRadioButton = (RadioButton) findViewById(selectedRadioButtonId);
                                 String type = selectedRadioButton.getText().toString();
+                                user.setType(type);
 
-                                // Using both the unique userId and type to write the type under user_profiles/$userId/type
-                                writeUserTypeToFBDB(userId, type);
+                                // Using both the unique userId and user object to write the type and location under user_profiles/$userId
+                                writeUserToFBDB(userId, user);
 
                                 // Notifying the user
                                 Toast.makeText(SignUpActivity.this, "You signed up successfully. Please sign in",
                                         Toast.LENGTH_SHORT).show();
 
-                                updateUI(user);
+                                updateUI(FBuser);
 
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                Toast.makeText(SignUpActivity.this, "Authentication failed.",
+                                Toast.makeText(SignUpActivity.this, "Sign up failed, try again.",
                                         Toast.LENGTH_SHORT).show();
                                 updateUI(null);
                             }
@@ -140,7 +165,9 @@ public class SignUpActivity extends AppCompatActivity {
             passwordText.setError("Field can't be empty");
             return false;
         } else if (!PASSWORD_PATTERN.matcher(passwordInput).matches()) {
-            passwordText.setError("Password is weak");
+            passwordText
+                    .setError("At least 1 digit, 1 lowercase letter, 1 uppercase letter, no white spaces," +
+                            " at least 8 characters");
             return false;
         } else {
             passwordText.setError(null);
@@ -175,9 +202,9 @@ public class SignUpActivity extends AppCompatActivity {
             startActivity(new Intent(this, LoginActivity.class));
     }
     // Writing the type to the Firebase Database
-    private void writeUserTypeToFBDB(String userId, String type) {
-        // Creating a new $userId/type/$type node under the user_profiles node
-        userProfileRef.child(userId).child("type").setValue(type)
+    private void writeUserToFBDB(String userId, User user) {
+        // Creating a new $userId node under the user_profiles node and assigning whole user object
+        userProfileRef.child(userId).setValue(user)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

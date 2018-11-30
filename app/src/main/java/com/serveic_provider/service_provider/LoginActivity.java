@@ -112,7 +112,6 @@ public class LoginActivity extends AppCompatActivity {
     private void updateUI(FirebaseUser FBuser) {
         // Checking if the user is authenticated
         if(FBuser != null) {
-
             String userType = user.getType();
             if(userType.equals("Provider")){
                 startActivity(new Intent(this ,ProviderHomeActivity.class));
