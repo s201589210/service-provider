@@ -1,3 +1,54 @@
 <resources>
-    <string name="app_name">service_provider</string>
+    <string name="app_name">Service Provider</string>
+    <string name="searchServices">Search a service</string>
+    <!--Sign up-& Sign in-->
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="password_confirm">Confirm Password</string>
+    <string name="location">Location:</string>
+    <string-array name="locations">
+        <item>Abha</item>
+        <item>Al Bukayriyah</item>
+        <item>Buraydah</item>
+        <item>Al Bahah</item>
+        <item>Dhahran</item>
+        <item>Gurayat</item>
+        <item>Hofuf</item>
+        <item>Hafr Al-Batin</item>
+        <item>Jalajil</item>
+        <item>Al Jawf</item>
+        <item>Jeddah</item>
+        <item>Jizan</item>
+        <item>Jubail</item>
+        <item>Al Jafr</item>
+        <item>Khafji</item>
+        <item>Khamis Mushayt</item>
+        <item>Khobar</item>
+        <item>Al-Mubarraz</item>
+        <item>Mecca</item>
+        <item>Medina</item>
+        <item>Najran</item>
+        <item>Al-Namas</item>
+        <item>Al-Omran</item>
+        <item>Al-Oyoon</item>
+        <item>Qatif</item>
+        <item>Al Qunfudhah</item>
+        <item>Ar Rass</item>
+        <item>Ras Tanura</item>
+        <item>Riyadh</item>
+        <item>Rumailah</item>
+        <item>Saihat</item>
+        <item>Sakakah</item>
+        <item>Sharurah</item>
+        <item>Taif</item>
+        <item>Tabuk</item>
+        <item>Unaizah</item>
+        <item>Yanbu</item>
+    </string-array>
+    <string name="type">Type:</string>
+    <string name="type_requester">Requester</string>
+    <string name="type_provider">Provider</string>
+    <string name="sign_up">SIGN UP</string>
+    <string name="sign_in">SIGN IN</string>
 </resources>
