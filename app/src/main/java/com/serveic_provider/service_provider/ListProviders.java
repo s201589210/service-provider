@@ -1,6 +1,7 @@
 package com.serveic_provider.service_provider;
 
 import android.app.AlertDialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -24,11 +25,13 @@ import java.util.ArrayList;
 public class ListProviders extends AppCompatActivity {
 private static final String TAG ="ListProviders";
     String name ;
-    private String company;
-    private String location;
- //   private String profission;
+     String company;
+     String location;
+     String profission;
+     String city;
+    DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
 
-
+    ArrayList<String> IDArray = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,13 +42,8 @@ private static final String TAG ="ListProviders";
 
 
 
-//const rootRef = firebase.database().ref();
-        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
         DatabaseReference ProfissionRef = rootRef.child("profession_location_provider");
-        DatabaseReference ProfissionCityRef = ProfissionRef.child("Plumber").child("Dhahran");
-        DatabaseReference nameRef = ProfissionCityRef.child("providerName");
-        DatabaseReference locationRef = ProfissionCityRef.child("ProviderLocation");
-        DatabaseReference CompanyRef = ProfissionCityRef.child("ProviderCompany");
+        DatabaseReference ProfissionCityRef = ProfissionRef.child("Plumber").child("dammam");
 
 
 
@@ -57,58 +55,126 @@ private static final String TAG ="ListProviders";
 
 
 
+        for(int i=1;i<3;i++) {
+         final   String x = Integer.toString(i);
+            final int  a = i;
+            DatabaseReference idRef = ProfissionCityRef.child(x);
 
-         nameRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                 name = dataSnapshot.getValue(String.class);
-             //   words.add(new service(name, "Cooker","11" ,"company name","DHAHRAN","KFUPM mall"));
+            idRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    name = dataSnapshot.getValue(String.class);
+                    IDArray.add(name);
 
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        locationRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                location = dataSnapshot.getValue(String.class);
-          //      words.add(new service(name, profission,"11" ,"company name","DHAHRAN", location));
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-
-        CompanyRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                company = dataSnapshot.getValue(String.class);
-                words.add(new service(name, "Cooker","11" ,company,"DHAHRAN", location));
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+                   int y=IDArray.size();
 
 
 
+                    DatabaseReference ProfileRef = rootRef.child("user_profiles");
+
+                    DatabaseReference ProfileInfoRef = ProfileRef.child(IDArray.get(y-1));
+
+
+                    DatabaseReference nameRef = ProfileInfoRef.child("ProviderName");
+                    DatabaseReference CompanyRef = ProfileInfoRef.child("ProviderCompany");
+                    DatabaseReference locationRef = ProfileInfoRef.child("ProviderLocation");
+                    DatabaseReference profissionRef = ProfileInfoRef.child("ProviderProfission");
+                    final DatabaseReference cityRef = ProfileInfoRef.child("ProviderCity");
+
+
+                    nameRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            name = dataSnapshot.getValue(String.class);
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+
+                    profissionRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            profission = dataSnapshot.getValue(String.class);
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+
+
+                    cityRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            city = dataSnapshot.getValue(String.class);
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+
+                    CompanyRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            company = dataSnapshot.getValue(String.class);
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+
+                    locationRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            location = dataSnapshot.getValue(String.class);
+                            words.add(new service(name, profission,"11" ,company,city,location));
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
 
 
 
 
-       // words.add(new service(name, profission,"11" ,company,"DHAHRAN",location));
-        words.add(new service(name, "Cooker","11" ,"company name","DHAHRAN","KFUPM mall"));
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+        }
+
+
+
+
+
+
+
+
+
+        words.add(new service("Hussain", "Cooker","11" ,"company name","DHAHRAN","KFUPM mall"));
         words.add(new service("Hussain", "Cooker","11" ,"company name","DHAHRAN","KFUPM mall",R.drawable.electrician));
         words.add(new service("Hussain", "Cooker","11" ,"company name","DHAHRAN","KFUPM mall"));
         words.add(new service("Hussain", "Cooker","11" ,"company name","DHAHRAN","KFUPM mall"));
