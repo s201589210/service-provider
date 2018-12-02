@@ -3,11 +3,11 @@ package com.serveic_provider.service_provider.serviceProvider;
 public interface Penalizable {
 	
 
-	public void getPenalty();
+	void getPenalty();
 
-	public void penalize();
+	void penalize();
 
-	public void setPenalty();
+	void setPenalty();
 
-	public void updatePenalty();
+	void updatePenalty();
 }

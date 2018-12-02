@@ -117,7 +117,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                                 // Getting the type from the radio buttons and assigning to user,type
                                 int selectedRadioButtonId = radioGroup.getCheckedRadioButtonId();
-                                RadioButton selectedRadioButton = (RadioButton) findViewById(selectedRadioButtonId);
+                                RadioButton selectedRadioButton = findViewById(selectedRadioButtonId);
                                 String type = selectedRadioButton.getText().toString();
                                 user.setType(type);
 

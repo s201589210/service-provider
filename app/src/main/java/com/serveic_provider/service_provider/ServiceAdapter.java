@@ -44,38 +44,38 @@ public class ServiceAdapter extends ArrayAdapter<service> {
         service currentword = getItem(position);
 
         // Find the TextView in the list_item.xml layout with the ID version_name
-        TextView nameTextView = (TextView) listItemView.findViewById(R.id.proider_name_text_view);
+        TextView nameTextView = listItemView.findViewById(R.id.proider_name_text_view);
         // Get the version name from the current AndroidFlavor object and
         // set this text on the name TextView
         nameTextView.setText(currentword.getNames());
 
-        TextView proffisonTextView = (TextView) listItemView.findViewById(R.id.profission_text_view);
+        TextView proffisonTextView = listItemView.findViewById(R.id.profission_text_view);
         // Get the version name from the current AndroidFlavor object and
         // set this text on the name TextView
         proffisonTextView.setText(currentword.getProffision());
 
-        TextView cityTextView = (TextView) listItemView.findViewById(R.id.city_text_view);
+        TextView cityTextView = listItemView.findViewById(R.id.city_text_view);
         // Get the version name from the current AndroidFlavor object and
         // set this text on the name TextView
         cityTextView.setText(currentword.getCities());
 
-        TextView RnumberView = (TextView) listItemView.findViewById(R.id.number_of_reviews);
+        TextView RnumberView = listItemView.findViewById(R.id.number_of_reviews);
         // Get the version name from the current AndroidFlavor object and
         // set this text on the name TextView
         RnumberView.setText(currentword.getNumberReviews());
 
-        TextView companyNameView = (TextView) listItemView.findViewById(R.id.company_name);
+        TextView companyNameView = listItemView.findViewById(R.id.company_name);
         // Get the version name from the current AndroidFlavor object and
         // set this text on the name TextView
         companyNameView.setText(currentword.getDescriptions());
 
-        TextView locationView = (TextView) listItemView.findViewById(R.id.loacation);
+        TextView locationView = listItemView.findViewById(R.id.loacation);
         // Get the version name from the current AndroidFlavor object and
         // set this text on the name TextView
         locationView.setText(currentword.getLocations());
 
 
-        ImageView imgeid = (ImageView) listItemView.findViewById(R.id.image);
+        ImageView imgeid = listItemView.findViewById(R.id.image);
         // Get the version number from the current AndroidFlavor object and
         // set this text on the number TextView
         if(currentword.hasImage()){

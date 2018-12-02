@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
 
     // Used to get the userId
-    private FirebaseAuth mAuth = FirebaseAuth.getInstance();;
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseUser FBuser;
 
     // Getting the user_profiles node

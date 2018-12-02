@@ -92,7 +92,7 @@ public class FirebaseUIActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 // Successfully signed in
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                TextView userId = (TextView) findViewById(R.id.u_id);
+                TextView userId = findViewById(R.id.u_id);
                 userId.setText(user.getUid());
             } else {
                 // Sign in failed. If response is null the user canceled the

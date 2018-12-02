@@ -204,7 +204,7 @@ private static final String TAG ="ListProviders";
         // Find the {@link ListView} object in the view hierarchy of the {@link Activity}.
         // There should be a {@link ListView} with the view ID called list, which is declared in the
         // activity_numbers.xml layout file.
-        ListView listView = (ListView) findViewById(R.id.list);
+        ListView listView = findViewById(R.id.list);
 
         // Make the {@link ListView} use the {@link WordAdapter} we created above, so that the
         // {@link ListView} will display list items for each {@link Word} in the list.
@@ -225,7 +225,7 @@ private static final String TAG ="ListProviders";
 
 
     public void onButtonClickListener() {
-        btn = (Button)findViewById(R.id.slect_button);
+        btn = findViewById(R.id.slect_button);
         btn.setOnClickListener(
                 new View.OnClickListener() {
                     @Override

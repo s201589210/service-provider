@@ -16,7 +16,7 @@ public class RequesterHomeActivity extends AppCompatActivity {
 
 
 
-        ImageView prof_dyer =(ImageView)  findViewById(R.id.prof_dyer);
+        ImageView prof_dyer = findViewById(R.id.prof_dyer);
 
         prof_dyer.setOnClickListener(new View.OnClickListener() {
             @Override

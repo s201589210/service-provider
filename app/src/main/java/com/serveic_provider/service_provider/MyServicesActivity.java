@@ -24,9 +24,9 @@ public class MyServicesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_services_page);
 
-        tabLayout = (TabLayout) findViewById(R.id.myServicesTab);
-        appBarLayout = (AppBarLayout) findViewById(R.id.myServicesBar);
-        viewPager = (ViewPager) findViewById(R.id.myServicesPager);
+        tabLayout = findViewById(R.id.myServicesTab);
+        appBarLayout = findViewById(R.id.myServicesBar);
+        viewPager = findViewById(R.id.myServicesPager);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         //Adding Fragments
         adapter.addFragment(new PendingFragment(), "Pending");

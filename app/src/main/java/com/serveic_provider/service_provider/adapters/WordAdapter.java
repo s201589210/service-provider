@@ -47,27 +47,27 @@ public class WordAdapter extends ArrayAdapter<word> {
         word currentword = getItem(position);
 
         // Find the TextView in the list_item.xml layout with the ID version_name
-        TextView nameTextView = (TextView) listItemView.findViewById(R.id.name_text_view);
+        TextView nameTextView = listItemView.findViewById(R.id.name_text_view);
         // Get the version name from the current AndroidFlavor object and
         // set this text on the name TextView
         nameTextView.setText(currentword.toNames());
         // Find the TextView in the list_item.xml layout with the ID version_number
-         TextView numberTextView = (TextView) listItemView.findViewById(R.id.description);
+         TextView numberTextView = listItemView.findViewById(R.id.description);
         // Get the version number from the current AndroidFlavor object and
         // set this text on the number TextView
         numberTextView.setText(currentword.todefult());
 
-        TextView PriceTextView = (TextView) listItemView.findViewById(R.id.ServicePrice);
+        TextView PriceTextView = listItemView.findViewById(R.id.ServicePrice);
         // Get the version number from the current AndroidFlavor object and
         // set this text on the number TextView
         PriceTextView.setText(currentword.ToPrice());
 
-        TextView FromTextView = (TextView) listItemView.findViewById(R.id.from);
+        TextView FromTextView = listItemView.findViewById(R.id.from);
         // Get the version number from the current AndroidFlavor object and
         // set this text on the number TextView
        FromTextView.setText(currentword.getFromUser());
 
-        ImageView imgeid = (ImageView) listItemView.findViewById(R.id.image);
+        ImageView imgeid = listItemView.findViewById(R.id.image);
         // Get the version number from the current AndroidFlavor object and
         // set this text on the number TextView
         if(currentword.hasImage()){
