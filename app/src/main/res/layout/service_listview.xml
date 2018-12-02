@@ -151,16 +151,6 @@
 
 
 
-            <CheckBox xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/txt_title"
-                android:layout_height="30dp"
-                android:textAppearance="?android:textAppearanceMedium"
-                android:layout_marginBottom="5dp"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_gravity="center"
-                android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-                />
 
 
         </LinearLayout>

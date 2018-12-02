@@ -23,15 +23,12 @@
         <activity
             android:name=".ListProviders"
             />
-        <activity android:name=".createService"
-            android:parentActivityName=".ListProviders"></activity>
-
+        <activity android:name=".Test" />
+        <activity android:name=".SignUpActivity" />
         <activity android:name=".ProviderHomeActivity" />
         <activity android:name=".RequesterHomeActivity" />
         <activity android:name=".MyServicesActivity"></activity>
-        <activity android:name=".SignUpActivity" />
         <activity android:name=".FirebaseUIActivity"></activity>
-
     </application>
 
 </manifest>
