@@ -172,7 +172,7 @@ private static final String TAG ="ListProviders";
 
                                     String value=IDArray.get(position);
 
-                                    Intent myIntent = new Intent(ListProviders.this, Test.class);
+                                    Intent myIntent = new Intent(ListProviders.this, createService.class);
 
                                     myIntent.putExtra("key",value);
                                     ListProviders.this.startActivity(myIntent);
@@ -230,7 +230,7 @@ private static final String TAG ="ListProviders";
                 String value="check4change";
 
                 // TODO Auto-generated method stub
-                Intent i = new Intent(getApplicationContext(),Test.class);
+                Intent i = new Intent(getApplicationContext(),createService.class);
                 i.putExtra("key",value);
                 startActivity(i);
             }

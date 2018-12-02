@@ -1,5 +1,9 @@
 package com.serveic_provider.service_provider.serviceProvider;
 
+import com.serveic_provider.service_provider.Job;
+
+import java.util.ArrayList;
+
 public class Service {
 	private String date;
 	private String description;
@@ -8,6 +12,7 @@ public class Service {
 	private int rate;
 	//private int requester_id;
 	private String status;
+	private ArrayList<Job> jobs;
 	//private int time;
 	private int providersCounter;
 
@@ -21,6 +26,14 @@ public class Service {
 		this.rate = rate;
 
 		this.status = status;
+	}
+	public Service(String date, String description, int location, String provider_id, ArrayList<Job> jobs) {
+		this.date = date;
+		this.description = description;
+
+		this.location = location;
+		this.provider_id = provider_id;
+		this.jobs =jobs;
 	}
 
 	public void addLovcation() {
