@@ -2,6 +2,7 @@
 <LinearLayout android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:orientation="vertical"
+
     xmlns:android="http://schemas.android.com/apk/res/android">
 
 
@@ -17,13 +18,12 @@
         android:queryHint="search" />
 
     <ListView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/list"
+        android:id="@+id/lists"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="10"
         android:padding="5dp"
-        android:choiceMode="multipleChoice"
         />
 
     <Button

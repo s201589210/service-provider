@@ -23,6 +23,7 @@
         <activity
             android:name=".ListProviders"
             />
+        <activity android:name=".Test" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".ProviderHomeActivity" />
         <activity android:name=".RequesterHomeActivity" />
