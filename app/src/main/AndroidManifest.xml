@@ -29,6 +29,7 @@
         <activity android:name=".RequesterHomeActivity" />
         <activity android:name=".MyServicesActivity"></activity>
         <activity android:name=".FirebaseUIActivity"></activity>
+        <activity android:name=".createService"></activity>
     </application>
 
 </manifest>
