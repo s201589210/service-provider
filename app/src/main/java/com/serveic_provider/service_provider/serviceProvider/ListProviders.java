@@ -27,25 +27,18 @@ public class ListProviders extends AppCompatActivity {
     String location;
     String profession;
     String city;
-
-
-
     DatabaseReference locationRef;
     DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
 
-    ArrayList<String> IDArray = new ArrayList<String>();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_providers);
-
+        //get information based with last activity
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             profession = extras.getString("profession");
             //The key argument here must match that used in the other activity
-
             //auth table reference
             FirebaseAuth mAuth = FirebaseAuth.getInstance();
             ;
@@ -54,7 +47,6 @@ public class ListProviders extends AppCompatActivity {
             //get user
             FBuser = mAuth.getCurrentUser();
             String requsterID = FBuser.getUid();
-
             //requster_location reference
             final FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
             locationRef = mDatabase.getReference().child("user_profiles").child(requsterID).child("location");
@@ -66,223 +58,15 @@ public class ListProviders extends AppCompatActivity {
                     buildList(location);
                     Log.v("potato","we are in the location listner");
                 }
-
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
-
                 }
             });//end of getting location
-
-
         }//end of checking extras!=null
-
-
-
-/*
-
-        DatabaseReference ProfissionRef = rootRef.child("profession_location_provider");
-        DatabaseReference ProfissionCityRef = ProfissionRef.child("Plumber").child("dammam");
-
-
-
-
-
-
-        // Create a list of words
-        final ArrayList<Service> words = new ArrayList<Service>();
-
-
-
-        for(int i=1;i<3;i++) {
-         final   String x = Integer.toString(i);
-            final int  a = i;
-            DatabaseReference idRef = ProfissionCityRef.child(x);
-
-            idRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    name = dataSnapshot.getValue(String.class);
-                    IDArray.add(name);
-
-                   int y=IDArray.size();
-
-
-
-                    DatabaseReference ProfileRef = rootRef.child("user_profiles");
-
-                    DatabaseReference ProfileInfoRef = ProfileRef.child(IDArray.get(y-1));
-
-
-                    DatabaseReference nameRef = ProfileInfoRef.child("ProviderName");
-                    DatabaseReference CompanyRef = ProfileInfoRef.child("ProviderCompany");
-                    DatabaseReference locationRef = ProfileInfoRef.child("ProviderLocation");
-                    DatabaseReference profissionRef = ProfileInfoRef.child("ProviderProfission");
-                    final DatabaseReference cityRef = ProfileInfoRef.child("ProviderCity");
-
-
-                    nameRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            name = dataSnapshot.getValue(String.class);
-
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-
-
-                    profissionRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            profission = dataSnapshot.getValue(String.class);
-
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-
-
-
-                    cityRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            city = dataSnapshot.getValue(String.class);
-
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-
-
-                    CompanyRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            company = dataSnapshot.getValue(String.class);
-
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-
-
-                    locationRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            location = dataSnapshot.getValue(String.class);
-                            words.add(new Service(name, profission,"11" ,company,city,location));
-
-
-                            /////////////////////////////////
-
-                            // Create an {@link WordAdapter}, whose data source is a list of {@link Word}s. The
-                            // adapter knows how to create list items for each item in the list.
-                            ServiceAdapter adapter = new ServiceAdapter(ListProviders.this,words, R.color.colorPrimary);
-                            // Find the {@link ListView} object in the view hierarchy of the {@link Activity}.
-                            // There should be a {@link ListView} with the view ID called list, which is declared in the
-                            // activity_numbers.xml layout file.
-                            ListView listView = (ListView) findViewById(R.id.lists);
-
-                            // Make the {@link ListView} use the {@link WordAdapter} we created above, so that the
-                            // {@link ListView} will display list items for each {@link Word} in the list.
-                            listView.setAdapter(adapter);
-
-
-                            listView.setClickable(true);
-
-                            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-
-                                    String value=IDArray.get(position);
-
-                                    Intent myIntent = new Intent(ListProviders.this, CreateServiceActivity.class);
-
-                                    myIntent.putExtra("key",value);
-                                    ListProviders.this.startActivity(myIntent);
-
-                                }
-                            });
-                            /////////////////////////////////
-
-
-
-
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-
-
-
-
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-
-        }
-
-
-
-     //  words.add(new service("Hussain", "Cooker","11" ,"company name","DHAHRAN","KFUPM mall"));
-       */
-/*  words.add(new service("Hussain", "Cooker","11" ,"company name","DHAHRAN","KFUPM mall",R.drawable.electrician));
-        words.add(new service("Hussain", "Cooker","11" ,"company name","DHAHRAN","KFUPM mall"));
-        words.add(new service("Hussain", "Cooker","11" ,"company name","DHAHRAN","KFUPM mall"));
-        words.add(new service("Hussain", "Cooker","11" ,"company name","DHAHRAN","KFUPM mall"));
-        words.add(new service("Hussain", "Cooker","11" ,"company name","DHAHRAN","KFUPM mall"));
-        words.add(new service("Hussain", "Cooker","11" ,"company name","DHAHRAN","KFUPM mall"));
-        words.add(new service("Hussain", "Cooker","11" ,"company name","DHAHRAN","KFUPM mall"));
-        words.add(new service("Hussain", "Cooker","11" ,"company name","DHAHRAN","KFUPM mall"));
-*//*
-
-
-
-
-        Button btn = (Button) findViewById(R.id.slect_button);
-
-
-        btn.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                String value="check4change";
-
-                // TODO Auto-generated method stub
-                Intent i = new Intent(getApplicationContext(),CreateServiceActivity.class);
-                i.putExtra("key",value);
-                startActivity(i);
-            }
-        });
-
-
-*/
-
-
     }//on create method
-
-
+    
+    //appends provider to view
     public void buildList(String location) {
-
-
         //refernce to the profession providers
         DatabaseReference ProfissionRef = rootRef.child("profession_location_provider");
         DatabaseReference professionLocationRef = ProfissionRef.child(profession).child(location);
@@ -305,7 +89,7 @@ public class ListProviders extends AppCompatActivity {
         });
 
     }// end of building list
-
+    //get the provider profile information and insert them to the list
     public void addProvInfoToList(String providerID){
         //refernce to the user profile
         DatabaseReference profilesRef = rootRef.child("user_profiles");
@@ -327,8 +111,7 @@ public class ListProviders extends AppCompatActivity {
         });
 
     }//end of adding item to list
-
-
+    //add the provider(user) to an item
     public void buildItem(User user){
         ListView listView = (ListView) findViewById(R.id.lists);
         professionProviderList.add(user);
