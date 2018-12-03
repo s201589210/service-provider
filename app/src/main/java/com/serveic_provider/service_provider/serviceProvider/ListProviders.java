@@ -28,7 +28,7 @@ public class ListProviders extends AppCompatActivity {
     String profession;
     String city;
 
-    ListView listView = (ListView) findViewById(R.id.lists);
+
 
     DatabaseReference locationRef;
     DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
@@ -64,7 +64,7 @@ public class ListProviders extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     location = dataSnapshot.getValue(String.class);
                     buildList(location);
-                    ///Log.v("potato","we are in the location listner");
+                    Log.v("potato","we are in the location listner");
                 }
 
                 @Override
@@ -316,6 +316,7 @@ public class ListProviders extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 //construct new user === firebase user
                 User user = dataSnapshot.getValue(User.class);
+                Log.v("addingInfo","");
                 buildItem(user);
             }
 
@@ -329,7 +330,7 @@ public class ListProviders extends AppCompatActivity {
 
 
     public void buildItem(User user){
-
+        ListView listView = (ListView) findViewById(R.id.lists);
         professionProviderList.add(user);
         // Create an {@link WordAdapter}, whose data source is a list of {@link Word}s. The
         // adapter knows how to create list items for each item in the list.
@@ -337,12 +338,12 @@ public class ListProviders extends AppCompatActivity {
         // Find the {@link ListView} object in the view hierarchy of the {@link Activity}.
         // There should be a {@link ListView} with the view ID called list, which is declared in the
         // activity_numbers.xml layout file.
-        ///ListView listView = (ListView) findViewById(R.id.lists);
+
         // Make the {@link ListView} use the {@link WordAdapter} we created above, so that the
         // {@link ListView} will display list items for each {@link Word} in the list.
+          Log.v("itemBuild", "buildItem: ");
         listView.setAdapter(adapter);
         listView.setClickable(true);
-
     }// end of building item
 
 

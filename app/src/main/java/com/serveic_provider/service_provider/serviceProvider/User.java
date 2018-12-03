@@ -11,7 +11,7 @@ public class User {
 	private String location;
 	private String serviceCounter;
 	private String name;
-	private int rate;
+	private int rate=0;
     private int id = NO_IMAGE_PROVIDED;
     private static final int NO_IMAGE_PROVIDED =-1;
 

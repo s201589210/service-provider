@@ -53,7 +53,7 @@ public class ProviderAdaptor extends ArrayAdapter<User> {
         TextView RnumberView = (TextView) listItemView.findViewById(R.id.number_of_reviews);
         // Get the version name from the current AndroidFlavor object and
         // set this text on the name TextView
-        RnumberView.setText(currentword.getRate());
+        RnumberView.setText(currentword.getRate()+"");
 
         ImageView imgeid = (ImageView) listItemView.findViewById(R.id.image);
         // Get the version number from the current AndroidFlavor object and
