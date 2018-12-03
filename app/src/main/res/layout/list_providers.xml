@@ -16,6 +16,11 @@
         android:layout_height="wrap_content"
         android:iconifiedByDefault="false"
         android:queryHint="search" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/selectedProviders"
+    />
 
     <ListView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/lists"
@@ -25,6 +30,7 @@
         android:layout_weight="10"
         android:padding="5dp"
         />
+
 
     <Button
         android:id="@+id/slect_button"

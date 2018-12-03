@@ -37,7 +37,8 @@ public class CreateServiceActivity extends AppCompatActivity {
             TextView tv = (TextView) findViewById(R.id.textfield);
 
 
-            insertService(providderID);
+            ////insertService(providderID);
+
             tv.setText(providderID);
 
 
