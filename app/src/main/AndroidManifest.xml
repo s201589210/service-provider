@@ -21,9 +21,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ListProviders"
+            android:name=".serviceProvider.ListProviders"
             />
-        <activity android:name=".Test" />
+        <activity android:name=".CreateServiceActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".ProviderHomeActivity" />
         <activity android:name=".RequesterHomeActivity" />

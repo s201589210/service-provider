@@ -4,14 +4,18 @@ public class User {
 	private int is_baned;
 	private String phone_number;
 	private String type;
-	private String profession;
+    private String profession;
 	private int age;
 	private int available;
 	private String image;
 	private String location;
-	private int serviceCounter;
+	private String serviceCounter;
+	private String name;
+	private int rate;
+    private int id = NO_IMAGE_PROVIDED;
+    private static final int NO_IMAGE_PROVIDED =-1;
 
-	public User(int is_baned, String phone_number, String type, String profession, int serviceCounter) {
+    public User(int is_baned, String phone_number, String type, String profession, String serviceCounter) {
 
 		this.is_baned = is_baned;
 		this.phone_number = phone_number;
@@ -106,11 +110,39 @@ public class User {
 		this.location = location;
 	}
 
-	public int getServiceCounter() {
+	public String getServiceCounter() {
 		return serviceCounter;
 	}
 
-	public void setServiceCounter(int serviceCounter) {
+	public void setServiceCounter(String serviceCounter) {
 		this.serviceCounter = serviceCounter;
 	}
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getRate() {
+        return rate;
+    }
+
+    public void setRate(int rate) {
+        this.rate = rate;
+    }
+
+    public boolean hasImage(){
+        return id != NO_IMAGE_PROVIDED;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

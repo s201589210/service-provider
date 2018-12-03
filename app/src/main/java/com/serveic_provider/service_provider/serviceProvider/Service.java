@@ -10,7 +10,7 @@ public class Service {
 	private String status;
 	//private int time;
 	private int providersCounter;
-
+	public Service(){}
 	public Service(String date, String description, int location, String provider_id, int rate,
 			String status) {
 		this.date = date;

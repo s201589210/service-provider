@@ -1,6 +1,5 @@
 package com.serveic_provider.service_provider;
 
-
 import android.app.Activity;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
@@ -10,15 +9,16 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.serveic_provider.service_provider.serviceProvider.User;
+
 import java.util.ArrayList;
 
-public class ServiceAdapter extends ArrayAdapter<service> {
+public class ProviderAdaptor extends ArrayAdapter<User> {
     private int colorid;
 
-    private static final String LOG_TAG = ServiceAdapter.class.getSimpleName();
+    private static final String LOG_TAG = ProviderAdaptor.class.getSimpleName();
 
-
-    public ServiceAdapter(Activity context, ArrayList<service> words,int color) {
+    public ProviderAdaptor(Activity context, ArrayList<User> words, int color) {
         super(context, 0, words);
 
         colorid=color;
@@ -32,7 +32,8 @@ public class ServiceAdapter extends ArrayAdapter<service> {
 
     @Override
 
-    public View getView(int position,  View convertView,  ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent) {
+
         // Check if the existing view is being reused, otherwise inflate the view
         View listItemView = convertView;
         if(listItemView == null) {
@@ -41,39 +42,18 @@ public class ServiceAdapter extends ArrayAdapter<service> {
         }
 
         // Get the {@link AndroidFlavor} object located at this position in the list
-        service currentword = getItem(position);
+        User currentword = getItem(position);
 
         // Find the TextView in the list_item.xml layout with the ID version_name
         TextView nameTextView = (TextView) listItemView.findViewById(R.id.proider_name_text_view);
         // Get the version name from the current AndroidFlavor object and
         // set this text on the name TextView
-        nameTextView.setText(currentword.getNames());
-
-        TextView proffisonTextView = (TextView) listItemView.findViewById(R.id.profission_text_view);
-        // Get the version name from the current AndroidFlavor object and
-        // set this text on the name TextView
-        proffisonTextView.setText(currentword.getProffision());
-
-        TextView cityTextView = (TextView) listItemView.findViewById(R.id.city_text_view);
-        // Get the version name from the current AndroidFlavor object and
-        // set this text on the name TextView
-        cityTextView.setText(currentword.getCities());
+        nameTextView.setText(currentword.getName());
 
         TextView RnumberView = (TextView) listItemView.findViewById(R.id.number_of_reviews);
         // Get the version name from the current AndroidFlavor object and
         // set this text on the name TextView
-        RnumberView.setText(currentword.getNumberReviews());
-
-        TextView companyNameView = (TextView) listItemView.findViewById(R.id.company_name);
-        // Get the version name from the current AndroidFlavor object and
-        // set this text on the name TextView
-        companyNameView.setText(currentword.getDescriptions());
-
-        TextView locationView = (TextView) listItemView.findViewById(R.id.loacation);
-        // Get the version name from the current AndroidFlavor object and
-        // set this text on the name TextView
-        locationView.setText(currentword.getLocations());
-
+        RnumberView.setText(currentword.getRate());
 
         ImageView imgeid = (ImageView) listItemView.findViewById(R.id.image);
         // Get the version number from the current AndroidFlavor object and
@@ -95,8 +75,6 @@ public class ServiceAdapter extends ArrayAdapter<service> {
         // so that it can be shown in the ListView
         return listItemView;
 
-
-
-
     }
+
 }

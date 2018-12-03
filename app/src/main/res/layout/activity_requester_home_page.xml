@@ -56,6 +56,7 @@
                 android:padding="15dp"
                 android:clickable="true"
                 android:foreground="?android:attr/selectableItemBackground"
+                android:onClick="onDyerClick"
                 />
 
             <ImageView
@@ -67,7 +68,11 @@
                 android:scaleType="fitCenter"
                 android:padding="15dp"
                 android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"/>
+                android:foreground="?android:attr/selectableItemBackground"
+                android:onClick="onBuilderClick"
+                />
+
+
 
             <ImageView
                 android:id="@+id/prof_carpenter"
@@ -78,7 +83,9 @@
                 android:scaleType="fitCenter"
                 android:padding="15dp"
                 android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"/>
+                android:foreground="?android:attr/selectableItemBackground"
+                android:onClick="onCarpenterClick"
+                />
 
 
 
@@ -100,7 +107,7 @@
                 android:layout_weight="1"
                 android:scaleType="fitCenter"
                 android:textAlignment="center"
-                android:text="DAYER"/>
+                android:text="DYER"/>
 
             <TextView
                 android:layout_width="0dp"
@@ -143,7 +150,9 @@
                 android:scaleType="fitCenter"
                 android:padding="15dp"
                 android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"/>
+                android:foreground="?android:attr/selectableItemBackground"
+                android:onClick="onCourierClick"
+                />
 
             <ImageView
                 android:id="@+id/prof_electrician"
@@ -154,18 +163,22 @@
                 android:scaleType="fitCenter"
                 android:padding="15dp"
                 android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"/>
+                android:foreground="?android:attr/selectableItemBackground"
+                android:onClick="onElectricianClick"
+                />
 
             <ImageView
                 android:id="@+id/prof_maid"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:src="@drawable/maid"
-                android:scaleType="fitCenter"
-                android:padding="15dp"
                 android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"/>
+                android:foreground="?android:attr/selectableItemBackground"
+                android:padding="15dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/maid"
+                android:onClick="onMaidClick"
+                />
 
 
         </LinearLayout>
@@ -225,7 +238,9 @@
                 android:scaleType="fitCenter"
                 android:padding="15dp"
                 android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"/>
+                android:foreground="?android:attr/selectableItemBackground"
+                android:onClick="onGardenerClick"
+                />
 
             <ImageView
                 android:id="@+id/prof_mechanic"
@@ -236,7 +251,8 @@
                 android:scaleType="fitCenter"
                 android:padding="15dp"
                 android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"/>
+                android:foreground="?android:attr/selectableItemBackground"
+                android:onClick="onMechanicClick"/>
 
             <ImageView
                 android:id="@+id/prof_welder"
@@ -247,10 +263,8 @@
                 android:scaleType="fitCenter"
                 android:padding="15dp"
                 android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"/>
-
-
-
+                android:foreground="?android:attr/selectableItemBackground"
+                android:onClick="onWelderClick"/>
 
         </LinearLayout>
 
