@@ -11,6 +11,10 @@ public class Profession {
 		this.title = title;
 	}
 
+	public Profession() {
+
+	}
+
 	public void delete() {
 	}
 

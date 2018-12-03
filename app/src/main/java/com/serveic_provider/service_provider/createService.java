@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.serveic_provider.service_provider.serviceProvider.Profession;
 import com.serveic_provider.service_provider.serviceProvider.Service;
 
 import java.util.ArrayList;
@@ -79,7 +80,7 @@ public class createService extends AppCompatActivity {
             }
         });
 
-        profission= "Plumber";
+        profission = "Plumber" ;
         DatabaseReference professionJobRef = rootRef;
         professionJobRef.child("profession_jobs");
         professionJobRef.child(profission);
@@ -118,7 +119,8 @@ public class createService extends AppCompatActivity {
 
     private void findProfission(DataSnapshot dataSnapshot) {
         for(DataSnapshot ds : dataSnapshot.getChildren()){
-            
+            Job jobss = new Job();
+            jobss.setTitle(ds.child(providerID).getValue(Job.class).getTitle());
         }
     }
 
