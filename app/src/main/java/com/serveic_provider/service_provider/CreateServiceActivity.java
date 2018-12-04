@@ -34,8 +34,10 @@ public class CreateServiceActivity extends AppCompatActivity {
     private static final String TAG = "CreateServiceActivity";
 
     String requsterID;
-    String profession;
     String providerID;
+
+    String serviceID;
+    String profession;
     String PROMPT_FOR_JOB = "Select Job";
     Job job;
     String jobTitle;
@@ -45,9 +47,8 @@ public class CreateServiceActivity extends AppCompatActivity {
     ArrayList<String> JOBS = new ArrayList<String>();
 
     DatabaseReference requesterServicesRef;
+    DatabaseReference providerServicesRef;
     DatabaseReference userProfileRef_serviceCounter;
-
-
     DatabaseReference professionJobsRef;
 
 
@@ -97,7 +98,7 @@ public class CreateServiceActivity extends AppCompatActivity {
                // attributes from UI are in validate method
 
                 // Service is not inserted into provider_service
-                insertService(providerID);
+                insertRequesterService();
 
                 Toast.makeText(CreateServiceActivity.this, "Service has been created",
                         Toast.LENGTH_SHORT).show();
@@ -137,7 +138,7 @@ public class CreateServiceActivity extends AppCompatActivity {
         return true;
     }
 
-    public void insertService(String providderID){
+    public void insertRequesterService(){
         //auth table reference
         FirebaseAuth mAuth = FirebaseAuth.getInstance();;
         //user reference
@@ -158,9 +159,54 @@ public class CreateServiceActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 serviceCounter = dataSnapshot.getValue(String.class);
                 //initiate new service object
-                Service service = buildService(requsterID);
+                Service service = buildRequesterService(requsterID);
                 //insert service to user id in the requster_services node
                 requesterServicesRef.child(requsterID).child(serviceCounter).setValue(service)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            Integer intServiceCounter = Integer.parseInt(serviceCounter) + 1;
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                userProfileRef_serviceCounter.setValue(intServiceCounter+"");
+                                insertProviderService(providerID, intServiceCounter-1+"");
+                                Log.d("tag", "writeUserType:success");
+                            }
+                        });//end insertion refrence
+            }//end of counter on data change listner
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });//end of counter listner
+
+
+    }//end of inserting service
+
+    public void insertProviderService(final String providerID, final String requester_serviceCounter){
+        //auth table reference
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();;
+        //user reference
+        FirebaseUser FBuser;
+        //requster_service reference
+        final FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
+        providerServicesRef = mDatabase.getReference("provider_services");
+        //get user
+        FBuser = mAuth.getCurrentUser();
+        //get id
+        requsterID = FBuser.getUid();
+        // set the serviceID
+        serviceID = requsterID + "_" + requester_serviceCounter;
+        //user profile reference
+        userProfileRef_serviceCounter = mDatabase.getReference("user_profiles").child(providerID).child("serviceCounter");
+        //service counter listener
+        userProfileRef_serviceCounter.addListenerForSingleValueEvent(new ValueEventListener() {
+            String serviceCounter;
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                serviceCounter = dataSnapshot.getValue(String.class);
+                //initiate new service object
+                //Service service = buildProviderService(providerID);
+                //insert service to user id in the requster_services node
+                providerServicesRef.child(providerID).child(serviceCounter).setValue(serviceID)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             Integer intServiceCounter = Integer.parseInt(serviceCounter) + 1;
                             @Override
@@ -178,7 +224,7 @@ public class CreateServiceActivity extends AppCompatActivity {
 
     }//end of inserting service
 
-    public Service buildService(String userId){
+    public Service buildRequesterService(String userId){
         //service no values
         Service service = new Service();
         //setting all values here
@@ -190,6 +236,18 @@ public class CreateServiceActivity extends AppCompatActivity {
 
         return service;
     }
+
+    /*public Service buildProviderService(String userId){
+        //service no values
+        Service service = new Service();
+        //setting all values here
+        service.setJob(jobTitle);
+        service.setDescription(description);
+        service.setDate(date);
+        service.setStatus("pending");
+
+        return service;
+    }*/
 
     public void readJobsFromFBDB() {
         // Getting the user_profiles node
