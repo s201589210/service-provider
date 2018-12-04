@@ -84,4 +84,8 @@ public class RequesterHomeActivity extends AppCompatActivity {
            myIntent.putExtra("profession", profession);
            RequesterHomeActivity.this.startActivity(myIntent);
         }
+
+    public void goToMyServicesPage(View view) {
+        startActivity(new Intent(this,MyServicesActivity.class));
+    }
 }

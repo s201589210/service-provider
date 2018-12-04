@@ -1,5 +1,6 @@
 package com.serveic_provider.service_provider;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -83,4 +84,7 @@ public class ProviderHomeActivity extends AppCompatActivity {
 
     }
 
+    public void goToMyServicesPage(View view) {
+        startActivity(new Intent(this,MyServicesActivity.class));
+    }
 }
