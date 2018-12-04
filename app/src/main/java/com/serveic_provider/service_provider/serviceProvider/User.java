@@ -9,7 +9,7 @@ public class User {
 	private int available;
 	private String image;
 	private String location;
-	private String serviceCounter;
+	private String serviceCounter = "0";
 	private String name;
 	private int rate=0;
     private int id = NO_IMAGE_PROVIDED;

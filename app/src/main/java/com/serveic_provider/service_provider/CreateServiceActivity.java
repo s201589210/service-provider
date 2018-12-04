@@ -94,18 +94,14 @@ public class CreateServiceActivity extends AppCompatActivity {
     @OnClick(R.id.create_button)
     public void createService(View view) {
         if(validateCreateForm()) {
-               // attributes from UI
+               // attributes from UI are in validate method
 
-
-
-               // !!!!!! Crash due to this method + it does put user_profiles/requesterID/serviceCounter
-                // userProfileRef_serviceCounter = mDatabase.getReference("user_profiles").child(requsterID).child("serviceCounter");
                 // Service is not inserted into provider_service
                 insertService(providerID);
 
-                /*Toast.makeText(CreateServiceActivity.this, "Service has been created",
-                        Toast.LENGTH_SHORT).show();*/
-               // updateUI();
+                Toast.makeText(CreateServiceActivity.this, "Service has been created",
+                        Toast.LENGTH_SHORT).show();
+                updateUI();
         }
 
     }
@@ -164,8 +160,6 @@ public class CreateServiceActivity extends AppCompatActivity {
                 //initiate new service object
                 Service service = buildService(requsterID);
                 //insert service to user id in the requster_services node
-                Log.v("requsterID: ", requsterID);
-                Log.v("serviceCounter: ", serviceCounter);
                 requesterServicesRef.child(requsterID).child(serviceCounter).setValue(service)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             Integer intServiceCounter = Integer.parseInt(serviceCounter) + 1;
@@ -193,11 +187,6 @@ public class CreateServiceActivity extends AppCompatActivity {
         service.setDate(date);
         service.setStatus("pending");
         service.setProvider_id(providerID);
-        Log.v("setJob: ", service.getJob());
-        Log.v("setDescription: ", service.getDescription());
-        Log.v("setDate: ", service.getDate());
-        Log.v("setStatus: ", service.getStatus());
-        Log.v("setProvider_id: ", service.getProvider_id());
 
         return service;
     }
