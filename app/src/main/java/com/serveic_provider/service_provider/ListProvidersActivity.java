@@ -1,4 +1,4 @@
-package com.serveic_provider.service_provider.serviceProvider;
+package com.serveic_provider.service_provider;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -18,14 +17,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.serveic_provider.service_provider.CreateServiceActivity;
-import com.serveic_provider.service_provider.ProviderAdaptor;
-import com.serveic_provider.service_provider.R;
+import com.serveic_provider.service_provider.serviceProvider.User;
 
 import java.util.ArrayList;
 
-public class ListProviders extends AppCompatActivity {
-    private static final String TAG = "ListProviders";
+public class ListProvidersActivity extends AppCompatActivity {
+    private static final String TAG = "ListProvidersActivity";
     final ArrayList<User> professionProviderList = new ArrayList<User>();
     String name;
     String company;
@@ -122,7 +119,7 @@ public class ListProviders extends AppCompatActivity {
         professionProviderList.add(user);
         // Create an {@link WordAdapter}, whose data source is a list of {@link Word}s. The
         // adapter knows how to create list items for each item in the list.
-        ProviderAdaptor adapter = new ProviderAdaptor(ListProviders.this,professionProviderList, R.color.colorPrimary);
+        ProviderAdaptor adapter = new ProviderAdaptor(ListProvidersActivity.this,professionProviderList, R.color.colorPrimary);
         // Find the {@link ListView} object in the view hierarchy of the {@link Activity}.
         // There should be a {@link ListView} with the view ID called list, which is declared in the
         // activity_numbers.xml layout file.
@@ -130,9 +127,9 @@ public class ListProviders extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.v("helloVetnam", ": ");
-                Intent createService = new Intent(ListProviders.this,CreateServiceActivity.class);
-                createService.putExtra("id",providerID);
-                ListProviders.this.startActivity(createService);
+                Intent createService = new Intent(ListProvidersActivity.this,CreateServiceActivity.class);
+                createService.putExtra("providerID_profession", providerID+"_"+ profession);
+                ListProvidersActivity.this.startActivity(createService);
             }
         });
         // Make the {@link ListView} use the {@link WordAdapter} we created above, so that the

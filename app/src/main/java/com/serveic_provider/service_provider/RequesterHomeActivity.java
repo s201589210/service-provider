@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.serveic_provider.service_provider.serviceProvider.ListProviders;
-
 public class RequesterHomeActivity extends AppCompatActivity {
 
     @Override
@@ -24,7 +22,7 @@ public class RequesterHomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-               /* Intent myIntent = new Intent(RequesterHomeActivity.this, ListProviders.class);
+               /* Intent myIntent = new Intent(RequesterHomeActivity.this, ListProvidersActivity.class);
                 //myIntent.putExtra("key", value); //Optional parameters
                 RequesterHomeActivity.this.startActivity(myIntent);*/
 
@@ -47,8 +45,8 @@ public class RequesterHomeActivity extends AppCompatActivity {
         transit("dyer");
     }
 
-    public void onMechanicClick(View view) {
-        transit("mechanic");
+    public void onPlumberClick(View view) {
+        transit("Plumber");
     }
 
     public void onWelderClick(View view) {
@@ -82,7 +80,7 @@ public class RequesterHomeActivity extends AppCompatActivity {
 
     //intent transtion based on the clicked view
        public void  transit(String profession){
-           Intent myIntent = new Intent(RequesterHomeActivity.this, ListProviders.class);
+           Intent myIntent = new Intent(RequesterHomeActivity.this, ListProvidersActivity.class);
            myIntent.putExtra("profession", profession);
            RequesterHomeActivity.this.startActivity(myIntent);
         }

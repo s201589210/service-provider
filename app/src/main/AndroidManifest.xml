@@ -20,15 +20,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".serviceProvider.ListProviders"
-            />
-        <activity android:name=".CreateServiceActivity" />
+
+
         <activity android:name=".SignUpActivity" />
+        <activity android:name=".MyServicesActivity"></activity>
+        <activity android:name=".ListProvidersActivity"></activity>
         <activity android:name=".ProviderHomeActivity" />
         <activity android:name=".RequesterHomeActivity" />
-        <activity android:name=".MyServicesActivity"></activity>
+        <activity android:name=".CreateServiceActivity" />
         <activity android:name=".FirebaseUIActivity"></activity>
+
     </application>
 
 </manifest>

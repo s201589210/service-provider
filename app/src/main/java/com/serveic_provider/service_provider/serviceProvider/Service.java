@@ -8,6 +8,7 @@ public class Service {
 	private int rate;
 	//private int requester_id;
 	private String status;
+	private String job;
 	//private int time;
 	private int providersCounter;
 	public Service(){}
@@ -107,4 +108,12 @@ public class Service {
 	public void setTime(int time) {
 		this.time = time;
 	}*/
+
+	public String getJob() {
+		return job;
+	}
+
+	public void setJob(String job) {
+		this.job = job;
+	}
 }
