@@ -97,7 +97,7 @@ public class CreateServiceActivity extends AppCompatActivity {
         if(validateCreateForm()) {
                // attributes from UI are in validate method
 
-                // Service is not inserted into provider_service
+                // Service is  inserted into provider_service inside this method
                 insertRequesterService();
 
                 Toast.makeText(CreateServiceActivity.this, "Service has been created",
