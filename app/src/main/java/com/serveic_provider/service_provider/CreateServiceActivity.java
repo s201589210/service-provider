@@ -47,11 +47,7 @@ public class CreateServiceActivity extends AppCompatActivity {
     DatabaseReference requesterServicesRef;
     DatabaseReference userProfileRef_serviceCounter;
 
-    // Used to get the userId
-    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
-    // Getting the user_profiles node
-    private final FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
     DatabaseReference professionJobsRef;
 
 
@@ -75,7 +71,7 @@ public class CreateServiceActivity extends AppCompatActivity {
             providerID = providerID_profession_array[0];
             profession = providerID_profession_array[1];
 
-            professionJobsRef = mDatabase.getReference("profession_jobs/" + profession);
+
             //The key argument here must match that used in the other activity
 
 
@@ -99,13 +95,13 @@ public class CreateServiceActivity extends AppCompatActivity {
     public void createService(View view) {
         if(validateCreateForm()) {
                // attributes from UI
-               String jobTitle_JobPrice = jobSpinner.getSelectedItem().toString();
-               jobTitle = jobTitle_JobPrice.split(",")[0];
+
+
 
                // !!!!!! Crash due to this method + it does put user_profiles/requesterID/serviceCounter
                 // userProfileRef_serviceCounter = mDatabase.getReference("user_profiles").child(requsterID).child("serviceCounter");
                 // Service is not inserted into provider_service
-                //insertService(providerID);
+                insertService(providerID);
 
                 /*Toast.makeText(CreateServiceActivity.this, "Service has been created",
                         Toast.LENGTH_SHORT).show();*/
@@ -113,6 +109,38 @@ public class CreateServiceActivity extends AppCompatActivity {
         }
 
     }
+
+    public boolean validateCreateForm() {
+        String jobSelected = jobSpinner.getSelectedItem().toString();
+        String dateText = dateEditText.getText().toString();
+        String descriptionText = descriptionEditText.getText().toString().trim();
+
+        if(jobSelected.equals(PROMPT_FOR_JOB)) {
+            Toast.makeText(CreateServiceActivity.this, "Please select a job",
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(dateText.isEmpty()) {
+            Toast.makeText(CreateServiceActivity.this, "Please enter a date",
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(dateText.isEmpty()) {
+            Toast.makeText(CreateServiceActivity.this, "Please enter a date",
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if(descriptionText.isEmpty())
+            descriptionEditText.setText("No description");
+
+        jobTitle = jobSelected.split(",")[0];
+        date = dateText;
+        description = descriptionText;
+
+        return true;
+    }
+
     public void insertService(String providderID){
         //auth table reference
         FirebaseAuth mAuth = FirebaseAuth.getInstance();;
@@ -136,6 +164,8 @@ public class CreateServiceActivity extends AppCompatActivity {
                 //initiate new service object
                 Service service = buildService(requsterID);
                 //insert service to user id in the requster_services node
+                Log.v("requsterID: ", requsterID);
+                Log.v("serviceCounter: ", serviceCounter);
                 requesterServicesRef.child(requsterID).child(serviceCounter).setValue(service)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             Integer intServiceCounter = Integer.parseInt(serviceCounter) + 1;
@@ -163,38 +193,19 @@ public class CreateServiceActivity extends AppCompatActivity {
         service.setDate(date);
         service.setStatus("pending");
         service.setProvider_id(providerID);
+        Log.v("setJob: ", service.getJob());
+        Log.v("setDescription: ", service.getDescription());
+        Log.v("setDate: ", service.getDate());
+        Log.v("setStatus: ", service.getStatus());
+        Log.v("setProvider_id: ", service.getProvider_id());
 
         return service;
     }
 
-    public boolean validateCreateForm() {
-        String jobSelected = jobSpinner.getSelectedItem().toString();
-        String dateText = dateEditText.getText().toString();
-        String descriptionText = descriptionEditText.getText().toString().trim();
-
-        if(jobSelected.equals(PROMPT_FOR_JOB)) {
-            Toast.makeText(CreateServiceActivity.this, "Please select a job",
-                    Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if(dateText.isEmpty()) {
-            Toast.makeText(CreateServiceActivity.this, "Please enter a date",
-                    Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if(dateText.isEmpty()) {
-            Toast.makeText(CreateServiceActivity.this, "Please enter a date",
-                    Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        if(descriptionText.isEmpty())
-            descriptionEditText.setText("No description");
-
-        return true;
-    }
-
     public void readJobsFromFBDB() {
+        // Getting the user_profiles node
+        final FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
+        professionJobsRef = mDatabase.getReference("profession_jobs/" + profession);
         ValueEventListener JobsListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
