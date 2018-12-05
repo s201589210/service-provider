@@ -10,6 +10,9 @@ public class Service {
 	private String status;
 	private String job;
 	//private int time;
+	private int id = NO_IMAGE_PROVIDED;
+	private static final int NO_IMAGE_PROVIDED =-1;
+
 	private int providersCounter;
 	public Service(){}
 	public Service(String date, String description, int location, String provider_id, int rate,
@@ -115,5 +118,13 @@ public class Service {
 
 	public void setJob(String job) {
 		this.job = job;
+	}
+
+    public boolean hasImage() {
+		return id != NO_IMAGE_PROVIDED;
+    }
+
+	public int getId() {
+		return id;
 	}
 }
