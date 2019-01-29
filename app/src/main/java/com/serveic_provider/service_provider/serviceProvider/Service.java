@@ -9,7 +9,7 @@ public class Service {
 	//private int requester_id;
 	private String status;
 	private String job;
-	//private int time;
+	private String time;
 	private int id = NO_IMAGE_PROVIDED;
 	private static final int NO_IMAGE_PROVIDED =-1;
 
@@ -104,13 +104,13 @@ public class Service {
 		this.status = status;
 	}
 
-	/*public int getTime() {
+	public String getTime() {
 		return time;
 	}
 
-	public void setTime(int time) {
+	public void setTime(String time) {
 		this.time = time;
-	}*/
+	}
 
 	public String getJob() {
 		return job;

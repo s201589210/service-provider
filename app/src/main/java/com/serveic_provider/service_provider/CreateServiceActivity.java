@@ -1,16 +1,21 @@
 package com.serveic_provider.service_provider;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -24,13 +29,17 @@ import com.google.firebase.database.ValueEventListener;
 import com.serveic_provider.service_provider.serviceProvider.Job;
 import com.serveic_provider.service_provider.serviceProvider.Service;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class CreateServiceActivity extends AppCompatActivity {
+public class CreateServiceActivity extends AppCompatActivity
+        implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+
     private static final String TAG = "CreateServiceActivity";
 
     String requsterID;
@@ -43,6 +52,7 @@ public class CreateServiceActivity extends AppCompatActivity {
     String jobTitle;
     String description;
     String date;
+    String time;
 
     ArrayList<String> JOBS = new ArrayList<String>();
 
@@ -58,6 +68,8 @@ public class CreateServiceActivity extends AppCompatActivity {
     EditText descriptionEditText;
     @BindView(R.id.date_edit_text)
     EditText dateEditText;
+    @BindView(R.id.time_edit_text)
+    EditText timeEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,10 +119,23 @@ public class CreateServiceActivity extends AppCompatActivity {
 
     }
 
+    @OnClick(R.id.date_edit_text)
+    public void selectDate(View view) {
+        DialogFragment datePicker = new DatePickerFragment();
+        datePicker.show(getSupportFragmentManager(), "date picker");
+    }
+
+    @OnClick(R.id.time_edit_text)
+    public void selectTime(View view) {
+        DialogFragment timePicker = new TimePickerFragment();
+        timePicker.show(getSupportFragmentManager(), "time picker");
+    }
+
     public boolean validateCreateForm() {
         String jobSelected = jobSpinner.getSelectedItem().toString();
-        String dateText = dateEditText.getText().toString();
         String descriptionText = descriptionEditText.getText().toString().trim();
+        String dateText = dateEditText.getText().toString();
+        String timeText = timeEditText.getText().toString();
 
         if(jobSelected.equals(PROMPT_FOR_JOB)) {
             Toast.makeText(CreateServiceActivity.this, "Please select a job",
@@ -122,8 +147,8 @@ public class CreateServiceActivity extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
             return false;
         }
-        if(dateText.isEmpty()) {
-            Toast.makeText(CreateServiceActivity.this, "Please enter a date",
+        if(timeText.isEmpty()) {
+            Toast.makeText(CreateServiceActivity.this, "Please enter a time",
                     Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -132,8 +157,9 @@ public class CreateServiceActivity extends AppCompatActivity {
             descriptionEditText.setText("No description");
 
         jobTitle = jobSelected.split(",")[0];
-        date = dateText;
         description = descriptionText;
+        date = dateText;
+        time = timeText;
 
         return true;
     }
@@ -231,6 +257,7 @@ public class CreateServiceActivity extends AppCompatActivity {
         service.setJob(jobTitle);
         service.setDescription(description);
         service.setDate(date);
+        service.setTime(time);
         service.setStatus("pending");
         service.setProvider_id(providerID);
 
@@ -281,5 +308,21 @@ public class CreateServiceActivity extends AppCompatActivity {
 
     public void updateUI() {
         startActivity(new Intent(CreateServiceActivity.this, MyServicesActivity.class));
+    }
+
+    @Override
+    public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+        String currentDateString = DateFormat.getDateInstance(DateFormat.SHORT).format(calendar.getTime());
+        dateEditText.setText(currentDateString);
+    }
+
+    @Override
+    public void onTimeSet(TimePicker timePicker, int hour, int minute) {
+        timeEditText.setText(hour + ":" + minute);
     }
 }
