@@ -79,11 +79,19 @@ public class RequesterHomeActivity extends AppCompatActivity {
     }
 
     //intent transtion based on the clicked view
-       public void  transit(String profession){
+     /*  public void  transit(String profession){
            Intent myIntent = new Intent(RequesterHomeActivity.this, ListProvidersActivity.class);
            myIntent.putExtra("profession", profession);
            RequesterHomeActivity.this.startActivity(myIntent);
-        }
+        }*/
+
+
+    //intent transtion based on the clicked view
+    public void  transit(String profession){
+        Intent myIntent = new Intent(RequesterHomeActivity.this, CreateServiceActivity.class);
+        //myIntent.putExtra("profession", profession);
+        RequesterHomeActivity.this.startActivity(myIntent);
+    }
 
     public void goToMyServicesPage(View view) {
         startActivity(new Intent(this,MyServicesActivity.class));

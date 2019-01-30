@@ -333,8 +333,12 @@ public class CreateServiceActivity extends AppCompatActivity
         professionJobsRef.addListenerForSingleValueEvent(JobsListener);
     }
 
-    public void updateUI() {
+  /*  public void updateUI() {
         startActivity(new Intent(CreateServiceActivity.this, MyServicesActivity.class));
+    }*/
+
+    public void updateUI() {
+        startActivity(new Intent(CreateServiceActivity.this, ListProvidersActivity.class));
     }
 
     @Override

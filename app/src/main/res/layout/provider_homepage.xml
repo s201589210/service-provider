@@ -4,58 +4,21 @@
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:id="@+id/name_text_view"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="bottom"
-        android:textAppearance="?android:textAppearanceMedium"
-        android:textColor="@android:color/black"
-        android:textStyle="bold"
-        android:padding="10dp"
-        android:text="public:" />
 
     <ListView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/list"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="5"
-        android:padding="5dp"
-        tools:context="com.example.android.miwok.wordlist"/>
-
-    <TextView
-        android:id="@+id/name_text_view2"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="bottom"
-        android:textAppearance="?android:textAppearanceMedium"
-        android:textColor="@android:color/black"
-        android:textStyle="bold"
-        android:padding="10dp"
-        android:text="private:" />
-
-
-    <ListView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/list2"
+        android:id="@+id/provider_pending_services_listview"
         android:orientation="vertical"
         android:layout_width="match_parent"
         tools:context="com.example.android.miwok.wordlist"
-        android:padding="5dp"
         android:layout_height="0dp"
-        android:layout_weight="5"
-        android:layout_marginBottom="10dp"/>
+        android:layout_weight="10"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1.2"
+        android:layout_weight="1"
         android:gravity="center"
-        android:layout_marginTop="16dp"
         android:orientation="horizontal">
 
         <ImageView

@@ -7,8 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
-
+import android.view.View.OnClickListener;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -65,6 +66,21 @@ public class ListProvidersActivity extends AppCompatActivity {
                 }
             });//end of getting location
         }//end of checking extras!=null
+
+       final Button Btn = (Button) findViewById(R.id.slect_button);
+
+
+
+
+        Btn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivity(new Intent(ListProvidersActivity.this, MyServicesActivity.class));
+            }
+        });
+
+
+
+
     }//on create method
     //appends provider to view
     public void buildList(String location) {
@@ -111,6 +127,8 @@ public class ListProvidersActivity extends AppCompatActivity {
 
             }
         });
+
+
 
     }//end of adding item to list
     //add the provider(user) to an item
