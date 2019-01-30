@@ -47,6 +47,369 @@
         <item>Unaizah</item>
         <item>Yanbu</item>
     </string-array>
+    <string-array name="cities_array">
+        <item></item>
+        <item>Dammam</item>
+        <item>Al Khobar</item>
+        <item>Dhahran </item>
+        <item>Jeddah</item>
+        <item>Riyadh</item>
+        <item>Riyadh Al Khabra</item>
+        <item>Jazan </item>
+        <item>Sarat Abidah</item>
+        <item>Bariq</item>
+        <item>Salwa</item>
+        <item>Al qaisumah</item>
+        <item>Hautat Sudair</item>
+        <item>Al Namas</item>
+        <item>Howtat Bani Tamim</item>
+        <item>Khaybar</item>
+        <item>Al Wadeen</item>
+        <item>Muhayil</item>
+        <item>Tubarjal</item>
+        <item>Qaryat al ulya</item>
+        <item>Umluj</item>
+        <item>Wadi ad-Dawasir</item>
+        <item>Afif</item>
+        <item>Dba</item>
+        <item>Al Jubail</item>
+        <item>Al Ula</item>
+        <item>Al Qatif</item>
+        <item>Al Hofuf </item>
+        <item>Zahban</item>
+        <item>Al Quwaiiyah</item>
+        <item>Al-Theebiyah</item>
+        <item>Al Mubarraz</item>
+        <item>Hanukkah</item>
+        <item>Ad Dubaiyah</item>
+        <item>King Abdullah Economic City</item>
+        <item>Al Muzahimiyah</item>
+        <item>Harmah</item>
+        <item>Al Wajh</item>
+        <item>Ad Dilam</item>
+        <item>Rumah</item>
+        <item>Al Uwayqilah</item>
+        <item>Khulais</item>
+        <item>Al Hayathem</item>
+        <item>Ahad Rafidah</item>
+        <item>Taurif</item>
+        <item>Baljurashi</item>
+        <item>Thebea</item>
+        <item>Dumah Al Jandal</item>
+        <item>Al Badayea</item>
+        <item>Sayhat</item>
+        <item>Sabya</item>
+        <item>Anak</item>
+        <item>Sharorah </item>
+        <item>Ras Tannurah</item>
+        <item>Al Bukayriyah</item>
+        <item>Al Baha </item>
+        <item>Najran </item>
+        <item>Mecca</item>
+        <item>Al Majmaah</item>
+        <item>Ad Duwadimi</item>
+        <item>Al Kharj</item>
+        <item>Safwa</item>
+        <item>Al Mithnab</item>
+        <item>Al Oyun</item>
+        <item>Hail </item>
+        <item>Zulfi</item>
+        <item>Rabigh</item>
+        <item>Ar Rass</item>
+        <item>arar</item>
+        <item>Nariyah</item>
+        <item>Tabuk</item>
+        <item>Shaqra</item>
+        <item>At Taif</item>
+        <item>Qurayat</item>
+        <item>Abha</item>
+        <item>Yanbu</item>
+        <item>Hafar Al Batin</item>
+        <item>Buqayq</item>
+        <item>Bishah</item>
+        <item>Al Qunfudhah</item>
+        <item>Sakakah</item>
+        <item>Abu Arish</item>
+        <item>Al Khafji</item>
+        <item>Buraydah</item>
+        <item>Khamis Mushayt</item>
+        <item>Rafha</item>
+        <item>Unayzah</item>
+        <item>Ahsa</item>
+        <item>Al Madinah Al Munawwarah </item>
+    </string-array>
+    <string-array name="dammam_neighbors">
+        <item></item>
+        <item>Al Khalidiyah Al Janubiyah </item>
+        <item>Ar Rawdah </item>
+        <item>Ash Shati Al Gharbi </item>
+        <item>Al Khalidiyah Ash Shamaliyah</item>
+        <item>Al Manar</item>
+        <item>Al Aziziyah</item>
+        <item>Ash Shati Ash Sharqi</item>
+        <item>Al Khalij</item>
+        <item>Ghirnatah</item>
+        <item>Az Zuhur</item>
+        <item>As Safa</item>
+        <item>An Nuzhah</item>
+        <item>An Nur</item>
+        <item>Al Muraikabat</item>
+        <item>Al Muhammadiyah</item>
+        <item>Al Athir</item>
+        <item>Al Hussam</item>
+        <item>Abdulla Fuad</item>
+        <item>Al Buhayrah</item>
+        <item>An Nakhil</item>
+        <item>Ibn Khaldun</item>
+        <item>Ash Shulah (Fakhriyah)</item>
+        <item>Ad Dawasir</item>
+        <item>Al Qadisiyah</item>
+        <item>As Suq</item>
+        <item>Al Amamrah</item>
+        <item>Iskan Dammam</item>
+        <item>Al Adamah</item>
+        <item>Madinat Al Umal</item>
+        <item>Al Nahdah</item>
+        <item>Al Muntazah</item>
+        <item>Badr</item>
+        <item>Industrial</item>
+        <item>Dahiyat Al Malik Fahd</item>
+        <item>Taybah</item>
+        <item>Ad Danah</item>
+        <item>Al Badiyah</item>
+        <item>Al Anud</item>
+        <item>Al Qazaz</item>
+        <item>Al Khodaryah</item>
+        <item>Qasr Al Khaleej</item>
+        <item>Industrial Area No1</item>
+        <item>Al Jalawiyah</item>
+        <item>Al Itisalat</item>
+        <item>Al Hamra</item>
+        <item>King Abdul Aziz Seaport</item>
+        <item>Al Basatin</item>
+        <item>Ad Dabab</item>
+        <item>Uhud</item>
+        <item>Al Mazruiyah</item>
+        <item>Al Jamiyin</item>
+        <item>Ar Rayyan</item>
+        <item>Al Wahah</item>
+        <item>An Nasriyah</item>
+        <item>At Tubayshi</item>
+        <item>Al Rabee</item>
+        <item>Al Amir Muhammed Ibn Saud</item>
+        <item>Al Badi</item>
+        <item>As Salam</item>
+        <item>Al Jawharah</item>
+        <item>Al Matar</item>
+        <item>King Fahd International Airport</item>
+        <item>Ar Rabiyah</item>
+        <item>2nd Industrial City</item>
+        <item>Al Anwar</item>
+        <item>Al Amal</item>
+        <item>Al Amanah</item>
+        <item>Al Hadabah</item>
+        <item>Al Fanar</item>
+        <item>Al Faisaliyah</item>
+        <item>An Nada</item>
+        <item>Al Faiha</item>
+        <item>Ash Sharq</item>
+        <item>Dammam University</item>
+        <item>An Nawras (Petromin)</item>
+        <item>As Saif</item>
+        <item>Ar Rakah Ash Shamaliyah</item>
+        <item>As Sadafah</item>
+        <item>Al Fursan</item>
+        <item>Al Firdaws</item>
+    </string-array>
+    <string-array name="dhahran_neighbors">
+        <item> Ad dawha Al Janubiyah</item>
+        <item>Gharb Adh dhahran</item>
+        <item>Al Nahdah</item>
+        <item>King Fahd University of Petroleum and Minerals</item>
+        <item>Ad danah Al Janubiyah</item>
+        <item>Ad danah Al Shamaliyah</item>
+        <item>Hajr</item>
+        <item>Al Jamiah (Rabwa)</item>
+        <item>Al Qusur (Telal Al Doha)</item>
+        <item>Ad dawhah Al Shamaliyah</item>
+        <item>Al Qashlah</item>
+        <item>Al Haras Al Watani</item>
+        <item>Tihamah</item>
+        <item>Aramco Dhahran</item>
+    </string-array>
+    <string-array name="riyadh_neighbors">
+        <item>Ad Difa</item>
+        <item>okaz</item>
+        <item>Badr</item>
+        <item>Arid</item>
+        <item>Al Sulaymanaya</item>
+        <item>New Industrial Area</item>
+        <item>Khashm Al An</item>
+        <item>King Khalid Airport</item>
+        <item>Tuwaiq</item>
+        <item>Al Uraija</item>
+        <item>Yamamah</item>
+        <item>Al Safarat</item>
+        <item>Al Olaya</item>
+        <item>As Sulay</item>
+        <item>Dhahrat Laban</item>
+        <item>An Nasim Al Gharbi</item>
+        <item>Al Badiah</item>
+        <item>Sultanah</item>
+        <item>Al Suwaidi</item>
+        <item>Uraija Al Wusta</item>
+        <item>Ad Diriyah</item>
+        <item>Khuzama</item>
+        <item>Laban</item>
+        <item>Al Mahdiyah</item>
+        <item>Maizlh</item>
+        <item>Hada</item>
+        <item>Munsiyah</item>
+        <item>Narjis</item>
+        <item>Alsharq</item>
+        <item>Ash Shifa</item>
+        <item>Malqa</item>
+        <item>Malaz</item>
+        <item>Al Khaldiyah</item>
+        <item>Al Mathar Ash Shamali</item>
+        <item>Hateen</item>
+        <item>Janadriyah</item>
+        <item>Ad Dhubbat</item>
+        <item>Irqah</item>
+        <item>Rabie</item>
+        <item>Al Wurud</item>
+        <item>Khaldiyah</item>
+        <item>King Abdllah Neighborhood</item>
+        <item>Al Morabaa</item>
+        <item>Uraija Al Gharbiyah</item>
+        <item>Qurtubah</item>
+        <item>Saadah</item>
+        <item>King AbdulAziz Neighborhood</item>
+        <item>Al Iskan</item>
+        <item>Al Azizyah</item>
+        <item>Manakh</item>
+        <item>Rimal</item>
+        <item>al massani</item>
+        <item>Jazirah</item>
+        <item>An Nadhim</item>
+        <item>Dar Al Baida</item>
+        <item>Ishbiliyah</item>
+        <item>Al Rawabi</item>
+        <item>Al Hazm</item>
+        <item>Faruq</item>
+        <item>Umm Al Hamam Ash Sharqi</item>
+        <item>Mansoriah</item>
+        <item>Namar</item>
+        <item>Dahiat Namar</item>
+        <item>Siyah</item>
+        <item>Alawali</item>
+        <item>Jabrah</item>
+        <item>Al Wisham</item>
+        <item>Al Bariah</item>
+        <item>Manfouhah Al Jadidah</item>
+        <item>Yasmin</item>
+        <item>Al Khaleej</item>
+        <item>King Saud University</item>
+        <item>Al Morsalat</item>
+        <item>Faiha - Exit 15</item>
+        <item>Zahrah</item>
+        <item>Nur</item>
+        <item>Faisaliyah</item>
+        <item>Al Mughrizat</item>
+        <item>Dhahrat Al Badiah</item>
+        <item>Al Fakhiriyah</item>
+        <item>Al Rabwah</item>
+        <item>Al Mohammadiyah</item>
+        <item>Nada - Exit 7</item>
+        <item>Raid</item>
+        <item>Duraihmiyah</item>
+        <item>Salhiyah</item>
+        <item>Safa</item>
+        <item>Sahafah</item>
+        <item>Ar Rayyan</item>
+        <item>Manar</item>
+        <item>Ash Shuhada</item>
+        <item>Al Maather</item>
+        <item>Al Wizarat</item>
+        <item>Al Yarmok - Exit 8</item>
+        <item>Mutamarat</item>
+        <item>East An Nasim</item>
+        <item>Namudhajiyah</item>
+        <item>Al Futha</item>
+        <item>Oud</item>
+        <item>Dirah</item>
+        <item>As Suwaidi Al Gharabi</item>
+        <item>An Nasiriyah</item>
+        <item>King Fahd Neighborhood</item>
+        <item>Ghirnatah</item>
+        <item>Al Falah</item>
+        <item>Al Ghnamiah</item>
+        <item>Al Moqbel Palaces</item>
+        <item>Al Shomaisi</item>
+        <item>Al Waha</item>
+        <item>Al Nahda</item>
+        <item>Al Quds</item>
+        <item>Al Rawdah</item>
+        <item>Ar Rihab</item>
+        <item>Taybah</item>
+        <item>Misfat</item>
+        <item>Sinaiyah</item>
+        <item>Ulaishah</item>
+        <item>Al Isdihar</item>
+        <item>Al Mishal</item>
+        <item>Al Wadi</item>
+        <item>Imam Muhammad Ibn Saud Islamic University</item>
+        <item>Utaiqah</item>
+        <item>Al Andalus</item>
+        <item>Al Haeer</item>
+        <item>Jarir</item>
+        <item>Umm Salim</item>
+        <item>Ghubairuh</item>
+        <item>Al Taawun</item>
+        <item>Rimayah</item>
+        <item>Mikal</item>
+        <item>Al Wusaita</item>
+        <item>Al Marwah</item>
+        <item>Marqab</item>
+        <item>Thulaim</item>
+        <item>Qirawan</item>
+        <item>Rafiah</item>
+        <item>Sharafiyah</item>
+        <item>King Faisal Neighborhood</item>
+        <item>Qadisiayh</item>
+        <item>Aqiq</item>
+        <item>Manfuhah</item>
+        <item>Al Mansourah</item>
+        <item>Hamra</item>
+        <item>Al Nafal</item>
+        <item>Al Muruj</item>
+        <item>Rahmaniyah</item>
+        <item>Al Nuzhah</item>
+        <item>Ghadir</item>
+        <item>Salah Ad Din</item>
+        <item>An Nakhil</item>
+        <item>Umm Al Hamam Algarbi</item>
+        <item>Salam - Exit 15</item>
+        <item>Al Amaaria</item>
+        <item>Al Muzahimiyah</item>
+        <item>Al Butaiha</item>
+        <item>Alqura</item>
+        <item>Al Jubaylah</item>
+        <item>Al Uyaynah</item>
+        <item>Dirab</item>
+        <item>Banban</item>
+        <item>Princess Nora Bint Abdul Rahman University</item>
+        <item>Al Amal</item>
+        <item>Uhud</item>
+        <item>Al Zahra</item>
+        <item>Hyt</item>
+        <item>Al Arid</item>
+        <item>Masiaf</item>
+        <item>Al Jaradiyah</item>
+        <item>Dubiyah</item>
+        <item>Shubra</item>
+        <item>Skirinah</item>
+    </string-array>
     <string name="type">Type:</string>
     <string name="type_requester">Requester</string>
     <string name="type_provider">Provider</string>

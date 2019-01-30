@@ -32,10 +32,13 @@ import com.serveic_provider.service_provider.serviceProvider.Service;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnItemClick;
+import butterknife.OnItemSelected;
 
 public class CreateServiceActivity extends AppCompatActivity
         implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
@@ -70,7 +73,10 @@ public class CreateServiceActivity extends AppCompatActivity
     EditText dateEditText;
     @BindView(R.id.time_edit_text)
     EditText timeEditText;
-
+    @BindView(R.id.city_spinner)
+    Spinner citySpinner;
+    @BindView(R.id.neighbor_spinner)
+    Spinner neighborSpinner;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,6 +135,27 @@ public class CreateServiceActivity extends AppCompatActivity
     public void selectTime(View view) {
         DialogFragment timePicker = new TimePickerFragment();
         timePicker.show(getSupportFragmentManager(), "time picker");
+    }
+    @OnItemSelected(R.id.city_spinner)
+    public void selectCity(View view) {
+        String[] tempArray = new String[1];
+        String city = citySpinner.getSelectedItem().toString();
+        Log.e("dfs",city);
+        if(!city.equals("")){
+            if(city.equals("Dammam")){
+                tempArray = getResources().getStringArray(R.array.dammam_neighbors);}
+            else if(city.equals("Dhahran")){
+                tempArray = getResources().getStringArray(R.array.dhahran_neighbors);}
+            else if(city.equals("Riyadh")) {
+                tempArray = getResources().getStringArray(R.array.riyadh_neighbors);
+            }
+
+            ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
+                    this, android.R.layout.simple_spinner_item, tempArray );
+            neighborSpinner.setAdapter(spinnerArrayAdapter);
+        }
+
+
     }
 
     public boolean validateCreateForm() {
