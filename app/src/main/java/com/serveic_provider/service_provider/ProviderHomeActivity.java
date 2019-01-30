@@ -84,7 +84,8 @@ public class ProviderHomeActivity extends AppCompatActivity {
                 //service object
                 Service service = dataSnapshot.getValue(Service.class);
                 //adding the sevice to the ArrayList
-                pendingServices.add(service);
+                if(service.getProvider_id() != "" || service.getProvider_id() != null)
+                    pendingServices.add(service);
             }
 
             @Override

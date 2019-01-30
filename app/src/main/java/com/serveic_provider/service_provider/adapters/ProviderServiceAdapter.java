@@ -98,7 +98,6 @@ public class ProviderServiceAdapter extends ArrayAdapter<Service> {
                     private void assignServiceToProvider(String requesterId, String serviceNumber) {
                         DatabaseReference serviceRef = mDatabase.getReference().child("requester_services").child(requesterId).child(serviceNumber);
                         serviceRef.child("provider_id").setValue(userId);
-                        serviceRef.child("status").setValue("IN PROGRESS");
                     }
                 });//end of getting location
 
