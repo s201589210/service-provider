@@ -70,6 +70,8 @@ public class ProviderHomeActivity extends AppCompatActivity {
             }
         });//end of getting location
 
+        pendingServices.add(new Service("02/02/2013", "to do stuff", 1, "provider id", 5,"pending"));
+        pendingServices.add(new Service("01/02/2013", "to do stuff", 2, "provider id", 5,"pending"));
         //display services loaded in pendingServices
         displayPendingServices();
     }

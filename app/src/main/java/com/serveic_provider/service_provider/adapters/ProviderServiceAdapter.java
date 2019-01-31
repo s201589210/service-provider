@@ -41,7 +41,7 @@ public class ProviderServiceAdapter extends ArrayAdapter<Service> {
         }
 
         // Get the {@link AndroidFlavor} object located at this position in the list
-        Service currentService = (Service) getItem(position);
+        final Service currentService = (Service) getItem(position);
 
         // Find the TextView in the list_item.xml layout with the ID version_name
         TextView nameTextView = (TextView) listItemView.findViewById(R.id.item_job);
@@ -65,6 +65,7 @@ public class ProviderServiceAdapter extends ArrayAdapter<Service> {
         FromTextView.setText(currentService.getLocation()+"");
 
         Button acceptButton = (Button) listItemView.findViewById(R.id.accept_service_button);
+        final View finalListItemView = listItemView;
         acceptButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,12 +101,29 @@ public class ProviderServiceAdapter extends ArrayAdapter<Service> {
                         serviceRef.child("provider_id").setValue(userId);
                     }
                 });//end of getting location
-
+                finalListItemView.setVisibility(View.GONE);
 
             }
         });
-        Button declineButton = (Button) listItemView.findViewById(R.id.decline_service_button);
 
+        Button declineButton = (Button) listItemView.findViewById(R.id.decline_service_button);
+        declineButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //auth table reference
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+                //user reference
+                FirebaseUser FBuser;
+                //get user
+                FBuser = mAuth.getCurrentUser();
+                final String userId = FBuser.getUid();
+                //remove value so it does not show again
+                mDatabase.getReference().child("provider_services").child(userId).child(position+"").removeValue();
+                finalListItemView.setVisibility(View.GONE);
+
+            }
+        });
         // Return the whole list item layout (containing 2 TextViews and an ImageView)
         // so that it can be shown in the ListView
         return listItemView;
