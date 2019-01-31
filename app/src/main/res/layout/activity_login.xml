@@ -20,7 +20,6 @@
             android:id="@+id/email_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="abdulrahman@email.com"
             android:hint="@string/email"
             android:inputType="textEmailAddress"/>
     </android.support.design.widget.TextInputLayout>
@@ -35,7 +34,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/password"
-            android:text="Aa12345678"
             android:inputType="textPassword" />
     </android.support.design.widget.TextInputLayout>
 
