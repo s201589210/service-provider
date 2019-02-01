@@ -62,7 +62,7 @@ public class ProviderServiceAdapter extends ArrayAdapter<Service> {
         TextView FromTextView = (TextView) listItemView.findViewById(R.id.item_location);
         // Get the version number from the current AndroidFlavor object and
         // set this text on the number TextView
-        FromTextView.setText(currentService.getLocation()+"");
+        FromTextView.setText(currentService.getCity()+"");
 
         Button acceptButton = (Button) listItemView.findViewById(R.id.accept_service_button);
         final View finalListItemView = listItemView;

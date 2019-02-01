@@ -63,7 +63,7 @@ public class RequesterHomeActivity extends AppCompatActivity {
 
 
     public void onElectricianClick(View view) {
-        transit("electrician");
+        transit("Electrician");
     }
 
     public void onCourierClick(View view) {
@@ -89,7 +89,7 @@ public class RequesterHomeActivity extends AppCompatActivity {
     //intent transtion based on the clicked view
     public void  transit(String profession){
         Intent myIntent = new Intent(RequesterHomeActivity.this, CreateServiceActivity.class);
-        //myIntent.putExtra("profession", profession);
+        myIntent.putExtra("profession", profession);
         RequesterHomeActivity.this.startActivity(myIntent);
     }
 

@@ -3,7 +3,9 @@ package com.serveic_provider.service_provider.serviceProvider;
 public class Service {
 	private String date;
 	private String description;
-	private int location;
+	private String city;
+	private String neighbor;
+	private int building;
 	private String provider_id;
 	private int rate;
 	//private int requester_id;
@@ -15,15 +17,15 @@ public class Service {
 
 	private int providersCounter;
 	public Service(){}
-	public Service(String date, String description, int location, String provider_id, int rate,
-			String status) {
+	public Service(String date, String description,String provider_id, int rate,
+			String status, int building, String city, String neighbor ) {
 		this.date = date;
 		this.description = description;
-
-		this.location = location;
+		this.city = city;
+		this.neighbor = neighbor;
+		this.building = building;
 		this.provider_id = provider_id;
 		this.rate = rate;
-
 		this.status = status;
 	}
 
@@ -64,12 +66,16 @@ public class Service {
 		this.description = description;
 	}
 
-	public int getLocation() {
-		return location;
+	public int getBuilding() {
+		return building;
 	}
 
-	public void setLocation(int location) {
-		this.location = location;
+	public void setBuilding(int building) {
+		this.building = building;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getProvider_id() {
@@ -87,6 +93,10 @@ public class Service {
 	public void setRate(int rate) {
 		this.rate = rate;
 	}
+	public void setCity(String city) { this.city = city;}
+	public String getCity(){return city;}
+    public void setNeighbor(String neighbor) { this.neighbor = neighbor; }
+
 
 /*	public int getRequester_id() {
 		return requester_id;

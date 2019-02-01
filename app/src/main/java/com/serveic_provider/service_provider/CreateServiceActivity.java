@@ -47,7 +47,6 @@ public class CreateServiceActivity extends AppCompatActivity
 
     String requsterID;
     String providerID;
-
     String serviceID;
     String profession;
     String PROMPT_FOR_JOB = "Select Job";
@@ -56,6 +55,9 @@ public class CreateServiceActivity extends AppCompatActivity
     String description;
     String date;
     String time;
+    String neighbor;
+    String city;
+    int building;
 
     ArrayList<String> JOBS = new ArrayList<String>();
 
@@ -77,6 +79,10 @@ public class CreateServiceActivity extends AppCompatActivity
     Spinner citySpinner;
     @BindView(R.id.neighbor_spinner)
     Spinner neighborSpinner;
+    @BindView(R.id.building_edit_text)
+    EditText buildingEditText;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,20 +91,17 @@ public class CreateServiceActivity extends AppCompatActivity
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            String providerID_profession = extras.getString("providerID_profession");
-            String[] providerID_profession_array = providerID_profession.split("_");
-            providerID = providerID_profession_array[0];
-            profession = providerID_profession_array[1];
+            //String providerID_profession = extras.getString("providerID_profession");
+            //String[] providerID_profession_array = providerID_profession.split("_");
+            //providerID = providerID_profession_array[0];
+            profession = extras.getString("profession");
 
-
+            Log.v("Potato", profession);
             //The key argument here must match that used in the other activity
-
-
             //tv.setText(providerID);
 
 
         }//end of checking extras!=null
-
         JOBS.add(PROMPT_FOR_JOB);
         readJobsFromFBDB();
 
@@ -163,6 +166,9 @@ public class CreateServiceActivity extends AppCompatActivity
         String descriptionText = descriptionEditText.getText().toString().trim();
         String dateText = dateEditText.getText().toString();
         String timeText = timeEditText.getText().toString();
+        String cityText = citySpinner.getSelectedItem().toString();
+        String neighborText = neighborSpinner.getSelectedItem().toString();
+        int buildingText = Integer.parseInt(buildingEditText.getText().toString());
 
         if(jobSelected.equals(PROMPT_FOR_JOB)) {
             Toast.makeText(CreateServiceActivity.this, "Please select a job",
@@ -179,6 +185,21 @@ public class CreateServiceActivity extends AppCompatActivity
                     Toast.LENGTH_SHORT).show();
             return false;
         }
+        if(timeText.isEmpty()) {
+            Toast.makeText(CreateServiceActivity.this, "Please enter a time",
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(timeText.isEmpty()) {
+            Toast.makeText(CreateServiceActivity.this, "Please enter a time",
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(timeText.isEmpty()) {
+            Toast.makeText(CreateServiceActivity.this, "Please enter a time",
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
 
         if(descriptionText.isEmpty())
             descriptionEditText.setText("No description");
@@ -187,6 +208,9 @@ public class CreateServiceActivity extends AppCompatActivity
         description = descriptionText;
         date = dateText;
         time = timeText;
+        city = cityText;
+        building = buildingText;
+        neighbor = neighborText;
 
         return true;
     }
@@ -287,7 +311,9 @@ public class CreateServiceActivity extends AppCompatActivity
         service.setTime(time);
         service.setStatus("pending");
         service.setProvider_id(providerID);
-
+        service.setCity(city);
+        service.setBuilding(building);
+        service.setNeighbor(neighbor);
         return service;
     }
 
@@ -317,7 +343,7 @@ public class CreateServiceActivity extends AppCompatActivity
                     String jobTitle_JobPrice = job.getTitle() + ", " + job.getPrice() + " SAR";
                     JOBS.add(jobTitle_JobPrice);
                     Log.v("Potato", JOBS.get(i));
-                    Log.v("Potato", JOBS.get(i));
+
                     i++;
                 }
             }
