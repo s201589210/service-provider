@@ -26,7 +26,6 @@
         <activity android:name=".ProviderHomeActivity" />
         <activity android:name=".RequesterHomeActivity" />
         <activity android:name=".CreateServiceActivity" />
-        <activity android:name=".FirebaseUIActivity"></activity>
 
     </application>
 
