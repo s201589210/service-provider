@@ -25,7 +25,7 @@ public class RequesterHomeActivity extends AppCompatActivity {
     }
 
     public void onPlumberClick(View view) {
-        transit("Plumber");
+        transit("plumber");
     }
 
     public void onWelderClick(View view) {

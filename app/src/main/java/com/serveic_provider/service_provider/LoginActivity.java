@@ -110,9 +110,9 @@ public class LoginActivity extends AppCompatActivity {
         // Checking if the user is authenticated
         if(FBuser != null) {
             String userType = user.getType();
-            if(userType.equals("Provider")){
+            if(userType.equals("provider")){
                 startActivity(new Intent(this ,ProviderHomeActivity.class));
-            } else if (userType.equals("Requester")){
+            } else if (userType.equals("requester")){
                 startActivity(new Intent(this ,RequesterHomeActivity.class));
             }
         }

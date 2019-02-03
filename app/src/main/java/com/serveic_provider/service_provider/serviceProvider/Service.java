@@ -11,19 +11,23 @@ public class Service {
 	//private int requester_id;
 	private String status;
 	private String job;
-	private String time;
+	private String startTime;
+	private String endTime;
 	private int id = NO_IMAGE_PROVIDED;
 	private static final int NO_IMAGE_PROVIDED =-1;
 
 	private int providersCounter;
+
 	public Service(){}
-	public Service(String date, String description,String provider_id, int rate,
-			String status, int building, String city, String neighbor ) {
+	public Service(String date, String description, String city, String neighbor,
+			int building, String startTime, String endTime, String provider_id, int rate, String status) {
 		this.date = date;
 		this.description = description;
 		this.city = city;
 		this.neighbor = neighbor;
 		this.building = building;
+		this.startTime = startTime;
+		this.endTime = endTime;
 		this.provider_id = provider_id;
 		this.rate = rate;
 		this.status = status;
@@ -48,16 +52,28 @@ public class Service {
 		this.description = description;
 	}
 
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getNeighbor() {
+		return neighbor;
+	}
+
+	public void setNeighbor(String neighbor) {
+		this.neighbor = neighbor;
+	}
+
 	public int getBuilding() {
 		return building;
 	}
 
 	public void setBuilding(int building) {
 		this.building = building;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public String getProvider_id() {
@@ -76,26 +92,12 @@ public class Service {
 		this.rate = rate;
 	}
 
-	public void setCity(String city) { this.city = city;}
-
-	public String getCity(){return city;}
-
-    public void setNeighbor(String neighbor) { this.neighbor = neighbor; }
-
 	public String getStatus() {
 		return status;
 	}
 
 	public void setStatus(String status) {
 		this.status = status;
-	}
-
-	public String getTime() {
-		return time;
-	}
-
-	public void setTime(String time) {
-		this.time = time;
 	}
 
 	public String getJob() {
@@ -106,9 +108,43 @@ public class Service {
 		this.job = job;
 	}
 
-    public boolean hasImage() {
-		return id != NO_IMAGE_PROVIDED;
-    }
+	public String getStartTime() {
+		return startTime;
+	}
 
-	public int getId() { return id; }
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
+
+	public String getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public static int getNoImageProvided() {
+		return NO_IMAGE_PROVIDED;
+	}
+
+	public int getProvidersCounter() {
+		return providersCounter;
+	}
+
+	public void setProvidersCounter(int providersCounter) {
+		this.providersCounter = providersCounter;
+	}
+
+	public boolean hasImage() {
+		return id != NO_IMAGE_PROVIDED;
+	}
 }
