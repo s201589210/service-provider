@@ -12,28 +12,7 @@ public class RequesterHomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_requester_home_page);
-
-
-
-
-        ImageView prof_dyer =(ImageView)  findViewById(R.id.prof_dyer);
-
-        prof_dyer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-               /* Intent myIntent = new Intent(RequesterHomeActivity.this, ListProvidersActivity.class);
-                //myIntent.putExtra("key", value); //Optional parameters
-                RequesterHomeActivity.this.startActivity(myIntent);*/
-
-
-            }
-
-        });
-
-
     }
-
 
     // Not allowing back button
     @Override
@@ -63,7 +42,7 @@ public class RequesterHomeActivity extends AppCompatActivity {
 
 
     public void onElectricianClick(View view) {
-        transit("Electrician");
+        transit("electrician");
     }
 
     public void onCourierClick(View view) {
@@ -77,13 +56,6 @@ public class RequesterHomeActivity extends AppCompatActivity {
     public void onBuilderClick(View view) {
         transit("builder");
     }
-
-    //intent transtion based on the clicked view
-     /*  public void  transit(String profession){
-           Intent myIntent = new Intent(RequesterHomeActivity.this, ListProvidersActivity.class);
-           myIntent.putExtra("profession", profession);
-           RequesterHomeActivity.this.startActivity(myIntent);
-        }*/
 
 
     //intent transtion based on the clicked view

@@ -9,10 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.serveic_provider.service_provider.ProviderAdaptor;
 import com.serveic_provider.service_provider.R;
 import com.serveic_provider.service_provider.serviceProvider.Service;
-import com.serveic_provider.service_provider.serviceProvider.User;
 
 import java.util.ArrayList;
 

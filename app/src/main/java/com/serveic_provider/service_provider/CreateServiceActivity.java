@@ -48,16 +48,20 @@ public class CreateServiceActivity extends AppCompatActivity
     String requsterID;
     String providerID;
     String serviceID;
-    String profession;
-    String PROMPT_FOR_JOB = "Select Job";
+
     Job job;
     String jobTitle;
+
+    String profession;
+
     String description;
     String date;
     String time;
     String neighbor;
     String city;
     int building;
+
+    String PROMPT_FOR_JOB = "Select Job";
 
     ArrayList<String> JOBS = new ArrayList<String>();
 
@@ -95,13 +99,12 @@ public class CreateServiceActivity extends AppCompatActivity
             //String[] providerID_profession_array = providerID_profession.split("_");
             //providerID = providerID_profession_array[0];
             profession = extras.getString("profession");
-
-            Log.v("Potato", profession);
+            Log.v("extras", profession);
             //The key argument here must match that used in the other activity
             //tv.setText(providerID);
 
-
         }//end of checking extras!=null
+
         JOBS.add(PROMPT_FOR_JOB);
         readJobsFromFBDB();
 
@@ -112,7 +115,6 @@ public class CreateServiceActivity extends AppCompatActivity
 
 
     }//end of create
-
     @OnClick(R.id.create_button)
     public void createService(View view) {
         if(validateCreateForm()) {
@@ -133,7 +135,6 @@ public class CreateServiceActivity extends AppCompatActivity
         DialogFragment datePicker = new DatePickerFragment();
         datePicker.show(getSupportFragmentManager(), "date picker");
     }
-
     @OnClick(R.id.time_edit_text)
     public void selectTime(View view) {
         DialogFragment timePicker = new TimePickerFragment();
@@ -160,6 +161,24 @@ public class CreateServiceActivity extends AppCompatActivity
 
 
     }
+
+
+    @Override
+    public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+        String currentDateString = DateFormat.getDateInstance(DateFormat.SHORT).format(calendar.getTime());
+        dateEditText.setText(currentDateString);
+    }
+    @Override
+    public void onTimeSet(TimePicker timePicker, int hour, int minute) {
+        timeEditText.setText(hour + ":" + minute);
+    }
+
+
 
     public boolean validateCreateForm() {
         String jobSelected = jobSpinner.getSelectedItem().toString();
@@ -317,18 +336,6 @@ public class CreateServiceActivity extends AppCompatActivity
         return service;
     }
 
-    /*public Service buildProviderService(String userId){
-        //service no values
-        Service service = new Service();
-        //setting all values here
-        service.setJob(jobTitle);
-        service.setDescription(description);
-        service.setDate(date);
-        service.setStatus("pending");
-
-        return service;
-    }*/
-
     public void readJobsFromFBDB() {
         // Getting the user_profiles node
         final FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
@@ -342,8 +349,7 @@ public class CreateServiceActivity extends AppCompatActivity
                     job = jobSnapshot.getValue(Job.class);
                     String jobTitle_JobPrice = job.getTitle() + ", " + job.getPrice() + " SAR";
                     JOBS.add(jobTitle_JobPrice);
-                    Log.v("Potato", JOBS.get(i));
-
+                    Log.v("inJob", JOBS.get(i));
                     i++;
                 }
             }
@@ -359,27 +365,8 @@ public class CreateServiceActivity extends AppCompatActivity
         professionJobsRef.addListenerForSingleValueEvent(JobsListener);
     }
 
-  /*  public void updateUI() {
-        startActivity(new Intent(CreateServiceActivity.this, MyServicesActivity.class));
-    }*/
-
     public void updateUI() {
         startActivity(new Intent(CreateServiceActivity.this, ListProvidersActivity.class));
     }
 
-    @Override
-    public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR, year);
-        calendar.set(Calendar.MONTH, month);
-        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-        String currentDateString = DateFormat.getDateInstance(DateFormat.SHORT).format(calendar.getTime());
-        dateEditText.setText(currentDateString);
-    }
-
-    @Override
-    public void onTimeSet(TimePicker timePicker, int hour, int minute) {
-        timeEditText.setText(hour + ":" + minute);
-    }
 }

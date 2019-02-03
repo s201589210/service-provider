@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.view.View.OnClickListener;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -18,6 +17,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.serveic_provider.service_provider.adapters.ProviderAdaptor;
 import com.serveic_provider.service_provider.serviceProvider.User;
 
 import java.util.ArrayList;
@@ -68,9 +68,6 @@ public class ListProvidersActivity extends AppCompatActivity {
         }//end of checking extras!=null
 
        final Button Btn = (Button) findViewById(R.id.slect_button);
-
-
-
 
         Btn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -127,8 +124,6 @@ public class ListProvidersActivity extends AppCompatActivity {
 
             }
         });
-
-
 
     }//end of adding item to list
     //add the provider(user) to an item

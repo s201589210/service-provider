@@ -8,9 +8,9 @@
     android:layout_margin="@dimen/linear_fab_margin"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".SignUpActivity"
     tools:showIn="@layout/activity_sign_up">
+
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
@@ -21,6 +21,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/email"
+            android:inputType="textEmailAddress"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:errorEnabled="true">
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/name_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/name"
             android:inputType="textEmailAddress"/>
 
     </android.support.design.widget.TextInputLayout>
@@ -100,100 +113,3 @@
 
 </LinearLayout>
 
-    <!--<EditText
-            android:id="@+id/editText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:ems="13"
-            android:hint="email"
-            android:inputType="textPersonName"
-            app:layout_constraintBottom_toTopOf="@+id/editText3"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.19999999"
-            app:layout_constraintVertical_chainStyle="packed" />
-
-        <EditText
-            android:id="@+id/editText3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:ems="13"
-            android:hint="username"
-            android:inputType="textPersonName"
-            app:layout_constraintBottom_toTopOf="@+id/editText4"
-            app:layout_constraintEnd_toEndOf="@+id/editText"
-            app:layout_constraintStart_toStartOf="@+id/editText"
-            app:layout_constraintTop_toBottomOf="@+id/editText" />
-
-        <EditText
-            android:id="@+id/editText4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="13"
-            android:hint="password"
-            android:inputType="textPassword"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/editText3"
-            app:layout_constraintStart_toStartOf="@+id/editText3"
-            app:layout_constraintTop_toBottomOf="@+id/editText3" />
-
-        <Button
-            android:id="@+id/btnSignup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="56dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:onClick="signup"
-            android:text="sign up"
-            app:layout_constraintEnd_toEndOf="@+id/editText4"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/typeSwitch"
-            app:layout_constraintTop_toBottomOf="@+id/editText2" />
-
-        <Switch
-            android:id="@+id/typeSwitch"
-            android:layout_width="122dp"
-            android:layout_height="31dp"
-            android:layout_marginTop="32dp"
-            android:text="Provider"
-            android:textOff="No"
-            android:textOn="Yes"
-            app:layout_constraintEnd_toEndOf="@+id/editText4"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/editText4"
-            app:layout_constraintTop_toBottomOf="@+id/editText4" />
-
-        <EditText
-            android:id="@+id/editText2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:ems="10"
-            android:hint="05XXXXXXXXXX"
-            android:inputType="phone"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="@+id/spinner"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/spinner"
-            app:layout_constraintTop_toBottomOf="@+id/spinner" />
-
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="155dp"
-            android:layout_height="24dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="8dp"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="@+id/editText4"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/typeSwitch"
-            app:layout_constraintTop_toBottomOf="@+id/typeSwitch" />-->

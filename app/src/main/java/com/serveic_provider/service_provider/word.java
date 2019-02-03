@@ -30,7 +30,6 @@ public class word {
         names= name  ;
         FromUser = fromUser;
 
-
     }
 
     public String todefult(){

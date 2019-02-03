@@ -61,7 +61,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         // Binding the UI elements
         ButterKnife.bind(this);
     }
@@ -81,12 +80,10 @@ public class LoginActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d(TAG, "signInWithEmail:success");
-
                                 // The userId of the authenticated user, the unique id for all of the users used in the Firebase Database
                                 // user.getEmail() return the email in String
                                 FBuser = mAuth.getCurrentUser();
                                 String userId = FBuser.getUid();
-
                                 // Notifying the user
                                 Toast.makeText(LoginActivity.this, "Authentication successed",
                                         Toast.LENGTH_SHORT).show();

@@ -29,25 +29,7 @@ public class Service {
 		this.status = status;
 	}
 
-	public void addLovcation() {
-	}
-
-	public void addRate() {
-	}
-
-	public void changeStatus() {
-	}
-
 	public void create() {
-	}
-
-	public void getInformation() {
-	}
-
-	public void sendOffer() {
-	}
-
-	public void update() {
 	}
 
 	public String getDate() {
@@ -93,18 +75,12 @@ public class Service {
 	public void setRate(int rate) {
 		this.rate = rate;
 	}
+
 	public void setCity(String city) { this.city = city;}
+
 	public String getCity(){return city;}
+
     public void setNeighbor(String neighbor) { this.neighbor = neighbor; }
-
-
-/*	public int getRequester_id() {
-		return requester_id;
-	}
-
-	public void setRequester_id(int requester_id) {
-		this.requester_id = requester_id;
-	}*/
 
 	public String getStatus() {
 		return status;
@@ -134,7 +110,5 @@ public class Service {
 		return id != NO_IMAGE_PROVIDED;
     }
 
-	public int getId() {
-		return id;
-	}
+	public int getId() { return id; }
 }

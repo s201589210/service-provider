@@ -99,8 +99,7 @@ public class PendingFragment extends Fragment {
         penddingServices.add(service);
         // Create an {@link WordAdapter}, whose data source is a list of {@link Word}s. The
         // adapter knows how to create list items for each item in the list.
-        ServiceAdapter adapter = new ServiceAdapter(this.getActivity(), penddingServices, R.color.colorPrimary);
-
+        ServiceAdapter adapter = new ServiceAdapter(this.getActivity(), penddingServices, R.color.colorWhite);
         // Make the {@link ListView} use the {@link WordAdapter} we created above, so that the
         // {@link ListView} will display list items for each {@link Word} in the list.
         Log.v("itemBuild", "buildItem: ");

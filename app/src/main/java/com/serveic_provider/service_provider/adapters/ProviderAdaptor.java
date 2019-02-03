@@ -1,4 +1,4 @@
-package com.serveic_provider.service_provider;
+package com.serveic_provider.service_provider.adapters;
 
 import android.app.Activity;
 import android.support.v4.content.ContextCompat;
@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.serveic_provider.service_provider.R;
 import com.serveic_provider.service_provider.serviceProvider.User;
 
 import java.util.ArrayList;
