@@ -76,8 +76,6 @@ public class SignUpActivity extends AppCompatActivity {
     Spinner locationSpinner;
     @BindView(R.id.group_radio_button)
     RadioGroup radioGroup;
-    @BindView(R.id.type_text_view)
-    TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,13 +110,13 @@ public class SignUpActivity extends AppCompatActivity {
                                 userId = FBuser.getUid();
 
                                 // Getting the location form the spinner and assigning to user.location
-                                String location = locationSpinner.getSelectedItem().toString();
+                                String location = locationSpinner.getSelectedItem().toString().toLowerCase();
                                 user.setLocation(location);
 
                                 // Getting the type from the radio buttons and assigning to user,type
                                 int selectedRadioButtonId = radioGroup.getCheckedRadioButtonId();
                                 RadioButton selectedRadioButton = (RadioButton) findViewById(selectedRadioButtonId);
-                                String type = selectedRadioButton.getText().toString();
+                                String type = selectedRadioButton.getText().toString().toLowerCase();
                                 user.setType(type);
 
                                 // Using both the unique userId and user object to write the type and location under user_profiles/$userId

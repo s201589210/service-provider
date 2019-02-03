@@ -12,9 +12,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -32,12 +30,10 @@ import com.serveic_provider.service_provider.serviceProvider.Service;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnItemClick;
 import butterknife.OnItemSelected;
 
 public class CreateServiceActivity extends AppCompatActivity
@@ -56,10 +52,13 @@ public class CreateServiceActivity extends AppCompatActivity
 
     String description;
     String date;
-    String time;
+    String startTime;
+    String endTime;
     String neighbor;
     String city;
     int building;
+
+    String whichPicker;
 
     String PROMPT_FOR_JOB = "Select Job";
 
@@ -77,8 +76,10 @@ public class CreateServiceActivity extends AppCompatActivity
     EditText descriptionEditText;
     @BindView(R.id.date_edit_text)
     EditText dateEditText;
-    @BindView(R.id.time_edit_text)
-    EditText timeEditText;
+    @BindView(R.id.from_edit_text)
+    EditText fromEditText;
+    @BindView(R.id.to_edit_text)
+    EditText toEditText;
     @BindView(R.id.city_spinner)
     Spinner citySpinner;
     @BindView(R.id.neighbor_spinner)
@@ -135,10 +136,17 @@ public class CreateServiceActivity extends AppCompatActivity
         DialogFragment datePicker = new DatePickerFragment();
         datePicker.show(getSupportFragmentManager(), "date picker");
     }
-    @OnClick(R.id.time_edit_text)
-    public void selectTime(View view) {
+    @OnClick(R.id.from_edit_text)
+    public void selectFromTime(View view) {
         DialogFragment timePicker = new TimePickerFragment();
-        timePicker.show(getSupportFragmentManager(), "time picker");
+        timePicker.show(getSupportFragmentManager(), "from time picker");
+        whichPicker = "from time picker";
+    }
+    @OnClick(R.id.to_edit_text)
+    public void selectToTime(View view) {
+        DialogFragment timePicker = new TimePickerFragment();
+        timePicker.show(getSupportFragmentManager(), "to time picker");
+        whichPicker = "to time picker";
     }
     @OnItemSelected(R.id.city_spinner)
     public void selectCity(View view) {
@@ -175,7 +183,10 @@ public class CreateServiceActivity extends AppCompatActivity
     }
     @Override
     public void onTimeSet(TimePicker timePicker, int hour, int minute) {
-        timeEditText.setText(hour + ":" + minute);
+        if(whichPicker.equals("from time picker"))
+            fromEditText.setText(hour + ":" + minute);
+        if(whichPicker.equals("to time picker"))
+            toEditText.setText(hour + ":" + minute);
     }
 
 
@@ -184,7 +195,8 @@ public class CreateServiceActivity extends AppCompatActivity
         String jobSelected = jobSpinner.getSelectedItem().toString();
         String descriptionText = descriptionEditText.getText().toString().trim();
         String dateText = dateEditText.getText().toString();
-        String timeText = timeEditText.getText().toString();
+        String fromTimeText = fromEditText.getText().toString();
+        String toTimeText = toEditText.getText().toString();
         String cityText = citySpinner.getSelectedItem().toString();
         String neighborText = neighborSpinner.getSelectedItem().toString();
         int buildingText = Integer.parseInt(buildingEditText.getText().toString());
@@ -199,34 +211,29 @@ public class CreateServiceActivity extends AppCompatActivity
                     Toast.LENGTH_SHORT).show();
             return false;
         }
-        if(timeText.isEmpty()) {
-            Toast.makeText(CreateServiceActivity.this, "Please enter a time",
+        if(fromTimeText.isEmpty()) {
+            Toast.makeText(CreateServiceActivity.this, "Please enter a start from time",
                     Toast.LENGTH_SHORT).show();
             return false;
         }
-        if(timeText.isEmpty()) {
-            Toast.makeText(CreateServiceActivity.this, "Please enter a time",
+        if(toTimeText.isEmpty()) {
+            Toast.makeText(CreateServiceActivity.this, "Please enter a to time",
                     Toast.LENGTH_SHORT).show();
             return false;
         }
-        if(timeText.isEmpty()) {
-            Toast.makeText(CreateServiceActivity.this, "Please enter a time",
-                    Toast.LENGTH_SHORT).show();
+        if(toTimeText.equals(fromTimeText)) {
+            Toast.makeText(CreateServiceActivity.this, "The from and to time cannot be" +
+                            "the same", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if(timeText.isEmpty()) {
-            Toast.makeText(CreateServiceActivity.this, "Please enter a time",
-                    Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
         if(descriptionText.isEmpty())
             descriptionEditText.setText("No description");
 
         jobTitle = jobSelected.split(",")[0];
         description = descriptionText;
         date = dateText;
-        time = timeText;
+        startTime = fromTimeText;
+        endTime = toTimeText;
         city = cityText;
         building = buildingText;
         neighbor = neighborText;
@@ -327,7 +334,8 @@ public class CreateServiceActivity extends AppCompatActivity
         service.setJob(jobTitle);
         service.setDescription(description);
         service.setDate(date);
-        service.setTime(time);
+        service.setStartTime(startTime);
+        service.setEndTime(endTime);
         service.setStatus("pending");
         service.setProvider_id(providerID);
         service.setCity(city);

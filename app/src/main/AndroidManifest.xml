@@ -27,6 +27,7 @@
         <activity android:name=".RequesterHomeActivity" />
         <activity android:name=".CreateServiceActivity" />
 
+
     </application>
 
 </manifest>
