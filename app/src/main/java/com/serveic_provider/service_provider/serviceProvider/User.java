@@ -1,6 +1,7 @@
 package com.serveic_provider.service_provider.serviceProvider;
 
 public class User {
+	private String uid;
 	private int is_baned;
 	private String phone_number;
 	private String type;
@@ -14,6 +15,7 @@ public class User {
 	private int rate=0;
     private int id = NO_IMAGE_PROVIDED;
     private static final int NO_IMAGE_PROVIDED =-1;
+	private boolean isSelected ;
 
     public User(int is_baned, String phone_number, String type, String profession, String serviceCounter) {
 
@@ -145,4 +147,20 @@ public class User {
     public void setId(int id) {
         this.id = id;
     }
+
+	public boolean isSelected() {
+		return isSelected;
+	}
+
+	public void setSelected(boolean selected) {
+		isSelected = selected;
+	}
+
+	public void setUid(String uid) {
+		this.uid = uid;
+	}
+	public String getUid(){
+    	return uid;
+	}
+
 }

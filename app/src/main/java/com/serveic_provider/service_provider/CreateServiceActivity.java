@@ -39,12 +39,13 @@ import butterknife.OnItemSelected;
 public class CreateServiceActivity extends AppCompatActivity
         implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
-    private static final String TAG = "CreateServiceActivity";
+
+    Intent listProviderIntent;
 
     String requsterID;
-    String providerID;
     String serviceID;
 
+    Service service = new Service();
     Job job;
     String jobTitle;
 
@@ -93,44 +94,33 @@ public class CreateServiceActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_service);
         ButterKnife.bind(this);
-
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            //String providerID_profession = extras.getString("providerID_profession");
-            //String[] providerID_profession_array = providerID_profession.split("_");
-            //providerID = providerID_profession_array[0];
+            //getting the selected profession
             profession = extras.getString("profession");
-            Log.v("extras", profession);
-            //The key argument here must match that used in the other activity
-            //tv.setText(providerID);
-
+            Log.v("extras1", profession);
         }//end of checking extras!=null
-
-        JOBS.add(PROMPT_FOR_JOB);
+        //appends all jobs of the selected profession
         readJobsFromFBDB();
-
-        // Putting the job array in the string.xml into the spinner
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, JOBS);
-        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        jobSpinner.setAdapter(adapter2);
-
-
     }//end of create
+
     @OnClick(R.id.create_button)
     public void createService(View view) {
         if(validateCreateForm()) {
-               // attributes from UI are in validate method
+           // attributes from UI are in validate method
 
-                // Service is  inserted into provider_service inside this method
-                insertRequesterService();
-
-                Toast.makeText(CreateServiceActivity.this, "Service has been created",
-                        Toast.LENGTH_SHORT).show();
-                updateUI();
+            // Service is  inserted into requster_service inside this method
+            buildService();
+            Intent intent = new Intent(this, ListProvidersActivity.class);
+            final Bundle bundle = new Bundle();
+            bundle.putSerializable("service",service);
+            intent.putExtras(bundle);
+            this.startActivity(intent);
+            /*Toast.makeText(CreateServiceActivity.this, "Service has been created",
+                    Toast.LENGTH_SHORT).show();*/
         }
 
     }
-
     @OnClick(R.id.date_edit_text)
     public void selectDate(View view) {
         DialogFragment datePicker = new DatePickerFragment();
@@ -150,6 +140,7 @@ public class CreateServiceActivity extends AppCompatActivity
     }
     @OnItemSelected(R.id.city_spinner)
     public void selectCity(View view) {
+        //temp array to hold all neighbors to the selected city
         String[] tempArray = new String[1];
         String city = citySpinner.getSelectedItem().toString();
         Log.e("dfs",city);
@@ -161,13 +152,14 @@ public class CreateServiceActivity extends AppCompatActivity
             else if(city.equals("Riyadh")) {
                 tempArray = getResources().getStringArray(R.array.riyadh_neighbors);
             }
+            else{
+                tempArray[0] = "not specified yet";
+            }
 
             ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
                     this, android.R.layout.simple_spinner_item, tempArray );
             neighborSpinner.setAdapter(spinnerArrayAdapter);
         }
-
-
     }
 
 
@@ -192,42 +184,56 @@ public class CreateServiceActivity extends AppCompatActivity
 
 
     public boolean validateCreateForm() {
-        String jobSelected = jobSpinner.getSelectedItem().toString();
-        String descriptionText = descriptionEditText.getText().toString().trim();
-        String dateText = dateEditText.getText().toString();
-        String fromTimeText = fromEditText.getText().toString();
-        String toTimeText = toEditText.getText().toString();
-        String cityText = citySpinner.getSelectedItem().toString();
-        String neighborText = neighborSpinner.getSelectedItem().toString();
+
+        String jobSelected = jobSpinner.getSelectedItem().toString().toLowerCase();
+        String descriptionText = descriptionEditText.getText().toString().trim().toLowerCase();
+        String dateText = dateEditText.getText().toString().toLowerCase();
+        String fromTimeText = fromEditText.getText().toString().toLowerCase();
+        String toTimeText = toEditText.getText().toString().toLowerCase();
+        String cityText = citySpinner.getSelectedItem().toString().toLowerCase();
+        String neighborText = neighborSpinner.getSelectedItem().toString().toLowerCase();
         int buildingText = Integer.parseInt(buildingEditText.getText().toString());
 
-        if(jobSelected.equals(PROMPT_FOR_JOB)) {
+        if (jobSelected.equals(PROMPT_FOR_JOB)) {
             Toast.makeText(CreateServiceActivity.this, "Please select a job",
                     Toast.LENGTH_SHORT).show();
             return false;
         }
-        if(dateText.isEmpty()) {
+        if (dateText.isEmpty()) {
             Toast.makeText(CreateServiceActivity.this, "Please enter a date",
                     Toast.LENGTH_SHORT).show();
             return false;
         }
-        if(fromTimeText.isEmpty()) {
+        if (fromTimeText.isEmpty()) {
             Toast.makeText(CreateServiceActivity.this, "Please enter a start from time",
                     Toast.LENGTH_SHORT).show();
             return false;
         }
-        if(toTimeText.isEmpty()) {
+        if (toTimeText.isEmpty()) {
             Toast.makeText(CreateServiceActivity.this, "Please enter a to time",
                     Toast.LENGTH_SHORT).show();
             return false;
         }
-        if(toTimeText.equals(fromTimeText)) {
+        if (toTimeText.equals(fromTimeText)) {
             Toast.makeText(CreateServiceActivity.this, "The from and to time cannot be" +
-                            "the same", Toast.LENGTH_SHORT).show();
+                    "the same", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if(descriptionText.isEmpty())
+        if (cityText.isEmpty()) {
+            Toast.makeText(CreateServiceActivity.this, "please enter a city", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (neighborText.isEmpty()) {
+            Toast.makeText(CreateServiceActivity.this, "please enter a neighbor", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (buildingText==0) {
+            Toast.makeText(CreateServiceActivity.this, "please enter a building number", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (descriptionText.isEmpty()){
             descriptionEditText.setText("No description");
+        }
 
         jobTitle = jobSelected.split(",")[0];
         description = descriptionText;
@@ -241,103 +247,17 @@ public class CreateServiceActivity extends AppCompatActivity
         return true;
     }
 
-    public void insertRequesterService(){
-        //auth table reference
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();;
-        //user reference
-        FirebaseUser FBuser;
-        //requster_service reference
-        final FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
-        requesterServicesRef = mDatabase.getReference("requester_services");
-        //get user
-        FBuser = mAuth.getCurrentUser();
-        //get id
-        requsterID = FBuser.getUid();
-        //user profile reference
-        userProfileRef_serviceCounter = mDatabase.getReference("user_profiles").child(requsterID).child("serviceCounter");
-        //service counter listener
-        userProfileRef_serviceCounter.addListenerForSingleValueEvent(new ValueEventListener() {
-            String serviceCounter;
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                serviceCounter = dataSnapshot.getValue(String.class);
-                //initiate new service object
-                Service service = buildRequesterService(requsterID);
-                //insert service to user id in the requster_services node
-                requesterServicesRef.child(requsterID).child(serviceCounter).setValue(service)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            Integer intServiceCounter = Integer.parseInt(serviceCounter) + 1;
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                userProfileRef_serviceCounter.setValue(intServiceCounter+"");
-                                insertProviderService(providerID, intServiceCounter-1+"");
-                                Log.d("tag", "writeUserType:success");
-                            }
-                        });//end insertion refrence
-            }//end of counter on data change listner
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });//end of counter listner
-
-
-    }//end of inserting service
-
-    public void insertProviderService(final String providerID, final String requester_serviceCounter){
-        //auth table reference
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();;
-        //user reference
-        FirebaseUser FBuser;
-        //requster_service reference
-        final FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
-        providerServicesRef = mDatabase.getReference("provider_services");
-        //get user
-        FBuser = mAuth.getCurrentUser();
-        //get id
-        requsterID = FBuser.getUid();
-        // set the serviceID
-        serviceID = requsterID + "_" + requester_serviceCounter;
-        //user profile reference
-        userProfileRef_serviceCounter = mDatabase.getReference("user_profiles").child(providerID).child("serviceCounter");
-        //service counter listener
-        userProfileRef_serviceCounter.addListenerForSingleValueEvent(new ValueEventListener() {
-            String serviceCounter;
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                serviceCounter = dataSnapshot.getValue(String.class);
-                //initiate new service object
-                //Service service = buildProviderService(providerID);
-                //insert service to user id in the requster_services node
-                providerServicesRef.child(providerID).child(serviceCounter).setValue(serviceID)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            Integer intServiceCounter = Integer.parseInt(serviceCounter) + 1;
-                            @Override
-                            public void onSuccess(Void aVoid) {userProfileRef_serviceCounter.setValue(intServiceCounter+"");
-                                Log.d("tag", "writeUserType:success");
-                            }
-                        });//end insertion refrence
-            }//end of counter on data change listner
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });//end of counter listner
-
-
-    }//end of inserting service
-
-    public Service buildRequesterService(String userId){
-        //service no values
-        Service service = new Service();
+    public Service buildService(){
         //setting all values here
+        Log.w("hello",profession);
         service.setJob(jobTitle);
+        service.setProfession(profession);
         service.setDescription(description);
         service.setDate(date);
         service.setStartTime(startTime);
         service.setEndTime(endTime);
         service.setStatus("pending");
-        service.setProvider_id(providerID);
+        service.setProvider_id("none");
         service.setCity(city);
         service.setBuilding(building);
         service.setNeighbor(neighbor);
@@ -345,6 +265,9 @@ public class CreateServiceActivity extends AppCompatActivity
     }
 
     public void readJobsFromFBDB() {
+        //add string to the jobs list
+        JOBS.add(PROMPT_FOR_JOB);
+
         // Getting the user_profiles node
         final FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
         professionJobsRef = mDatabase.getReference("profession_jobs/" + profession);
@@ -364,17 +287,20 @@ public class CreateServiceActivity extends AppCompatActivity
             @Override
             public void onCancelled (DatabaseError databaseError){
                 // Getting Post failed, log a message
-                Log.w(TAG, "loadJobs:onCancelled", databaseError.toException());
+                Log.w("loadJobsError", "loadJobs:onCancelled", databaseError.toException());
 
                 // ...
             }
         };
         // Adding the listener to the node so that it executes the above methods
         professionJobsRef.addListenerForSingleValueEvent(JobsListener);
+
+        // Putting the job array in the string.xml into the spinner
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, JOBS);
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        jobSpinner.setAdapter(adapter2);
     }
 
-    public void updateUI() {
-        startActivity(new Intent(CreateServiceActivity.this, ListProvidersActivity.class));
-    }
+
 
 }

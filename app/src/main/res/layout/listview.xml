@@ -16,53 +16,52 @@
         android:id="@+id/text_container"
         android:layout_width="match_parent"
         android:layout_height="@dimen/list_item_height"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
         android:layout_toRightOf="@id/image"
+        android:background="@null"
         android:orientation="vertical"
-        android:paddingLeft="16dp"
-        android:background="#bbb">
+        android:paddingLeft="16dp">
 
         <TextView
             android:id="@+id/name_text_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1.5"
+            android:text="Reuest type"
             android:textAppearance="?android:textAppearanceMedium"
             android:textColor="@android:color/black"
-            android:textStyle="bold"
-            android:text="Reuest type" />
+            android:textStyle="bold" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="6dp"
-        android:layout_weight="1"
-        android:orientation="horizontal"
-        android:paddingLeft="16dp"
-        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:paddingLeft="16dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:textAppearance="?android:textAppearanceSmall"
-            android:textColor="@android:color/black"
-            tools:text="Price: "  />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:textAppearance="?android:textAppearanceSmall"
+                android:textColor="@android:color/black"
+                tools:text="Price: " />
 
-        <TextView
-            android:id="@+id/ServicePrice"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:textAppearance="?android:textAppearanceSmall"
-            android:textColor="@android:color/black"
-            tools:text="11" />
+            <TextView
+                android:id="@+id/ServicePrice"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:textAppearance="?android:textAppearanceSmall"
+                android:textColor="@android:color/black"
+                tools:text="11" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:textAppearance="?android:textAppearanceSmall"
-            android:textColor="@android:color/black"
-            tools:text=" SAR" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:textAppearance="?android:textAppearanceSmall"
+                android:textColor="@android:color/black"
+                tools:text=" SAR" />
 
 
         </LinearLayout>
@@ -73,34 +72,33 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:textSize="12sp"
+            android:text="Small description about the service"
             android:textColor="@android:color/black"
-            android:text="Small description about the service" />
+            android:textSize="12sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal"
-            android:paddingLeft="16dp"
-            >
+            android:paddingLeft="16dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:paddingRight="5dp"
-                android:textSize="12sp"
+                android:text="From"
                 android:textColor="@android:color/black"
-                android:text="From" />
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/from"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:paddingRight="5dp"
-                android:textSize="12sp"
+                android:text="username"
                 android:textColor="@android:color/black"
-                android:text="username" />
+                android:textSize="12sp" />
 
 
             <RatingBar
@@ -108,13 +106,12 @@
                 style="?android:attr/ratingBarStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
-                android:numStars="5"
-                android:rating="2.5"
-                android:stepSize="0.5"
-
                 android:layout_marginBottom="5dp"
-                />
+                android:numStars="5"
+                android:paddingLeft="5dp"
+                android:rating="2.5"
+
+                android:stepSize="0.5" />
         </LinearLayout>
     </LinearLayout>
 

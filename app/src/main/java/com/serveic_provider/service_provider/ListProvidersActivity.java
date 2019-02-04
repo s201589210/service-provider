@@ -9,7 +9,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -18,73 +20,193 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.serveic_provider.service_provider.adapters.ProviderAdaptor;
+import com.serveic_provider.service_provider.adapters.multSelcProvAdaptor;
+import com.serveic_provider.service_provider.serviceProvider.Service;
 import com.serveic_provider.service_provider.serviceProvider.User;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+
 public class ListProvidersActivity extends AppCompatActivity {
+
+
     private static final String TAG = "ListProvidersActivity";
-    final ArrayList<User> professionProviderList = new ArrayList<User>();
+    ArrayList<User> providerList = new ArrayList<User>();
+    ArrayList<String> selectedProviders = new ArrayList<String>();
+    multSelcProvAdaptor adapter;
+
     String name;
     String company;
     String location;
     String profession;
     String city;
+    Service service;
+    String requsterID;
+    String providerID;
+    String serviceID;
+
+    DatabaseReference requesterServicesRef;
+    DatabaseReference providerServicesRef;
+    DatabaseReference userProfileRef_serviceCounter;
     DatabaseReference locationRef;
     DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+
+    @BindView(R.id.create_button)
+    Button createButton;
+
     //----------------------------------------------------------///
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_providers);
+        Log.v("onCreate","222");
         //get information based with last activity
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            profession = extras.getString("profession");
-            //The key argument here must match that used in the other activity
-            //auth table reference
-            FirebaseAuth mAuth = FirebaseAuth.getInstance();
-            ;
-            //user reference
-            FirebaseUser FBuser;
-            //get user
-            FBuser = mAuth.getCurrentUser();
-            String requsterID = FBuser.getUid();
-            //requster_location reference
-            final FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
-            locationRef = mDatabase.getReference().child("user_profiles").child(requsterID).child("location");
-            //location listner
-            locationRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    location = dataSnapshot.getValue(String.class);
-                    buildList(location);
-                    Log.v("potato","we are in the location listner");
-                }
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                }
-            });//end of getting location
+            //getting the service of the intent(createService)
+             service = (Service)extras.getSerializable("service");
+             Log.v("extraPass","222");
+            //build the providers list
+            buildList(service.getCity());
         }//end of checking extras!=null
 
-       final Button Btn = (Button) findViewById(R.id.slect_button);
-
+       final Button Btn = (Button) findViewById(R.id.create_button);
         Btn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                startActivity(new Intent(ListProvidersActivity.this, MyServicesActivity.class));
+                //insert the service to the requester node
+                insertRequesterService();
+
+
+                Toast.makeText(ListProvidersActivity.this, "created successfully ",
+                        Toast.LENGTH_SHORT).show();
+
+                startActivity(new Intent(ListProvidersActivity.this, RequesterHomeActivity.class));
+
+                //set the provider id;
+                //insertRequesterService();
             }
         });
 
 
+        ListView listView = (ListView)findViewById(R.id.lists);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                User model = providerList.get(i);
+                if (model.isSelected())
+                    model.setSelected(false);
+                else
+                    model.setSelected(true);
 
+                providerList.set(i, model);
+
+
+                //now update adapter
+                adapter.updateRecords(providerList);
+
+            }
+        });
 
     }//on create method
+    //insert service to requester
+    public void insertRequesterService(){
+        //auth table reference
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();;
+        //user reference
+        FirebaseUser FBuser;
+        //requster_service reference
+        final FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
+        requesterServicesRef = mDatabase.getReference("requester_services");
+        //get user
+        FBuser = mAuth.getCurrentUser();
+        //get id
+        requsterID = FBuser.getUid();
+        //user profile reference
+        userProfileRef_serviceCounter = mDatabase.getReference("user_profiles").child(requsterID).child("serviceCounter");
+        //service counter listener
+        userProfileRef_serviceCounter.addListenerForSingleValueEvent(new ValueEventListener() {
+            String serviceCounter;
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                serviceCounter = dataSnapshot.getValue(String.class);
+                //setting the service fields
+                service.setRequester_id(requsterID);
+                //insert service to user id in the requester_services node
+                requesterServicesRef.child(requsterID).child(serviceCounter).setValue(service)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            Integer intServiceCounter = Integer.parseInt(serviceCounter) + 1;
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                userProfileRef_serviceCounter.setValue(intServiceCounter+"");
+
+                                String tempCounter = intServiceCounter-1+"";
+                                //loop for all selected providers
+                                //if the user is selected insert service to his node
+                                for(User u : providerList){
+                                    if(u.isSelected())
+                                    insertProviderService(u.getUid(), tempCounter);
+                                }
+
+
+                                Log.d("tag", "writeUserType:success");
+                            }
+                        });//end insertion refrence
+            }//end of counter on data change listner
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });//end of counter listner
+    }//end of inserting service
+    //inserts the service to the selected providers
+    public void insertProviderService(final String providerID, final String requester_serviceCounter){
+        //auth table reference
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();;
+        //user reference
+        FirebaseUser FBuser;
+        //requster_service reference
+        final FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
+        providerServicesRef = mDatabase.getReference("provider_services");
+        //get user
+        FBuser = mAuth.getCurrentUser();
+        //get id
+        requsterID = FBuser.getUid();
+        // set the serviceID
+        serviceID = requsterID + "_" + requester_serviceCounter;
+        //user profile reference
+        userProfileRef_serviceCounter = mDatabase.getReference("user_profiles").child(providerID).child("serviceCounter");
+        //service counter listener
+        userProfileRef_serviceCounter.addListenerForSingleValueEvent(new ValueEventListener() {
+            String serviceCounter;
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                serviceCounter = dataSnapshot.getValue(String.class);
+                //Service service = buildProviderService(providerID);
+
+                //insert service to user id in the requster_services node
+                providerServicesRef.child(providerID).child(serviceCounter).setValue(serviceID)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            Integer intServiceCounter = Integer.parseInt(serviceCounter) + 1;
+                            @Override
+                            public void onSuccess(Void aVoid) {userProfileRef_serviceCounter.setValue(intServiceCounter+"");
+                                Log.d("tag", "writeUserType:success");
+                            }
+                        });//end insertion refrence
+            }//end of counter on data change listner
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });//end of counter listner
+    }//end of inserting service
+
+
+
     //appends provider to view
     public void buildList(String location) {
-
         //refernce to the profession providers
         DatabaseReference ProfissionRef = rootRef.child("profession_location_provider");
-        DatabaseReference professionLocationRef = ProfissionRef.child(profession).child(location);
+        DatabaseReference professionLocationRef = ProfissionRef.child(service.getProfession()).child(location);
         //getting providers of  location_Profession
         professionLocationRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -93,30 +215,33 @@ public class ListProvidersActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     String providerID = snapshot.getValue(String.class);
                     Log.v("potato", providerID);
-                        addProvInfoToList(providerID);
+                    //add providers to providerList array
+                    addProvInfoToList(providerID);
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
-
     }// end of building list
     //get the provider profile information and insert them to the list
-    public void addProvInfoToList(final String providerID){
+    public void addProvInfoToList( final String providerID){
+
         //refernce to the user profile
         DatabaseReference profilesRef = rootRef.child("user_profiles");
         DatabaseReference providerProfileRef = profilesRef.child(providerID);
-
         providerProfileRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 //construct new user === firebase user
                 User user = dataSnapshot.getValue(User.class);
-                Log.v("addingInfo","");
-                buildItem(user,providerID);
+                user.setUid(providerID);
+                providerList.add(user);
+                Log.v("addingInfo",providerList.get(0).getName());
+                //display the list
+                setList();
+                //buildItem(user,providerID);
             }
 
             @Override
@@ -124,25 +249,33 @@ public class ListProvidersActivity extends AppCompatActivity {
 
             }
         });
-
     }//end of adding item to list
+    public void setList(){
+        ListView listView = (ListView) findViewById(R.id.lists);
+        adapter = new multSelcProvAdaptor(ListProvidersActivity.this, providerList);
+        listView.setAdapter(adapter);
+       // listView.setClickable(true);
+    }
+
+
+
     //add the provider(user) to an item
     public void buildItem(final User user,final String providerID){
         ListView listView = (ListView) findViewById(R.id.lists);
-        professionProviderList.add(user);
+        providerList.add(user);
         // Create an {@link WordAdapter}, whose data source is a list of {@link Word}s. The
         // adapter knows how to create list items for each item in the list.
-        ProviderAdaptor adapter = new ProviderAdaptor(ListProvidersActivity.this,professionProviderList, R.color.colorPrimary);
+        ProviderAdaptor adapter = new ProviderAdaptor(ListProvidersActivity.this, providerList, R.color.colorPrimary);
         // Find the {@link ListView} object in the view hierarchy of the {@link Activity}.
         // There should be a {@link ListView} with the view ID called list, which is declared in the
         // activity_numbers.xml layout file.
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.v("helloVetnam", ": ");
-                Intent createService = new Intent(ListProvidersActivity.this,CreateServiceActivity.class);
-                createService.putExtra("providerID_profession", providerID+"_"+ profession);
-                ListProvidersActivity.this.startActivity(createService);
+
+                /*Intent createService = new Intent(ListProvidersActivity.this,CreateServiceActivity.class);
+                createService.putExtra("providerID_profession", providerID+"_"+ service.getProfession());
+                ListProvidersActivity.this.startActivity(createService);*/
             }
         });
         // Make the {@link ListView} use the {@link WordAdapter} we created above, so that the

@@ -7,9 +7,6 @@
 
 
 
-
-
-
     <SearchView
         android:id="@+id/search_viewr"
         android:layout_width="match_parent"
@@ -33,7 +30,7 @@
 
 
     <Button
-        android:id="@+id/slect_button"
+        android:id="@+id/create_button"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -41,7 +38,7 @@
         android:textColor="@android:color/black"
         android:textStyle="bold"
         android:padding="10dp"
-        android:text="CREATE REQUEST"
+        android:text="Create Request"
         android:layout_marginBottom="5dp"
         android:layout_gravity="center"/>
 
