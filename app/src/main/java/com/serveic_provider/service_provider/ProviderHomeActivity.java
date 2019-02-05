@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
@@ -33,6 +34,11 @@ public class ProviderHomeActivity extends AppCompatActivity {
 
         setTitle("Service Provider");
 
+        buildList();
+
+    }
+
+    private void buildList() {
         //auth table reference
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
@@ -44,7 +50,8 @@ public class ProviderHomeActivity extends AppCompatActivity {
         //provider_services reference
         mDatabase = FirebaseDatabase.getInstance();
         providerServicesRef = mDatabase.getReference().child("provider_services").child(userId);
-        //location listner
+
+        //provider_services listener
         providerServicesRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -64,8 +71,6 @@ public class ProviderHomeActivity extends AppCompatActivity {
             }
         });//end of getting location
 
-        //display services loaded in pendingServices
-        displayPendingServices();
     }
 
     private void addServiceToPendingList(String requesterId, String serviceNumber) {
@@ -78,8 +83,12 @@ public class ProviderHomeActivity extends AppCompatActivity {
                 //service object
                 Service service = dataSnapshot.getValue(Service.class);
                 //adding the service to the ArrayList
-                if(service.getProvider_id() != "" || service.getProvider_id() != null)
+                Log.v("MyTag",service.getDescription());
+                if(service.getProvider_id().equals("none")){
                     pendingServices.add(service);
+                    //display service
+                    setList();
+                }
             }
 
             @Override
@@ -87,6 +96,13 @@ public class ProviderHomeActivity extends AppCompatActivity {
             }
         });//end of adding service to pending list
 
+    }
+
+    private void setList() {
+        ListView pendingServicesListView = findViewById(R.id.provider_pending_services_listview);
+        ProviderServiceAdapter adapter = new ProviderServiceAdapter(this, pendingServices);
+        pendingServicesListView.setAdapter(adapter);
+        pendingServicesListView.setClickable(true);
     }
 
 

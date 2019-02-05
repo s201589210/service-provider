@@ -52,7 +52,7 @@ public class ProviderServiceAdapter extends ArrayAdapter<Service> {
         TextView numberTextView = (TextView) listItemView.findViewById(R.id.item_requester_name);
         // Get the version number from the current AndroidFlavor object and
         // set this text on the number TextView
-        numberTextView.setText(currentService.getProvider_id());
+        numberTextView.setText(currentService.getProvider_id()+"");
 
         TextView PriceTextView = (TextView) listItemView.findViewById(R.id.item_date);
         // Get the version number from the current AndroidFlavor object and
