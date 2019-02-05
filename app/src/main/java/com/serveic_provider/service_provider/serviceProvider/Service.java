@@ -35,7 +35,7 @@ public class Service implements Serializable {
 		this.rate = rate;
 		this.status = status;
 	}
-
+	public Service(String provider_id){this.provider_id = provider_id;}
 	public void create() { }
 
 
