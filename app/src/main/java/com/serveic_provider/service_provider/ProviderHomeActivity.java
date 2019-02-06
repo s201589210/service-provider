@@ -25,6 +25,7 @@ public class ProviderHomeActivity extends AppCompatActivity {
 
     DatabaseReference providerServicesRef;
     FirebaseDatabase mDatabase;
+    String userId;
     ArrayList<Service> pendingServices = new ArrayList<Service>();
 
     @Override
@@ -46,7 +47,7 @@ public class ProviderHomeActivity extends AppCompatActivity {
         FirebaseUser FBuser;
         //get user
         FBuser = mAuth.getCurrentUser();
-        final String userId = FBuser.getUid();
+        userId = FBuser.getUid();
         //provider_services reference
         mDatabase = FirebaseDatabase.getInstance();
         providerServicesRef = mDatabase.getReference().child("provider_services").child(userId);
@@ -83,10 +84,14 @@ public class ProviderHomeActivity extends AppCompatActivity {
                 //service object
                 Service service = dataSnapshot.getValue(Service.class);
                 //adding the service to the ArrayList
+                //if the service has no provider assigned yet
                 if(service.getProvider_id().equals("none")){
-                    pendingServices.add(service);
-                    //display service
-                    setList();
+                    //if the provider has not decline the service before (provider's id is in the potential providers ids)
+                    if(service.getPotentialProvidersIds().contains(userId)) {
+                        //then display the service for hte provider
+                        pendingServices.add(service);
+                        setList();
+                    }
                 }
             }
 

@@ -3,6 +3,7 @@ package com.serveic_provider.service_provider.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,14 @@ public class ProviderServiceAdapter extends ArrayAdapter<Service> {
     DatabaseReference typeRef;
     FirebaseDatabase mDatabase;
     String requesterName = "";
+
+    //auth table reference
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    //user reference
+    FirebaseUser FBuser= mAuth.getCurrentUser();
+    final String userId = FBuser.getUid();
+
+    //requster_location reference
 
     TextView jobTextView;
     TextView descriptionTextView;
@@ -82,38 +91,7 @@ public class ProviderServiceAdapter extends ArrayAdapter<Service> {
         acceptButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //auth table reference
-                FirebaseAuth mAuth = FirebaseAuth.getInstance();
-
-                //user reference
-                FirebaseUser FBuser;
-                //get user
-                FBuser = mAuth.getCurrentUser();
-                final String userId = FBuser.getUid();
-                //requster_location reference
-                mDatabase = FirebaseDatabase.getInstance();
-                typeRef = mDatabase.getReference().child("provider_services").child(userId).child(position+"");
-                //location listner
-                typeRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        //serviceId = requester ID + service number
-                        String serviceId = dataSnapshot.getValue(String.class);
-                        String requesterId = serviceId.substring(0,serviceId.indexOf("_"));
-                        String serviceNumber = serviceId.substring(serviceId.indexOf("_")+1);
-                        //assigns he provider to the service
-                        assignServiceToProvider(requesterId, serviceNumber);
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                    }
-
-                    private void assignServiceToProvider(String requesterId, String serviceNumber) {
-                        DatabaseReference serviceRef = mDatabase.getReference().child("requester_services").child(requesterId).child(serviceNumber);
-                        serviceRef.child("provider_id").setValue(userId);
-                    }
-                });//end of getting location
+                assignServiceToProvider(currentService.getRequester_id(), currentService.getService_id());
                 finalListItemView.setVisibility(View.GONE);
 
             }
@@ -123,16 +101,34 @@ public class ProviderServiceAdapter extends ArrayAdapter<Service> {
         declineButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //auth table reference
-                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                /*final DatabaseReference potentialProvidersRef = FirebaseDatabase.getInstance().getReference().child("requester_services").child(currentService.getRequester_id()).child(currentService.getRequester_id()).child("potentialProvidersIds");
+                potentialProvidersRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        int counter =0;
+                        Log.v("MyTag",counter+"");
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                            String potentialProviderId = snapshot.getValue(String.class);
+                            Log.v("MyTag",counter+"");
+                            if (potentialProviderId.equals(userId)){
+                                removeProvider(counter,potentialProvidersRef);
+                                return;
+                            }
+                            counter++;
+                        }
+                        Log.v("MyTag",counter+"");
+                    }
 
-                //user reference
-                FirebaseUser FBuser;
-                //get user
-                FBuser = mAuth.getCurrentUser();
-                final String userId = FBuser.getUid();
-                //remove value so it does not show again
-                //mDatabase.getReference().child("provider_services").child(userId).child(position+"").removeValue();
+                    private void removeProvider(int counter, DatabaseReference potentialProvidersRef) {
+                        Log.v("MyTag",counter+"");
+                        potentialProvidersRef.child(counter+"").removeValue();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
+
+                });//end of getting requester name*/
                 makeItemsInvisible();
 
             }
@@ -142,12 +138,18 @@ public class ProviderServiceAdapter extends ArrayAdapter<Service> {
         undoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //currentService.getPotentialProvidersIds().add(userId);
                 makeItemsVisible();
             }
         });
 
         return listItemView;
 
+    }
+
+    private void assignServiceToProvider(String requesterId, String serviceNumber) {
+        DatabaseReference serviceRef = FirebaseDatabase.getInstance().getReference().child("requester_services").child(requesterId).child(serviceNumber);
+        serviceRef.child("provider_id").setValue(userId);
     }
 
     private void makeItemsVisible() {

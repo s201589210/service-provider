@@ -19,6 +19,7 @@ public class Service implements Serializable {
 	private String startTime;
 	private String endTime;
 	private int providersCounter;
+	private String service_id;
 	private int id = NO_IMAGE_PROVIDED;
 	private static final int NO_IMAGE_PROVIDED =-1;
 	private ArrayList<String> potentialProvidersIds;
@@ -90,5 +91,13 @@ public class Service implements Serializable {
 
 	public void setPotentialProvidersIds(ArrayList<String> potentialProvidersIds) {
 		this.potentialProvidersIds = potentialProvidersIds;
+	}
+
+	public String getService_id() {
+		return service_id;
+	}
+
+	public void setService_id(String service_id) {
+		this.service_id = service_id;
 	}
 }

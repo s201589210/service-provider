@@ -135,7 +135,7 @@ public class ListProvidersActivity extends AppCompatActivity {
                 //setting the service fields
                 service.setRequester_id(requsterID);
                 service.setPotentialProvidersIds(providerIdList);
-                Log.v("MyTag",providerIdList.toString());
+                service.setService_id(serviceCounter);
                 //insert service to user id in the requester_services node
                 requesterServicesRef.child(requsterID).child(serviceCounter).setValue(service)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
