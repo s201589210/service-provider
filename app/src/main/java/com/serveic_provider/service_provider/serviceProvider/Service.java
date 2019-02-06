@@ -1,6 +1,8 @@
 package com.serveic_provider.service_provider.serviceProvider;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+
 //note implementing serializable helps in moving object between content
 public class Service implements Serializable {
 	private String requester_id;
@@ -19,6 +21,7 @@ public class Service implements Serializable {
 	private int providersCounter;
 	private int id = NO_IMAGE_PROVIDED;
 	private static final int NO_IMAGE_PROVIDED =-1;
+	private ArrayList<String> potentialProvidersIds;
 
 
 
@@ -80,4 +83,12 @@ public class Service implements Serializable {
 
 	public boolean hasImage() { return id != NO_IMAGE_PROVIDED; }
 	public static int getNoImageProvided() { return NO_IMAGE_PROVIDED; }
+
+	public ArrayList<String> getPotentialProvidersIds() {
+		return potentialProvidersIds;
+	}
+
+	public void setPotentialProvidersIds(ArrayList<String> potentialProvidersIds) {
+		this.potentialProvidersIds = potentialProvidersIds;
+	}
 }

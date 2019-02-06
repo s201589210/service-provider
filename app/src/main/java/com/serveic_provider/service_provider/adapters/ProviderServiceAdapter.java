@@ -26,6 +26,18 @@ public class ProviderServiceAdapter extends ArrayAdapter<Service> {
     Context context;
     DatabaseReference typeRef;
     FirebaseDatabase mDatabase;
+    String requesterName = "";
+
+    TextView jobTextView;
+    TextView descriptionTextView;
+    TextView dateTextView;
+    TextView timeTextView;
+    TextView locationTextView;
+    TextView profissionTextView;
+    TextView requesterNameTextView;
+    Button acceptButton;
+    Button declineButton;
+    Button undoButton;
 
     public ProviderServiceAdapter(Activity context, ArrayList<Service> serviceArrayList) {
         super(context,0, serviceArrayList);
@@ -40,31 +52,32 @@ public class ProviderServiceAdapter extends ArrayAdapter<Service> {
                     R.layout.listview_item_pending_service, parent, false);
         }
 
-        // Get the {@link AndroidFlavor} object located at this position in the list
+        //declare views
+        undoButton = (Button) listItemView.findViewById(R.id.undo_button);
+        jobTextView = (TextView) listItemView.findViewById(R.id.item_job);
+        descriptionTextView = (TextView) listItemView.findViewById(R.id.item_description);
+        dateTextView = (TextView) listItemView.findViewById(R.id.item_date);
+        timeTextView = (TextView) listItemView.findViewById(R.id.item_time);
+        locationTextView = (TextView) listItemView.findViewById(R.id.item_location);
+        profissionTextView = (TextView) listItemView.findViewById(R.id.item_profission);
+        acceptButton = (Button) listItemView.findViewById(R.id.accept_service_button);
+        declineButton = (Button) listItemView.findViewById(R.id.decline_service_button);
+        requesterNameTextView = (TextView) listItemView.findViewById(R.id.item_requester_name);
+
         final Service currentService = (Service) getItem(position);
 
-        // Find the TextView in the list_item.xml layout with the ID version_name
-        TextView nameTextView = (TextView) listItemView.findViewById(R.id.item_job);
-        // Get the version name from the current AndroidFlavor object and
-        // set this text on the name TextView
-        nameTextView.setText(currentService.getJob());
-        // Find the TextView in the list_item.xml layout with the ID version_number
-        TextView numberTextView = (TextView) listItemView.findViewById(R.id.item_requester_name);
-        // Get the version number from the current AndroidFlavor object and
-        // set this text on the number TextView
-        numberTextView.setText(currentService.getProvider_id()+"");
+        //set requester name
+        setRequesterName(currentService.getRequester_id(), listItemView);
 
-        TextView PriceTextView = (TextView) listItemView.findViewById(R.id.item_date);
-        // Get the version number from the current AndroidFlavor object and
-        // set this text on the number TextView
-        PriceTextView.setText(currentService.getDate());
+        //set TextViews values
+        jobTextView.setText(currentService.getJob());
+        descriptionTextView.setText(currentService.getDescription());
+        dateTextView.setText(currentService.getDate());
+        timeTextView.setText(currentService.getStartTime()+" - " + currentService.getEndTime());
+        locationTextView.setText(currentService.getCity()+", "+ currentService.getNeighbor());
+        profissionTextView.setText("("+currentService.getProfession()+")");
 
-        TextView FromTextView = (TextView) listItemView.findViewById(R.id.item_location);
-        // Get the version number from the current AndroidFlavor object and
-        // set this text on the number TextView
-        FromTextView.setText(currentService.getCity()+"");
-
-        Button acceptButton = (Button) listItemView.findViewById(R.id.accept_service_button);
+        //set accept button value
         final View finalListItemView = listItemView;
         acceptButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,7 +119,7 @@ public class ProviderServiceAdapter extends ArrayAdapter<Service> {
             }
         });
 
-        Button declineButton = (Button) listItemView.findViewById(R.id.decline_service_button);
+        //set decline button value
         declineButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,15 +132,78 @@ public class ProviderServiceAdapter extends ArrayAdapter<Service> {
                 FBuser = mAuth.getCurrentUser();
                 final String userId = FBuser.getUid();
                 //remove value so it does not show again
-                mDatabase.getReference().child("provider_services").child(userId).child(position+"").removeValue();
-                finalListItemView.setVisibility(View.GONE);
+                //mDatabase.getReference().child("provider_services").child(userId).child(position+"").removeValue();
+                makeItemsInvisible();
 
             }
         });
-        // Return the whole list item layout (containing 2 TextViews and an ImageView)
-        // so that it can be shown in the ListView
+
+        //set undo button value
+        undoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                makeItemsVisible();
+            }
+        });
+
         return listItemView;
 
+    }
+
+    private void makeItemsVisible() {
+        jobTextView.setVisibility(View.VISIBLE);
+        descriptionTextView.setVisibility(View.VISIBLE);
+        dateTextView.setVisibility(View.VISIBLE);
+        timeTextView.setVisibility(View.VISIBLE);
+        locationTextView.setVisibility(View.VISIBLE);
+        profissionTextView.setVisibility(View.VISIBLE);
+        requesterNameTextView.setVisibility(View.VISIBLE);
+        acceptButton.setVisibility(View.VISIBLE);
+        declineButton.setVisibility(View.VISIBLE);
+
+        undoButton.setVisibility(View.INVISIBLE);
+    }
+
+    private void makeItemsInvisible() {
+        jobTextView.setVisibility(View.INVISIBLE);
+        descriptionTextView.setVisibility(View.INVISIBLE);
+        dateTextView.setVisibility(View.INVISIBLE);
+        timeTextView.setVisibility(View.INVISIBLE);
+        locationTextView.setVisibility(View.INVISIBLE);
+        profissionTextView.setVisibility(View.INVISIBLE);
+        requesterNameTextView.setVisibility(View.INVISIBLE);
+        acceptButton.setVisibility(View.INVISIBLE);
+        declineButton.setVisibility(View.INVISIBLE);
+
+        undoButton.setVisibility(View.VISIBLE);
+
+    }
+
+
+    //getting the requester name from the requester id
+    private void setRequesterName(String requester_id, final View listItemView) {
+        //auth table reference
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+        //user reference
+        FirebaseUser FBuser;
+        //get user
+        FBuser = mAuth.getCurrentUser();
+        final String userId = FBuser.getUid();
+        DatabaseReference userProfileRef = FirebaseDatabase.getInstance().getReference().child("user_profiles").child(requester_id).child("name");
+        //name listener
+        userProfileRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                requesterName = dataSnapshot.getValue(String.class);
+                requesterNameTextView.setText(requesterName+":");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+
+        });//end of getting requester name
     }
 
 

@@ -33,6 +33,7 @@ public class ListProvidersActivity extends AppCompatActivity {
 
     private static final String TAG = "ListProvidersActivity";
     ArrayList<User> providerList = new ArrayList<User>();
+    ArrayList<String> providerIdList = new ArrayList<String>();
     ArrayList<String> selectedProviders = new ArrayList<String>();
     multSelcProvAdaptor adapter;
 
@@ -100,6 +101,7 @@ public class ListProvidersActivity extends AppCompatActivity {
                     model.setSelected(true);
 
                 providerList.set(i, model);
+                providerIdList.add(model.getUid());
 
 
                 //now update adapter
@@ -132,6 +134,8 @@ public class ListProvidersActivity extends AppCompatActivity {
                 serviceCounter = dataSnapshot.getValue(String.class);
                 //setting the service fields
                 service.setRequester_id(requsterID);
+                service.setPotentialProvidersIds(providerIdList);
+                Log.v("MyTag",providerIdList.toString());
                 //insert service to user id in the requester_services node
                 requesterServicesRef.child(requsterID).child(serviceCounter).setValue(service)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {

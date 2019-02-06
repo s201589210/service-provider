@@ -83,7 +83,6 @@ public class ProviderHomeActivity extends AppCompatActivity {
                 //service object
                 Service service = dataSnapshot.getValue(Service.class);
                 //adding the service to the ArrayList
-                Log.v("MyTag",service.getDescription());
                 if(service.getProvider_id().equals("none")){
                     pendingServices.add(service);
                     //display service
