@@ -257,7 +257,7 @@ public class ListProvidersActivity extends AppCompatActivity {
         ListView listView = (ListView) findViewById(R.id.lists);
         adapter = new ProvAdaptor(ListProvidersActivity.this, providerList);
         listView.setAdapter(adapter);
-       // listView.setClickable(true);
+        listView.setClickable(true);
     }
 
 

@@ -12,12 +12,12 @@ public class User {
 	private String location;
 	private String serviceCounter = "0";
 	private String name;
+	private String lastName;
 	private int rate=0;
     private int id ;
 	private boolean isSelected ;
 
     public User(int is_baned, String phone_number, String type, String profession, String serviceCounter) {
-
 		this.is_baned = is_baned;
 		this.phone_number = phone_number;
 		this.type = type;
@@ -158,4 +158,11 @@ public class User {
     	return uid;
 	}
 
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 }

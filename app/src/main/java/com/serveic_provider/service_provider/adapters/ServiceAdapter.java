@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -21,8 +22,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.serveic_provider.service_provider.ProfileActivity;
 import com.serveic_provider.service_provider.R;
 import com.serveic_provider.service_provider.RateActivity;
+import com.serveic_provider.service_provider.serviceProvider.Profile;
 import com.serveic_provider.service_provider.serviceProvider.Service;
 import com.serveic_provider.service_provider.serviceProvider.User;
 
@@ -36,6 +39,7 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
     DatabaseReference userRef;
     DatabaseReference userRates;
 
+    String uid;
 
     TextView rateBtn;
     TextView provNameTextView;
@@ -46,9 +50,9 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
     TextView descriptionTextView;
     RatingBar ratingBar;
     ImageView imageBox;
+    TextView profBtn;
     public ServiceAdapter(Activity context, ArrayList<Service> words, int color) {
         super(context, 0, words);
-
         colorid=color;
         // Here, we initialize the ArrayAdapter's internal storage for the context and the list.
         // the second argument is used when the ArrayAdapter is populating a single TextView.
@@ -69,6 +73,7 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
         }
         //declare all view fields
         rateBtn = (TextView)listItemView.findViewById(R.id.rateBtn);
+        profBtn = (TextView)listItemView.findViewById(R.id.profileBtn);
         provNameTextView = (TextView) listItemView.findViewById(R.id.provider_name_text_view);
         professionTextView = (TextView) listItemView.findViewById(R.id.profession_text_view);
         locationTextView = (TextView) listItemView.findViewById(R.id.location);
@@ -77,7 +82,7 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
         descriptionTextView = (TextView) listItemView.findViewById(R.id.serviceDesc);
         ratingBar = (RatingBar) listItemView.findViewById(R.id.rating_bar);
         imageBox = (ImageView) listItemView.findViewById(R.id.image);
-
+        uid="-";
         // Get the {@link AndroidFlavor} object located at this position in the list
         final Service service = getItem(position);
         //if status is finished show the rate btn
@@ -85,7 +90,8 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
         //setting all fields
         setServiceFields( service,professionTextView, locationTextView, cityTextView, descriptionTextView);
         setProviderFields(service);
-
+        //setting the profile btn listener
+        setProfListener();
 
         View textcontainer = listItemView.findViewById(R.id.text_container);
         int color = ContextCompat.getColor(getContext(),colorid);
@@ -140,6 +146,7 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
                 else{
                     userId = s.getProvider_id();
                 }
+                    uid = userId;
                 //get user profile
                 getUserProf(userId);
              }
@@ -149,6 +156,18 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
         });
         
 
+    }
+    public void setProfListener(){
+        final Intent intent1 = new Intent(this.getContext(), ProfileActivity.class);
+        profBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                final Bundle bundle1 = new Bundle();
+                bundle1.putString("userId",uid);
+                intent1.putExtras(bundle1);
+                Log.w("ClickedHH",uid);
+                getContext().startActivity(intent1);
+            }
+        });
     }
     public void getUserProf(final String userId){
         userRef = mDatabase.getReference("user_profiles").child(userId);

@@ -60,7 +60,6 @@ public class ProviderServiceAdapter extends ArrayAdapter<Service> {
             listItemView = LayoutInflater.from(getContext()).inflate(
                     R.layout.listview_item_pending_service, parent, false);
         }
-
         //declare views
         undoButton = (Button) listItemView.findViewById(R.id.undo_button);
         jobTextView = (TextView) listItemView.findViewById(R.id.item_job);
@@ -96,7 +95,6 @@ public class ProviderServiceAdapter extends ArrayAdapter<Service> {
 
             }
         });
-
         //set decline button value
         declineButton.setOnClickListener(new View.OnClickListener() {
             @Override

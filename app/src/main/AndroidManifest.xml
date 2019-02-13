@@ -26,6 +26,7 @@
         <activity android:name=".ProviderHomeActivity" />
         <activity android:name=".RequesterHomeActivity" />
         <activity android:name=".CreateServiceActivity" />
+        <activity android:name=".ProfileActivity" />
         <activity android:name=".RateActivity"></activity>
     </application>
 
