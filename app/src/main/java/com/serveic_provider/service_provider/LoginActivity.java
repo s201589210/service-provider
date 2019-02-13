@@ -21,6 +21,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.FirebaseMessagingService;
+import com.serveic_provider.service_provider.firebase_notification.MyFirebaseMessagingService;
 import com.serveic_provider.service_provider.serviceProvider.User;
 
 
@@ -83,7 +88,26 @@ public class LoginActivity extends AppCompatActivity {
                                 // The userId of the authenticated user, the unique id for all of the users used in the Firebase Database
                                 // user.getEmail() return the email in String
                                 FBuser = mAuth.getCurrentUser();
-                                String userId = FBuser.getUid();
+                                final String userId = FBuser.getUid();
+
+                                // setting the token which used for notification
+                                FirebaseInstanceId.getInstance().getInstanceId()
+                                        .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                                                if (!task.isSuccessful()) {
+                                                    Log.w(TAG, "getInstanceId failed", task.getException());
+                                                    return;
+                                                }
+
+                                                // Stored under user id in user_profiles
+                                                String token = task.getResult().getToken();
+                                                Log.d(TAG, "current token: " + token);
+                                                userProfileRef.child(userId).child("token_id").setValue(token);
+
+                                            }
+                                        });
+
                                 // Notifying the user
                                 Toast.makeText(LoginActivity.this, "Authentication successed",
                                         Toast.LENGTH_SHORT).show();

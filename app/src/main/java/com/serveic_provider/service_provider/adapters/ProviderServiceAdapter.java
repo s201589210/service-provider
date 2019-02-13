@@ -118,16 +118,13 @@ public class ProviderServiceAdapter extends ArrayAdapter<Service> {
                         }
                         Log.v("MyTag",counter+"");
                     }
-
                     private void removeProvider(int counter, DatabaseReference potentialProvidersRef) {
                         Log.v("MyTag",counter+"");
                         potentialProvidersRef.child(counter+"").removeValue();
                     }
-
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                     }
-
                 });//end of getting requester name*/
                 makeItemsInvisible();
 

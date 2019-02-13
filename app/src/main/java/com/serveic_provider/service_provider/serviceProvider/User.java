@@ -15,7 +15,8 @@ public class User {
 	private int rate=0;
     private int id = NO_IMAGE_PROVIDED;
     private static final int NO_IMAGE_PROVIDED =-1;
-	private boolean isSelected ;
+	private boolean isSelected;
+	private String token_id;
 
     public User(int is_baned, String phone_number, String type, String profession, String serviceCounter) {
 
@@ -163,4 +164,11 @@ public class User {
     	return uid;
 	}
 
+	public String getToken_id() {
+		return token_id;
+	}
+
+	public void setToken_id(String token_id) {
+		this.token_id = token_id;
+	}
 }

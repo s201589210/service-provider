@@ -42,7 +42,15 @@ public class CreateServiceActivity extends AppCompatActivity
 
     Intent listProviderIntent;
 
-    String requsterID;
+    //auth table reference
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+    //user reference
+    FirebaseUser FBuser = mAuth.getCurrentUser();
+    final String userId = FBuser.getUid();
+
+    String requsterID = userId;
+
     String serviceID;
 
     Service service = new Service();
@@ -107,7 +115,7 @@ public class CreateServiceActivity extends AppCompatActivity
     @OnClick(R.id.create_button)
     public void createService(View view) {
         if(validateCreateForm()) {
-           // attributes from UI are in validate method
+            // attributes from UI are in validate method
 
             // Service is  inserted into requster_service inside this method
             buildService();
@@ -258,6 +266,7 @@ public class CreateServiceActivity extends AppCompatActivity
         service.setEndTime(endTime);
         service.setStatus("pending");
         service.setProvider_id("none");
+        service.setRequester_id(requsterID);
         service.setCity(city);
         service.setBuilding(building);
         service.setNeighbor(neighbor);
