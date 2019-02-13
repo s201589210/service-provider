@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 
@@ -27,14 +29,37 @@ public class ProviderHomeActivity extends AppCompatActivity {
     FirebaseDatabase mDatabase;
     String userId;
     ArrayList<Service> pendingServices = new ArrayList<Service>();
+    ImageView profile_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.provider_homepage);
-
         setTitle("Service Provider");
-
+        profile_button = (ImageView)findViewById(R.id.profile_button);
+        final Intent intent1 = new Intent(ProviderHomeActivity.this, ProfileActivity.class);
+        profile_button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //check type of the user
+                //current user id
+                String currnetUserId ;
+                //auth table reference
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();;
+                //user reference
+                FirebaseUser FBuser;
+                //dRef
+                DatabaseReference userProfileRef_type;
+                //get user
+                FBuser = mAuth.getCurrentUser();
+                //get id
+                currnetUserId = FBuser.getUid();
+                final Bundle bundle1 = new Bundle();
+                bundle1.putString("userId",currnetUserId);
+                intent1.putExtras(bundle1);
+                Log.w("ClickedHH",currnetUserId);
+                startActivity(intent1);
+            }
+        });
         buildList();
 
     }

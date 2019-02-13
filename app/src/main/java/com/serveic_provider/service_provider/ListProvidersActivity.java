@@ -60,6 +60,7 @@ public class ListProvidersActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_providers);
+
         Log.v("onCreate","222");
         //get information based with last activity
         Bundle extras = getIntent().getExtras();
@@ -93,6 +94,7 @@ public class ListProvidersActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.d("itemClick", i+"");
                 User model = providerList.get(i);
                 if (model.isSelected())
                     model.setSelected(false);
@@ -244,7 +246,7 @@ public class ListProvidersActivity extends AppCompatActivity {
                 Log.v("addingInfo",providerList.get(0).getName());
                 //display the list
                 setList();
-                //buildItem(user,providerID);
+
             }
 
             @Override
@@ -257,7 +259,7 @@ public class ListProvidersActivity extends AppCompatActivity {
         ListView listView = (ListView) findViewById(R.id.lists);
         adapter = new ProvAdaptor(ListProvidersActivity.this, providerList);
         listView.setAdapter(adapter);
-       // listView.setClickable(true);
+        listView.setClickable(true);
     }
 
 

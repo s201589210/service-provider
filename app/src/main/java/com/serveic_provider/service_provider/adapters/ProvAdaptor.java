@@ -73,8 +73,6 @@ public class ProvAdaptor extends BaseAdapter {
 
             view = inflater.inflate(R.layout.service_listview, viewGroup, false);
 
-
-
             username = (TextView)view.findViewById(R.id.provider_name_text_view);
             profession = (TextView) view.findViewById(R.id.profession_text_view);
             image = (ImageView) view.findViewById(R.id.image);

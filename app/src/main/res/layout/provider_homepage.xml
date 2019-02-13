@@ -46,16 +46,16 @@
             android:clickable="true"/>
 
         <ImageView
-            android:background="@color/browser_actions_divider_color"
-            android:id="@+id/info_button"
+            android:id="@+id/profile_button"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:src="@drawable/info"
-            android:scaleType="fitCenter"
-            android:padding="15dp"
+            android:background="@color/browser_actions_divider_color"
+            android:clickable="true"
             android:foreground="?android:attr/selectableItemBackground"
-            android:clickable="true"/>
+            android:padding="15dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/fui_ic_anonymous_white_24dp" />
 
 
     </LinearLayout>
