@@ -124,7 +124,7 @@
 
             <TextView
                 android:id="@+id/location"
-                android:layout_width="181dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:paddingRight="5dp"
                 android:text="lacation "
@@ -132,7 +132,7 @@
                 android:textSize="12sp" />
 
             <View
-                android:layout_width="26dp"
+                android:layout_width="10dp"
                 android:layout_height="match_parent"
                 android:layout_weight="7" />
 
@@ -142,7 +142,24 @@
                 android:layout_height="wrap_content"
                 android:background="@color/colorPrimary"
                 android:text="Rate"
-                android:visibility="invisible" />
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/confirmBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="3dp"
+                android:background="@color/colorPrimary"
+                android:text="Confirm"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/reportBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:text="Report"
+                android:visibility="gone"/>
 
             <View
                 android:id="@+id/view"

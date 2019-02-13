@@ -1,11 +1,11 @@
 package com.serveic_provider.service_provider.adapters;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +13,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -31,13 +34,19 @@ import java.util.ArrayList;
 public class ServiceAdapter extends ArrayAdapter<Service> {
 
     private int colorid;
+    private Context context;
+
     private Service service;
+    private String senderId;
+    private String recieverId;
+
     final FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
     DatabaseReference userRef;
     DatabaseReference userRates;
 
-
     TextView rateBtn;
+    TextView confirmBtn;
+    TextView reportBtn;
     TextView provNameTextView;
     TextView professionTextView;
     TextView locationTextView;
@@ -46,10 +55,13 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
     TextView descriptionTextView;
     RatingBar ratingBar;
     ImageView imageBox;
+
     public ServiceAdapter(Activity context, ArrayList<Service> words, int color) {
         super(context, 0, words);
 
         colorid=color;
+        this.context = context;
+
         // Here, we initialize the ArrayAdapter's internal storage for the context and the list.
         // the second argument is used when the ArrayAdapter is populating a single TextView.
         // Because this is a custom adapter for two TextViews and an ImageView, the adapter is not
@@ -69,6 +81,8 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
         }
         //declare all view fields
         rateBtn = (TextView)listItemView.findViewById(R.id.rateBtn);
+        confirmBtn = (TextView)listItemView.findViewById(R.id.confirmBtn);
+        reportBtn = (TextView)listItemView.findViewById(R.id.reportBtn);
         provNameTextView = (TextView) listItemView.findViewById(R.id.provider_name_text_view);
         professionTextView = (TextView) listItemView.findViewById(R.id.profession_text_view);
         locationTextView = (TextView) listItemView.findViewById(R.id.location);
@@ -82,6 +96,8 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
         final Service service = getItem(position);
         //if status is finished show the rate btn
         rateCheck(service);
+        //if status is in progress show both confirm and report btns
+        confirmCheck(service);
         //setting all fields
         setServiceFields( service,professionTextView, locationTextView, cityTextView, descriptionTextView);
         setProviderFields(service);
@@ -134,6 +150,7 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
              public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String type = dataSnapshot.getValue(String.class);
                 String userId;
+
                 if(type.equals("provider")){
                     userId = s.getRequester_id();
                 }
@@ -142,6 +159,7 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
                 }
                 //get user profile
                 getUserProf(userId);
+
              }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -149,6 +167,43 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
         });
         
 
+    }
+    public void setIds(final Service s, final String message){
+        //check type of the user
+        //current user id
+        String currnetUserId ;
+        //auth table reference
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();;
+        //user reference
+        FirebaseUser FBuser;
+        //dRef
+        DatabaseReference userProfileRef_type;
+        //get user
+        FBuser = mAuth.getCurrentUser();
+        //get id
+        currnetUserId = FBuser.getUid();
+        userProfileRef_type = mDatabase.getReference("user_profiles").child(currnetUserId).child("type");
+        userProfileRef_type.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String type = dataSnapshot.getValue(String.class);
+                String recieverId;
+                String senderId;
+                if(type.equals("provider")){
+                    recieverId = s.getRequester_id();
+                    senderId = s.getProvider_id();
+                }
+                else{
+                    recieverId = s.getProvider_id();
+                    senderId = s.getRequester_id();
+                }
+                //send notification using the ids
+                writeNotificaitonToFBDB(senderId, recieverId, message, s);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
     }
     public void getUserProf(final String userId){
         userRef = mDatabase.getReference("user_profiles").child(userId);
@@ -179,11 +234,12 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
         });
     }
     public void rateCheck(final Service s){
+
         if(s.getStatus().equals("finished")){
             rateBtn.setVisibility(View.VISIBLE);
         }
         else{
-            rateBtn.setVisibility(View.INVISIBLE);
+            rateBtn.setVisibility(View.GONE);
         }
         //on click add service to intent and indicate user to be rated
         final Intent intent = new Intent(this.getContext(), RateActivity.class);
@@ -196,5 +252,49 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
             }
         });
     }
+    public void confirmCheck(final Service s){
+        if(s.getStatus().equals("in progress")){
+            confirmBtn.setVisibility(View.VISIBLE);
+            reportBtn.setVisibility(View.VISIBLE);
+        }
+        else{
+            confirmBtn.setVisibility(View.GONE);
+            reportBtn.setVisibility(View.GONE);
+        }
+
+        //on click set and send notification to other user in the service
+        confirmBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                String message = "Please confirm that the service is finished";
+                setIds(s, message);
+            }
+        });
+    }
+
+    //this used for sending notification while the receiving app is in background. It must
+    // go to the database first. To reuse it take of the service element and redo the function
+    public void writeNotificaitonToFBDB(String fromUserId, String toUserId,
+                                        String messageText, final Service service) {
+        String requesterServiceId = service.getRequester_id()+"_"+service.getService_id();
+
+        DatabaseReference notificationsRef = FirebaseDatabase.getInstance().getReference()
+                .child("user_notifications").child(toUserId).push();
+        notificationsRef.child("message").setValue(messageText);
+        notificationsRef.child("from").setValue(fromUserId);
+        notificationsRef.child("serviceId").setValue(requesterServiceId).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(context, "Notifiaction Sent", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(context, "Error in Sending Notification", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
+
 
 }

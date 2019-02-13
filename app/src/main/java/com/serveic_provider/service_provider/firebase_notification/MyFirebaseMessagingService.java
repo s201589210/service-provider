@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 
+import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -17,11 +18,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.serveic_provider.service_provider.ConfirmationActivity;
 import com.serveic_provider.service_provider.R;
 import com.serveic_provider.service_provider.SignUpActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Map;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
@@ -33,18 +37,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        // Check if message contains a data payload.
-        if (remoteMessage.getData().size() > 0) {
-            Log.d(TAG, "Message data payload: " + remoteMessage.getData());
-            try {
-                JSONObject data = new JSONObject(remoteMessage.getData());
-                String jsonMessage = data.getString("extra_information");
-                Log.d(TAG, "onMessageReceived: \n" +
-                        "Extra Information: " + jsonMessage);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
 
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
@@ -56,7 +48,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             Log.d(TAG, "Message Notification Body: " + message);
             Log.d(TAG, "Message Notification click_action: " + click_action);
 
-            sendNotification(title, message, click_action);
+            // Check if message contains a data payload.
+            if (remoteMessage.getData().size() > 0) {
+                Log.d(TAG, "Message data payload: " + remoteMessage.getData());
+                Map data = remoteMessage.getData();
+                sendNotification(title, message, click_action, data);
+            }
         }
     }
 
@@ -92,15 +89,24 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         Log.d("newToken", token);
     }
+    //this used for sending notification while the receiving app is in foreground. It must
+    // go to the database first
+    private void sendNotification(String title,String messageBody,
+                                  String click_action, Map data) {
+        Intent intent = new Intent(click_action);
+        Bundle mBundle = new Bundle();
+        mBundle.putString("service",  (String) data.get("service"));
+        intent.putExtras(mBundle);
 
-    private void sendNotification(String title,String messageBody, String click_action) {
-        Intent intent = new Intent(this, SignUpActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
+
+        PendingIntent pendingIntent = PendingIntent
+                .getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
-        String NOTIFICATION_CHANNEL = "Service Finished Confirmation";
+
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL)
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat
+                .Builder(this, getString(R.string.default_notification_channel_id))
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle(title)
                 .setContentText(messageBody)
@@ -108,10 +114,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
 
+        int notificationId = (int) System.currentTimeMillis();
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+
+        notificationManager.notify(notificationId/* ID of notification */, notificationBuilder.build());
     }
 
 }
