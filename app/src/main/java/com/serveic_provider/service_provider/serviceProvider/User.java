@@ -13,8 +13,7 @@ public class User {
 	private String serviceCounter = "0";
 	private String name;
 	private int rate=0;
-    private int id = NO_IMAGE_PROVIDED;
-    private static final int NO_IMAGE_PROVIDED =-1;
+    private int id ;
 	private boolean isSelected ;
 
     public User(int is_baned, String phone_number, String type, String profession, String serviceCounter) {
@@ -134,10 +133,6 @@ public class User {
 
     public void setRate(int rate) {
         this.rate = rate;
-    }
-
-    public boolean hasImage(){
-        return id != NO_IMAGE_PROVIDED;
     }
 
     public int getId() {

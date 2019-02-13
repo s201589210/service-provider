@@ -19,8 +19,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.serveic_provider.service_provider.adapters.ProviderAdaptor;
-import com.serveic_provider.service_provider.adapters.multSelcProvAdaptor;
+import com.serveic_provider.service_provider.adapters.ProvAdaptor;
 import com.serveic_provider.service_provider.serviceProvider.Service;
 import com.serveic_provider.service_provider.serviceProvider.User;
 
@@ -35,7 +34,7 @@ public class ListProvidersActivity extends AppCompatActivity {
     ArrayList<User> providerList = new ArrayList<User>();
     ArrayList<String> providerIdList = new ArrayList<String>();
     ArrayList<String> selectedProviders = new ArrayList<String>();
-    multSelcProvAdaptor adapter;
+    ProvAdaptor adapter;
 
     String name;
     String company;
@@ -256,37 +255,11 @@ public class ListProvidersActivity extends AppCompatActivity {
     }//end of adding item to list
     public void setList(){
         ListView listView = (ListView) findViewById(R.id.lists);
-        adapter = new multSelcProvAdaptor(ListProvidersActivity.this, providerList);
+        adapter = new ProvAdaptor(ListProvidersActivity.this, providerList);
         listView.setAdapter(adapter);
        // listView.setClickable(true);
     }
 
 
-
-    //add the provider(user) to an item
-    public void buildItem(final User user,final String providerID){
-        ListView listView = (ListView) findViewById(R.id.lists);
-        providerList.add(user);
-        // Create an {@link WordAdapter}, whose data source is a list of {@link Word}s. The
-        // adapter knows how to create list items for each item in the list.
-        ProviderAdaptor adapter = new ProviderAdaptor(ListProvidersActivity.this, providerList, R.color.colorPrimary);
-        // Find the {@link ListView} object in the view hierarchy of the {@link Activity}.
-        // There should be a {@link ListView} with the view ID called list, which is declared in the
-        // activity_numbers.xml layout file.
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                /*Intent createService = new Intent(ListProvidersActivity.this,CreateServiceActivity.class);
-                createService.putExtra("providerID_profession", providerID+"_"+ service.getProfession());
-                ListProvidersActivity.this.startActivity(createService);*/
-            }
-        });
-        // Make the {@link ListView} use the {@link WordAdapter} we created above, so that the
-        // {@link ListView} will display list items for each {@link Word} in the list.
-          Log.v("itemBuild", "buildItem: ");
-        listView.setAdapter(adapter);
-        listView.setClickable(true);
-    }// end of building item
 
 }

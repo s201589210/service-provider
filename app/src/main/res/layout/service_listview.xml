@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/list_item_height"
+    android:layout_height="120dp"
     android:background="@color/colorPrimary"
     android:orientation="horizontal">
 
@@ -18,90 +18,79 @@
         android:id="@+id/text_container"
         android:layout_width="match_parent"
         android:layout_height="@dimen/list_item_height"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
         android:layout_toRightOf="@id/image"
+        android:background="#FFFFFF"
         android:orientation="vertical"
-        android:paddingLeft="8dp"
-        android:background="#FFFFFF">
+        android:paddingLeft="8dp">
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="6dp"
             android:layout_weight="1"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/provider_name_text_view"
+                android:id="@+id/profession_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
-                android:textAppearance="?android:textAppearanceMedium"
-                android:textColor="@android:color/black"
-                android:textStyle="bold"
-                android:text=" provider Name" />
-
-
-
-            <TextView
-                android:id="@+id/profission_text_view"
-                android:gravity="end"
-                android:layout_width="wrap_content"
-                android:layout_height="25dp"
-                android:textAppearance="?android:textAppearanceMedium"
-                android:textColor="@android:color/black"
-                android:layout_marginRight="10dp"
                 android:layout_marginLeft="10dp"
-                android:text=" profission" />
-
-
+                android:layout_marginRight="10dp"
+                android:gravity="end"
+                android:text=" profession"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@android:color/black" />
 
 
             <TextView
                 android:id="@+id/city_text_view"
-                android:gravity="end"
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
-                android:textAppearance="?android:textAppearanceMedium"
-                android:textColor="@android:color/black"
                 android:layout_marginRight="10dp"
+                android:gravity="end"
+                android:text=" city"
+                android:textAppearance="?android:textAppearanceMedium"
 
-                android:text=" city" />
+                android:textColor="@android:color/black" />
 
         </LinearLayout>
-
-
-
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="6dp"
             android:layout_weight="1"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/provider_name_text_view"
+                android:layout_width="138dp"
+                android:layout_height="25dp"
+                android:text=" provider Name"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@android:color/black" />
 
             <RatingBar
                 android:id="@+id/rating_bar"
                 style="?android:attr/ratingBarStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:numStars="5"
-                android:rating="2.5"
-                android:stepSize="0.5"
                 android:layout_gravity="bottom"
                 android:layout_marginBottom="5dp"
-                />
+                android:numStars="5"
+                android:rating="2.5"
+                android:stepSize="0.5" />
 
             <TextView
                 android:id="@+id/number_of_reviews"
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
+                android:layout_marginLeft="5dp"
                 android:textAppearance="?android:textAppearanceSmall"
                 android:textColor="@android:color/black"
-                android:layout_marginLeft="5dp"
 
                 tools:text="11" />
 
@@ -109,55 +98,63 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
+                android:text=" reviws"
                 android:textAppearance="?android:textAppearanceSmall"
-                android:textColor="@android:color/black"
-                android:text=" reviws" />
+                android:textColor="@android:color/black" />
 
 
         </LinearLayout>
 
         <TextView
 
-            android:id="@+id/company_name"
+            android:id="@+id/serviceDesc"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:textSize="12sp"
+            android:text="service description"
             android:textColor="@android:color/black"
-            android:text="company name" />
+            android:textSize="12sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1.5"
-            android:orientation="horizontal"
-            >
-
+            android:orientation="horizontal">
 
 
             <TextView
                 android:id="@+id/location"
-                android:layout_width="wrap_content"
+                android:layout_width="181dp"
                 android:layout_height="match_parent"
                 android:paddingRight="5dp"
-                android:textSize="12sp"
+                android:text="lacation "
                 android:textColor="@android:color/black"
-                android:text="lacation " />
+                android:textSize="12sp" />
 
             <View
-                android:layout_width="0dp"
+                android:layout_width="26dp"
                 android:layout_height="match_parent"
                 android:layout_weight="7" />
+
+            <Button
+                android:id="@+id/rateBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:text="Rate"
+                android:visibility="invisible" />
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="26dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
             <!--<CheckBox
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="20dp"
                 android:layout_marginLeft="5dp"/>-->
-
-
-
-
-
 
 
         </LinearLayout>

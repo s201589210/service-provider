@@ -28,23 +28,17 @@ public class DeletedFragment extends Fragment {
     DatabaseReference typeRef;
     FirebaseDatabase mDatabase;
     ArrayList<Service> deletedServices = new ArrayList<Service>();
-    public DeletedFragment(){
-
+    DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+    public DeletedFragment() {
     }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.pending_fragment, container, false);
-
-
-
-
-
-
+        //empty the list
+        deletedServices = new ArrayList<Service>();
         //auth table reference
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
-
         //user reference
         FirebaseUser FBuser;
         //get user
@@ -54,60 +48,36 @@ public class DeletedFragment extends Fragment {
         mDatabase = FirebaseDatabase.getInstance();
         typeRef = mDatabase.getReference().child("user_profiles").child(userId).child("type");
         //location listner
-
-
 //*//
-
-
         DatabaseReference ServicesRef = rootRef.child("requester_services").child(userId);
         ServicesRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 //loop over all providers ids
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Service serviceNumber = snapshot.getValue(Service.class);
-                    String job =serviceNumber.getJob();
-                    String status =serviceNumber.getStatus();
-
+                    Service service = snapshot.getValue(Service.class);
+                    String job = service.getJob();
+                    String status = service.getStatus();
                     // Log.v("potato", "test");
-                    if(status.equals("deleted")){
-                        deletedServices.add(new Service(job));}
-
-
+                    if (status.equals("deleted")) {
+                        deletedServices.add(service);
+                    }
                     ///////////////////
-
                     ///////////////////////////
-
                     ListView listView = (ListView) view.findViewById(R.id.pending_services_listview);
-                    // Create an {@link WordAdapter}, whose data source is a list of {@link Word}s. The
                     // adapter knows how to create list items for each item in the list.
                     ServiceAdapter adapter = new ServiceAdapter(DeletedFragment.this.getActivity(), deletedServices, R.color.colorWhite);
-                    // Make the {@link ListView} use the {@link WordAdapter} we created above, so that the
                     // {@link ListView} will display list items for each {@link Word} in the list.
                     listView.setAdapter(adapter);
                     listView.setClickable(true);
-
-
-
-
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
-
-
-
-
-
-
         return view;
     }//on create method
-    DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-
-
-
 }
 
