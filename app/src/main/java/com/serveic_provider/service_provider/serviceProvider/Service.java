@@ -1,5 +1,7 @@
 package com.serveic_provider.service_provider.serviceProvider;
 
+import android.media.Image;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -20,8 +22,8 @@ public class Service implements Serializable {
 	private String endTime;
 	private int providersCounter;
 	private String service_id;
-	private int id = NO_IMAGE_PROVIDED;
-	private static final int NO_IMAGE_PROVIDED =-1;
+	private Image image;
+	private int id ;
 	private ArrayList<String> potentialProvidersIds;
 
 
@@ -81,22 +83,15 @@ public class Service implements Serializable {
 	public void setProfession(String profession) { this.profession = profession; }
 	public String getRequester_id() { return requester_id;}
 	public void setRequester_id(String requester_id) {this.requester_id = requester_id;}
-
-	public boolean hasImage() { return id != NO_IMAGE_PROVIDED; }
-	public static int getNoImageProvided() { return NO_IMAGE_PROVIDED; }
-
+	public Image getImage() { return image; }
+	public void setImage(Image image) { this.image = image; }
 	public ArrayList<String> getPotentialProvidersIds() {
 		return potentialProvidersIds;
 	}
-
-	public void setPotentialProvidersIds(ArrayList<String> potentialProvidersIds) {
-		this.potentialProvidersIds = potentialProvidersIds;
-	}
-
+	public void setPotentialProvidersIds(ArrayList<String> potentialProvidersIds) { this.potentialProvidersIds = potentialProvidersIds; }
 	public String getService_id() {
 		return service_id;
 	}
-
 	public void setService_id(String service_id) {
 		this.service_id = service_id;
 	}

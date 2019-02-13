@@ -3,6 +3,7 @@ package com.serveic_provider.service_provider.adapters;
 import android.app.Activity;
 import android.graphics.Color;
 import android.media.Image;
+import android.media.audiofx.AudioEffect;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,7 @@ import java.util.List;
 import butterknife.BindView;
 
 
-public class multSelcProvAdaptor extends BaseAdapter {
+public class ProvAdaptor extends BaseAdapter {
 
     Activity activity;
     List<User> users;
@@ -33,16 +34,16 @@ public class multSelcProvAdaptor extends BaseAdapter {
     TextView city;
     RatingBar rate;
     TextView raterNum;
-    TextView company;
+    TextView description;
     TextView location;
     ImageView ivCheckBox;
 
 
-    public multSelcProvAdaptor(Activity activity) {
+    public ProvAdaptor(Activity activity) {
         this.activity = activity;
     }
 
-    public multSelcProvAdaptor(Activity activity, List<User> users) {
+    public ProvAdaptor(Activity activity, List<User> users) {
         this.activity   = activity;
         this.users      = users;
 
@@ -75,12 +76,12 @@ public class multSelcProvAdaptor extends BaseAdapter {
 
 
             username = (TextView)view.findViewById(R.id.provider_name_text_view);
-            profession = (TextView) view.findViewById(R.id.profission_text_view);
+            profession = (TextView) view.findViewById(R.id.profession_text_view);
             image = (ImageView) view.findViewById(R.id.image);
             city = (TextView) view.findViewById(R.id.city_text_view);
             rate = (RatingBar) view.findViewById(R.id.rating_bar);
             raterNum = (TextView) view.findViewById(R.id.number_of_reviews);
-            company = (TextView) view.findViewById(R.id.company_name);
+            description = (TextView) view.findViewById(R.id.serviceDesc);
             location = (TextView) view.findViewById(R.id.location);
 
         }
@@ -93,9 +94,9 @@ public class multSelcProvAdaptor extends BaseAdapter {
         //image
         city.setText(user.getLocation());
         rate.setRating(user.getRate());
-        raterNum.setText("23");
-        company.setText("temp");
-        location.setText("temp");
+        raterNum.setText("");
+        description.setText("");
+        location.setText("");
 
 
         if (user.isSelected())
