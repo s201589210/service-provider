@@ -33,7 +33,7 @@ public class InProgressFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.pending_fragment, container, false);
+        view = inflater.inflate(R.layout.services_fragment, container, false);
         inProgressServices = new ArrayList<Service>();
         //auth table reference
         FirebaseAuth mAuth = FirebaseAuth.getInstance();

@@ -40,9 +40,13 @@ public class SignUpActivity extends AppCompatActivity {
     // Used to get the userId
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
-    // Getting the user_profiles node
     private final FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
+
+    // Getting the user_profiles node
     DatabaseReference userProfileRef = mDatabase.getReference("user_profiles");
+
+    //Getting the profession_location_provider
+    DatabaseReference professionLocationRef = mDatabase.getReference("profession_location_provider");
 
     // The userId of the authenticated user
     private String userId;
@@ -68,12 +72,20 @@ public class SignUpActivity extends AppCompatActivity {
     // Initializing the UI elements to get them ready for binding
     @BindView(R.id.email_edit_text)
     EditText emailText;
+    @BindView(R.id.first_name_edit_text)
+    EditText firstNametext;
+    @BindView(R.id.last_name_edit_text)
+    EditText lastNametext;
     @BindView(R.id.password_edit_text)
     EditText passwordText;
     @BindView(R.id.password_confirm_edit_text)
     EditText passwordConfirmText;
     @BindView(R.id.location_spinner)
     Spinner locationSpinner;
+    @BindView(R.id.profession_text_view)
+    TextView professionTextView;
+    @BindView(R.id.profession_spinner)
+    Spinner professionSpinner;
     @BindView(R.id.group_radio_button)
     RadioGroup radioGroup;
 
@@ -91,12 +103,19 @@ public class SignUpActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         locationSpinner.setAdapter(adapter);
 
+        makeProfessionVisible();
+        // Putting the professions array in the string.xml into the spinner
+        ArrayAdapter<CharSequence> professionadapter = ArrayAdapter
+                .createFromResource(this, R.array.professions, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        professionSpinner.setAdapter(professionadapter);
+
     }
     // Assigning onClick for the sign up using Butterknife instead of the onClick on the XML file
     @OnClick(R.id.sign_up_button)
     public void signUp(View view) {
         // Validate information. this can be commented in case of testing to ease the sign up
-        if (validateEmail() && validatePassword() && validatePasswordConfirm())
+        if (validateAll())
             mAuth.createUserWithEmailAndPassword(emailText.getText().toString(), passwordText.getText().toString())
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -112,21 +131,41 @@ public class SignUpActivity extends AppCompatActivity {
                                 // Getting the location form the spinner and assigning to user.location
                                 String location = locationSpinner.getSelectedItem().toString().toLowerCase();
                                 user.setLocation(location);
+                                //user.setLocation(location);
 
                                 // Getting the type from the radio buttons and assigning to user,type
                                 int selectedRadioButtonId = radioGroup.getCheckedRadioButtonId();
                                 RadioButton selectedRadioButton = (RadioButton) findViewById(selectedRadioButtonId);
                                 String type = selectedRadioButton.getText().toString().toLowerCase();
                                 user.setType(type);
-
+                                // Setting the name of the user
+                                String name = firstNametext.getText() + " " + lastNametext.getText();
+                                user.setName(name);
                                 // Using both the unique userId and user object to write the type and location under user_profiles/$userId
                                 writeUserToFBDB(userId, user);
 
-                                // Notifying the user
-                                Toast.makeText(SignUpActivity.this, "You signed up successfully. Please sign in",
-                                        Toast.LENGTH_SHORT).show();
 
-                                updateUI(FBuser);
+
+                                if(type.equals("requester")) {
+                                    updateUI(FBuser);
+
+                                    // Notifying the user
+                                    Toast.makeText(SignUpActivity.this, "You signed up successfully. Please sign in",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+
+                                else {
+                                    // Getting the profession form the spinner and assigning for
+                                    // profession_location_provider node
+                                    String profession = professionSpinner.getSelectedItem().toString().toLowerCase();
+
+                                    writeProfessionToFBDB(profession, location, userId);
+                                    updateUI(FBuser);
+
+                                    // Notifying the user
+                                    Toast.makeText(SignUpActivity.this, "You signed up successfully. Please sign in",
+                                            Toast.LENGTH_SHORT).show();
+                                }
 
                             } else {
                                 // If sign in fails, display a message to the user.
@@ -140,6 +179,11 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     // Validation Methods
+    private boolean validateAll() {
+        return validateEmail() && validateFirstName() && validateLastName()
+                && validatePassword() && validatePasswordConfirm();
+
+    }
 
     private boolean validateEmail() {
         String emailInput = emailText.getText().toString().trim();
@@ -152,6 +196,34 @@ public class SignUpActivity extends AppCompatActivity {
             return false;
         } else {
             emailText.setError(null);
+            return true;
+        }
+    }
+
+    private boolean validateFirstName() {
+        String firstNameInput = firstNametext.getText().toString().trim();
+        if (firstNameInput.isEmpty()) {
+            firstNametext.setError("Field can't be empty");
+            return false;
+        } else if (!firstNameInput.matches("[a-zA-Z]+")) {
+            firstNametext.setError("Please enter characters only and not white spaces");
+            return false;
+        } else {
+            firstNametext.setError(null);
+            return true;
+        }
+    }
+
+    private boolean validateLastName() {
+        String lastNameInput = lastNametext.getText().toString().trim();
+        if (lastNameInput.isEmpty()) {
+            lastNametext.setError("Field can't be empty");
+            return false;
+        } else if (!lastNameInput.matches("[a-zA-Z]+")) {
+            lastNametext.setError("Please enter characters only and not white spaces");
+            return false;
+        } else {
+            lastNametext.setError(null);
             return true;
         }
     }
@@ -193,12 +265,37 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
+
+    private void makeProfessionVisible() {
+        // Getting the type from the radio buttons to show the prpfession
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+            public void onCheckedChanged(RadioGroup group, int checkedId)
+            {
+                // This will get the radiobutton that has changed in its check state
+                RadioButton checkedRadioButton = (RadioButton)group.findViewById(checkedId);
+                String type = checkedRadioButton.getText().toString().toLowerCase();
+                if(type.equals("provider")) {
+                    professionTextView.setVisibility(View.VISIBLE);
+                    professionSpinner.setVisibility(View.VISIBLE);
+                }
+                else {
+                    professionTextView.setVisibility(View.GONE);
+                    professionSpinner.setVisibility(View.GONE);
+                }
+            }
+        });
+    }
+
+
     // Changing the UI if the user is authenticated
     private void updateUI(FirebaseUser user) {
         // Checking if the user is authenticated
         if(user != null)
             startActivity(new Intent(this, LoginActivity.class));
     }
+
+
     // Writing the type to the Firebase Database
     private void writeUserToFBDB(String userId, User user) {
         // Creating a new $userId node under the user_profiles node and assigning whole user object
@@ -217,5 +314,9 @@ public class SignUpActivity extends AppCompatActivity {
                 });
     }
 
-
+    // Writing the profession_location_provider to the Firebase Database
+    private void writeProfessionToFBDB(String profession, String location, String userId) {
+        // Creating a new $userId node under the user_profiles node and assigning whole user object
+        professionLocationRef.child(profession).child(location).push().setValue(userId);
+    }
 }
