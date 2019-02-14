@@ -139,16 +139,6 @@
                 android:textSize="20dp"
                 tools:text="Lname" />
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginBottom="8dp"
-                android:layout_marginRight="8dp"
-                android:text="save changes"
-                android:onClick="saveChanges"/>
-
         </RelativeLayout>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

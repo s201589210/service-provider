@@ -1,8 +1,11 @@
 package com.serveic_provider.service_provider;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
@@ -74,7 +77,7 @@ public class EditProfileActivity extends AppCompatActivity {
         phone .setText(user.getPhone_number());
     }
 
-    public void saveChanges(View view) {
+    public void saveChanges() {
         user.setName(firstNameEditText.getText().toString());
         user.setLastName(lastNameEditText.getText().toString());
         user.setLocation(cityEditText.getText().toString());
@@ -82,5 +85,20 @@ public class EditProfileActivity extends AppCompatActivity {
 
         DatabaseReference userProfileRef = mDatabase.getReference("user_profiles");
         userProfileRef.child(userId).setValue(user);
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.save_profile_changes,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.save_profile_button){
+            saveChanges();
+            finish();
+        }
+
+        return true;
     }
 }

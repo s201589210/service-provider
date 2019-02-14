@@ -139,30 +139,6 @@
                 android:textSize="20dp"
                 tools:text="Lname" />
 
-            <Button
-                android:id="@+id/editButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="launchEditProfile"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="15dp"
-                android:padding="10dp"
-                android:text="Edit Profile"
-                android:textSize="20dp"
-                android:visibility="invisible" />
-
-            <Button
-                android:id="@+id/updateBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginEnd="7dp"
-                android:layout_marginBottom="14dp"
-                android:layout_toStartOf="@+id/editButton"
-                android:text="update"
-                android:visibility="invisible" />
-
 
         </RelativeLayout>
     </LinearLayout>
