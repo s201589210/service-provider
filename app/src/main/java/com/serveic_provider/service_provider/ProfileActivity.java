@@ -1,5 +1,6 @@
 package com.serveic_provider.service_provider;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -94,5 +95,10 @@ public class ProfileActivity extends AppCompatActivity {
         lastName.setText(user.getLastName());
         city.setText(user.getLocation());
         phone .setText(user.getPhone_number());
+    }
+
+    public void launchEditProfile(View view) {
+        Intent intent = new Intent(this, EditProfileActivity.class);
+        startActivity(intent);
     }
 }

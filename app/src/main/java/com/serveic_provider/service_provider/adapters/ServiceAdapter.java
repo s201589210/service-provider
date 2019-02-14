@@ -221,7 +221,6 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
                 final Bundle bundle1 = new Bundle();
                 bundle1.putString("userId",uid);
                 intent1.putExtras(bundle1);
-                Log.w("ClickedHH",uid);
                 getContext().startActivity(intent1);
             }
         });

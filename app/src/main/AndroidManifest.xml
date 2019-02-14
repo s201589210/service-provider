@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-
+        <activity android:name=".EditProfileActivity"></activity>
         <!-- Firebase Messaaging -->
         <service android:name=".firebase_notification.MyFirebaseMessagingService">
             <intent-filter>
@@ -23,17 +23,14 @@
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/colorAccent" />
-
-        <!-- After pressing confirm service, the user will go to this activity-->
+            android:resource="@color/colorAccent" /> <!-- After pressing confirm service, the user will go to this activity -->
         <activity android:name=".ConfirmationActivity">
             <intent-filter>
-                <action android:name="com.serveic_provider.service_provider.ConfirmationTarget"/>
-                <category android:name="android.intent.category.DEFAULT"></category>
-            </intent-filter>
-        </activity>
+                <action android:name="com.serveic_provider.service_provider.ConfirmationTarget" />
 
-        <!-- End of firebase Messaging -->
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity> <!-- End of firebase Messaging -->
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -48,7 +45,7 @@
         <activity android:name=".RequesterHomeActivity" />
         <activity android:name=".CreateServiceActivity" />
         <activity android:name=".ProfileActivity" />
-        <activity android:name=".RateActivity"></activity>
+        <activity android:name=".RateActivity" />
     </application>
 
 </manifest>
