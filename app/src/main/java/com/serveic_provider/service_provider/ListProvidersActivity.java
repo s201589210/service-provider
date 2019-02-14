@@ -60,7 +60,7 @@ public class ListProvidersActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_providers);
-
+        providerList = new ArrayList<User>();
         Log.v("onCreate","222");
         //get information based with last activity
         Bundle extras = getIntent().getExtras();
@@ -77,8 +77,6 @@ public class ListProvidersActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //insert the service to the requester node
                 insertRequesterService();
-
-
                 Toast.makeText(ListProvidersActivity.this, "created successfully ",
                         Toast.LENGTH_SHORT).show();
 

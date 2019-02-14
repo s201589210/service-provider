@@ -1,9 +1,11 @@
 package com.serveic_provider.service_provider.adapters;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.media.Image;
 import android.media.audiofx.AudioEffect;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +16,16 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.serveic_provider.service_provider.ListProvidersActivity;
+import com.serveic_provider.service_provider.ProfileActivity;
 import com.serveic_provider.service_provider.R;
 import com.serveic_provider.service_provider.serviceProvider.User;
 
 import java.util.List;
 
 import butterknife.BindView;
+
+import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 
 public class ProvAdaptor extends BaseAdapter {
@@ -37,7 +43,7 @@ public class ProvAdaptor extends BaseAdapter {
     TextView description;
     TextView location;
     ImageView ivCheckBox;
-
+    TextView profBtn;
 
     public ProvAdaptor(Activity activity) {
         this.activity = activity;
@@ -46,7 +52,6 @@ public class ProvAdaptor extends BaseAdapter {
     public ProvAdaptor(Activity activity, List<User> users) {
         this.activity   = activity;
         this.users      = users;
-
         inflater        = activity.getLayoutInflater();
     }
 
@@ -81,6 +86,7 @@ public class ProvAdaptor extends BaseAdapter {
             raterNum = (TextView) view.findViewById(R.id.number_of_reviews);
             description = (TextView) view.findViewById(R.id.serviceDesc);
             location = (TextView) view.findViewById(R.id.location);
+            profBtn = (TextView)view.findViewById(R.id.profileBtn);
 
         }
 
@@ -95,7 +101,7 @@ public class ProvAdaptor extends BaseAdapter {
         raterNum.setText("");
         description.setText("");
         location.setText("");
-
+        setProfListener(user.getUid());
 
         if (user.isSelected())
             view.setBackgroundColor(Color.GRAY);
@@ -110,6 +116,17 @@ public class ProvAdaptor extends BaseAdapter {
         this.users = users;
 
         notifyDataSetChanged();
+    }
+    public void setProfListener(final String uid){
+        final Intent intent1 = new Intent(activity, ProfileActivity.class);
+        profBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                final Bundle bundle1 = new Bundle();
+                bundle1.putString("userId",uid);
+                intent1.putExtras(bundle1);
+               activity.startActivity(intent1);
+            }
+        });
     }
 
 

@@ -163,10 +163,11 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
                 else{
                     userId = s.getProvider_id();
                 }
+                if(!userId.equals("none")) {
                     uid = userId;
-                //get user profile
-                getUserProf(userId);
-
+                    //get user profile
+                    getUserProf(userId);
+                }
              }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {

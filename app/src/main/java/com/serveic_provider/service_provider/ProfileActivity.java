@@ -46,8 +46,9 @@ public class ProfileActivity extends AppCompatActivity {
         if (extras != null) {
             userId = extras.getString("userId");
         }//end of checking extras!=null
-
-        buildProfile(userId);
+        if(!userId.equals("none")){
+            buildProfile(userId);
+        }
     }
     public void buildProfile(String userId){
 
@@ -95,7 +96,6 @@ public class ProfileActivity extends AppCompatActivity {
 
     public boolean onCreateOptionsMenu(Menu menu) {
         //check if current user opening his profile
-
         if(checkUser(userId)){
             getMenuInflater().inflate(R.menu.edit_profile,menu);
             return true;
