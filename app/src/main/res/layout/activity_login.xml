@@ -2,16 +2,36 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_centerHorizontal="true"
     android:layout_centerVertical="true"
-    android:layout_margin="@dimen/linear_fab_margin"
+    android:layout_marginLeft="@dimen/linear_fab_margin"
+    android:layout_marginRight="@dimen/linear_fab_margin"
     android:background="@drawable/bg"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".LoginActivity"
     tools:showIn="@layout/activity_login">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/linear_fab_margin"
+        android:layout_marginLeft="@dimen/linear_fab_margin"
+        android:layout_marginRight="@dimen/linear_fab_margin"
+        android:text="WELCOME :)"
+        />
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/linear_fab_margin"
+        android:layout_marginRight="@dimen/linear_fab_margin"
+        android:src="@drawable/icon"
+        />
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
@@ -45,23 +65,35 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/linear_fab_margin"
         android:orientation="horizontal"
+        android:layout_marginTop="@dimen/linear_fab_margin"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <Button
             android:id="@+id/sign_up_button"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/sign_up"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:layout_weight="1"
+            android:singleLine="true"
+            android:padding="5dp"
+            />
+
+
+
 
         <Button
             android:id="@+id/sign_in_button"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/sign_in"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:layout_weight="1"
+            android:singleLine="true"
+            android:padding="5dp"
+
+            />
 
     </LinearLayout>
 

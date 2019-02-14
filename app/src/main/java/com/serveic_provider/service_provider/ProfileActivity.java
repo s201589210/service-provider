@@ -34,6 +34,8 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile);
+        setTitle("Profile");
+
 
         //assign all view fields
         firstName = (TextView)findViewById(R.id.firstNameTextView);

@@ -27,6 +27,8 @@ public class MyServicesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_services_page);
+        setTitle("My Services");
+
 
         tabLayout = (TabLayout) findViewById(R.id.myServicesTab);
         appBarLayout = (AppBarLayout) findViewById(R.id.myServicesBar);
