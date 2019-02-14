@@ -1,4 +1,4 @@
-package com.serveic_provider.service_provider;
+package com.serveic_provider.service_provider.fragments;
 
 import android.app.Dialog;
 import android.app.TimePickerDialog;

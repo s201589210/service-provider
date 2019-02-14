@@ -11,6 +11,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.serveic_provider.service_provider.adapters.ViewPagerAdapter;
+import com.serveic_provider.service_provider.fragments.DeletedFragment;
+import com.serveic_provider.service_provider.fragments.FinishedFragment;
+import com.serveic_provider.service_provider.fragments.InProgressFragment;
+import com.serveic_provider.service_provider.fragments.PendingFragment;
 
 public class MyServicesActivity extends AppCompatActivity {
 

@@ -1,15 +1,12 @@
-package com.serveic_provider.service_provider;
+package com.serveic_provider.service_provider.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,26 +16,25 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.serveic_provider.service_provider.R;
 import com.serveic_provider.service_provider.adapters.ServiceAdapter;
 import com.serveic_provider.service_provider.serviceProvider.Service;
 
 import java.util.ArrayList;
 
-public class PendingFragment extends Fragment {
+public class InProgressFragment extends Fragment {
     View view;
     DatabaseReference typeRef;
     FirebaseDatabase mDatabase;
-    ArrayList<Service> penddingServices = new ArrayList<Service>();
+    ArrayList<Service> inProgressServices = new ArrayList<Service>();
     DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-
-    public PendingFragment() {
-
+    public InProgressFragment() {
     }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.pending_fragment, container, false);
-        penddingServices = new ArrayList<Service>();
+        inProgressServices = new ArrayList<Service>();
         //auth table reference
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         //user reference
@@ -61,14 +57,14 @@ public class PendingFragment extends Fragment {
                     String job = service.getJob();
                     String status = service.getStatus();
                     // Log.v("potato", "test");
-                    if (status.equals("pending")) {
-                        penddingServices.add(service);
+                    if (status.equals("in progress")) {
+                        inProgressServices.add(service);
                     }
                     ///////////////////
                     ///////////////////////////
                     ListView listView = (ListView) view.findViewById(R.id.pending_services_listview);
                     // adapter knows how to create list items for each item in the list.
-                    ServiceAdapter adapter = new ServiceAdapter(PendingFragment.this.getActivity(), penddingServices, R.color.colorWhite);
+                    ServiceAdapter adapter = new ServiceAdapter(InProgressFragment.this.getActivity(), inProgressServices, R.color.colorWhite);
                     // {@link ListView} will display list items for each {@link Word} in the list.
                     listView.setAdapter(adapter);
                     listView.setClickable(true);
@@ -80,4 +76,7 @@ public class PendingFragment extends Fragment {
         });
         return view;
     }//on create method
+
+
 }
+

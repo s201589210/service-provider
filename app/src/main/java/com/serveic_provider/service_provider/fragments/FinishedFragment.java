@@ -1,10 +1,9 @@
-package com.serveic_provider.service_provider;
+package com.serveic_provider.service_provider.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,19 +22,19 @@ import com.serveic_provider.service_provider.serviceProvider.Service;
 
 import java.util.ArrayList;
 
-public class InProgressFragment extends Fragment {
+public class FinishedFragment extends Fragment {
     View view;
     DatabaseReference typeRef;
     FirebaseDatabase mDatabase;
-    ArrayList<Service> inProgressServices = new ArrayList<Service>();
+    ArrayList<Service> finishedServices = new ArrayList<Service>();
     DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-    public InProgressFragment() {
+    public FinishedFragment() {
     }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.pending_fragment, container, false);
-        inProgressServices = new ArrayList<Service>();
+        finishedServices = new ArrayList<Service>();
         //auth table reference
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         //user reference
@@ -54,21 +53,21 @@ public class InProgressFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 //loop over all providers ids
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Service service = snapshot.getValue(Service.class);
-                    String job = service.getJob();
-                    String status = service.getStatus();
+                    Service servic = snapshot.getValue(Service.class);
+                    String job = servic.getJob();
+                    String status = servic.getStatus();
                     // Log.v("potato", "test");
-                    if (status.equals("in progress")) {
-                        inProgressServices.add(service);
+                    if (status.equals("finished")) {
+                        finishedServices.add(servic);
                     }
                     ///////////////////
-                    ///////////////////////////
+                    ///////////////////
                     ListView listView = (ListView) view.findViewById(R.id.pending_services_listview);
                     // adapter knows how to create list items for each item in the list.
-                    ServiceAdapter adapter = new ServiceAdapter(InProgressFragment.this.getActivity(), inProgressServices, R.color.colorWhite);
+                    ServiceAdapter adapter = new ServiceAdapter(FinishedFragment.this.getActivity(), finishedServices, R.color.colorWhite);
                     // {@link ListView} will display list items for each {@link Word} in the list.
                     listView.setAdapter(adapter);
-                    listView.setClickable(true);
+                    listView.setClickable(false);
                 }
             }
             @Override
@@ -77,7 +76,4 @@ public class InProgressFragment extends Fragment {
         });
         return view;
     }//on create method
-
-
 }
-
