@@ -34,6 +34,8 @@ public class EditProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
+        setTitle("Edit Profile");
+
 
         //assign all view fields
         firstNameEditText = (EditText)findViewById(R.id.edit_profile_first_name_edit_text);

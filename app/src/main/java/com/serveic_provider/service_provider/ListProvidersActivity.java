@@ -60,6 +60,8 @@ public class ListProvidersActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_providers);
+        setTitle("Select Providers");
+
         providerList = new ArrayList<User>();
         Log.v("onCreate","222");
         //get information based with last activity
