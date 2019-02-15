@@ -139,8 +139,9 @@ public class SignUpActivity extends AppCompatActivity {
                                 String type = selectedRadioButton.getText().toString().toLowerCase();
                                 user.setType(type);
                                 // Setting the name of the user
-                                String name = firstNametext.getText() + " " + lastNametext.getText();
-                                user.setName(name);
+                                String firstName = firstNametext.getText().toString().trim().toLowerCase();
+                                String lastName = lastNametext.getText().toString().trim().toLowerCase();
+                                user.setName(firstName + " " + lastName);
                                 // Using both the unique userId and user object to write the type and location under user_profiles/$userId
                                 writeUserToFBDB(userId, user);
 
