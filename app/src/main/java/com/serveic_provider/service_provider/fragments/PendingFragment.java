@@ -105,50 +105,40 @@ public class PendingFragment extends Fragment {
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                 String service = snapshot.getValue(String.class);
-                     //store requesters id in arraylist
-                   // for some reason , there is extra 2 characters at the end of each id ,i use substring to remove them
-                                requestersIDs.add(service.substring(0,28));
-                            }
-                    // to remove dublicate id send it to set then return it back
-                            Set<String> set = new HashSet<>(requestersIDs);
-                            requestersIDs.clear();
-                            requestersIDs.addAll(set);
 
-                        //loop for the id list to add to find all services in requester side
-                            for(int i=0;i<requestersIDs.size();i++){
-
-                           // Toast.makeText(getActivity(), servicesIDs.get(0), Toast.LENGTH_LONG).show();
-                  DatabaseReference ServicesRef = rootRef.child("requester_services").child(requestersIDs.get(i));
-                        ServicesRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                String[] parts = service.split("_");
+                                String requesterID = parts[0];
+                                String serviceNumber = parts[1];
+                                ////////////////////////////
+     DatabaseReference ServicesRef = rootRef.child("requester_services").child(requesterID).child(serviceNumber);
+                                ServicesRef.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                        //loop over all providers ids
-                                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                            Service service = snapshot.getValue(Service.class);
-                                            String job = service.getJob();
-                                            String status = service.getStatus();
-                                 // if statment for service if its in pending status and made by the spcific requester
-                                            if (status.equals("pending") && service.getProvider_id().equals(userId)) {
-                                                penddingServices.add(service);
-                                            }
 
-                                            ListView listView = (ListView) view.findViewById(R.id.pending_services_listview);
-                                            // adapter knows how to create list items for each item in the list.
-                                            ServiceAdapter adapter = new ServiceAdapter(PendingFragment.this.getActivity(), penddingServices, R.color.colorWhite);
-                                            // {@link ListView} will display list items for each {@link Word} in the list.
-                                            listView.setAdapter(adapter);
-                                            listView.setClickable(true);
+                                        Service service = dataSnapshot.getValue(Service.class);
+                                        String job = service.getJob();
+                                        String status = service.getStatus();
+
+                                        if (status.equals("pending") && service.getProvider_id().equals(userId)) {
+                                            penddingServices.add(service);
                                         }
+
+                                        ListView listView = (ListView) view.findViewById(R.id.pending_services_listview);
+                                        // adapter knows how to create list items for each item in the list.
+                                        ServiceAdapter adapter = new ServiceAdapter(PendingFragment.this.getActivity(), penddingServices, R.color.colorWhite);
+                                        // {@link ListView} will display list items for each {@link Word} in the list.
+                                        listView.setAdapter(adapter);
+                                        listView.setClickable(true);
+
+
                                     }
                                     @Override
                                     public void onCancelled(@NonNull DatabaseError databaseError) {
                                     }
                                 });
+                            }
 
 
-
-
-                           }
 
                        }
                         @Override

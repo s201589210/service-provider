@@ -4,12 +4,7 @@
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:background="#000"
-        android:layout_height="1dp"
-        android:layout_width="match_parent"
 
-        />
 
     <LinearLayout
         android:orientation="vertical"
@@ -129,7 +124,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:src="@drawable/courier"
+                android:src="@drawable/mechanic"
                 android:scaleType="fitCenter"
                 android:padding="15dp"
                 android:clickable="true"
@@ -180,7 +175,7 @@
                 android:layout_weight="1"
                 android:scaleType="fitCenter"
                 android:textAlignment="center"
-                android:text="COURIER"/>
+                android:text="MECHANIC"/>
 
             <TextView
                 android:layout_width="0dp"
@@ -230,7 +225,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:src="@drawable/mechanic"
+                android:src="@drawable/plumber"
                 android:scaleType="fitCenter"
                 android:padding="15dp"
                 android:clickable="true"

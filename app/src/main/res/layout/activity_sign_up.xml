@@ -121,9 +121,6 @@
                 android:textAppearance="?android:textAppearanceMedium" />
         </RadioGroup>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/profession_text_view"
@@ -141,6 +138,7 @@
             >
 
         </Spinner>
+
         <Button
             android:id="@+id/sign_up_button"
             android:layout_width="wrap_content"
@@ -148,14 +146,6 @@
             android:text="@string/sign_up"
             android:textAlignment="center"
             android:layout_toRightOf="@id/profession_spinner"/>
-
-    </RelativeLayout>
-
-
-
-
-
-
 
 </LinearLayout>
 
