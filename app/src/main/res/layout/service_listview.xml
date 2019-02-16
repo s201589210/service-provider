@@ -37,7 +37,6 @@
                 android:id="@+id/profession_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
-                android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:gravity="end"
                 android:text=" profession"
