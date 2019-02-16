@@ -2,11 +2,13 @@
     <string name="app_name">Service Provider</string>
     <string name="searchServices">Search a service</string>
     <!--Sign up-& Sign in-->
-    <string name="name">Name</string>
     <string name="email">Email</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
     <string name="password">Password</string>
     <string name="password_confirm">Confirm Password</string>
     <string name="location">Location:</string>
+    <string name="profession">Profession:</string>
     <string-array name="locations">
         <item>Abha</item>
         <item>Al Bukayriyah</item>
@@ -409,6 +411,17 @@
         <item>Dubiyah</item>
         <item>Shubra</item>
         <item>Skirinah</item>
+    </string-array>
+    <string-array name="professions">
+        <item>Builder</item>
+        <item>Carpenter</item>
+        <item>Courier</item>
+        <item>Dyer</item>
+        <item>Electrician</item>
+        <item>Gardener</item>
+        <item>Maid</item>
+        <item>Plumber</item>
+        <item>Welder</item>
     </string-array>
     <string name="type">Type:</string>
     <string name="type_requester">Requester</string>

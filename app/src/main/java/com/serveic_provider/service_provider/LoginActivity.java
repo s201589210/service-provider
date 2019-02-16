@@ -91,22 +91,7 @@ public class LoginActivity extends AppCompatActivity {
                                 final String userId = FBuser.getUid();
 
                                 // setting the token which used for notification
-                                FirebaseInstanceId.getInstance().getInstanceId()
-                                        .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                                                if (!task.isSuccessful()) {
-                                                    Log.w(TAG, "getInstanceId failed", task.getException());
-                                                    return;
-                                                }
-
-                                                // Stored under user id in user_profiles
-                                                String token = task.getResult().getToken();
-                                                Log.d(TAG, "current token: " + token);
-                                                userProfileRef.child(userId).child("token_id").setValue(token);
-
-                                            }
-                                        });
+                                setTokenId(userId);
 
                                 // Notifying the user
                                 Toast.makeText(LoginActivity.this, "Authentication successed",
@@ -183,5 +168,23 @@ public class LoginActivity extends AppCompatActivity {
     // Checks for empty Password
     private Boolean isPasswordEmpty(String password) {
         return password.equals("");
+    }
+
+    private void setTokenId(final String userId) {
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "getInstanceId failed", task.getException());
+                            return;
+                        }
+
+                        // Stored under user id in user_profiles
+                        String token = task.getResult().getToken();
+                        Log.d(TAG, "current token: " + token);
+                        userProfileRef.child(userId).child("token_id").setValue(token);
+                    }
+                });
     }
 }

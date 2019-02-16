@@ -33,7 +33,7 @@ public class DeletedFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.pending_fragment, container, false);
+        view = inflater.inflate(R.layout.services_fragment, container, false);
         //empty the list
         deletedServices = new ArrayList<Service>();
         //auth table reference
