@@ -6,8 +6,8 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,6 +26,7 @@ public class ProfileActivity extends AppCompatActivity {
     TextView lastName;
     TextView city;
     TextView phone;
+    RatingBar ratingBar;
     String userId = "";
 
     Button editBtn;
@@ -42,6 +43,7 @@ public class ProfileActivity extends AppCompatActivity {
         lastName = (TextView)findViewById(R.id.lastNameTextView);
         city = (TextView)findViewById(R.id.cityTextView);
         phone =(TextView)findViewById(R.id.phoneTextView);
+        ratingBar =(RatingBar)findViewById(R.id.ratingBar);
 
         //get user id from last activity
         Bundle extras = getIntent().getExtras();
@@ -90,12 +92,17 @@ public class ProfileActivity extends AppCompatActivity {
 
     }
     public void setFields(User user){
-        firstName.setText(user.getName());
-        lastName.setText(user.getLastName());
-        city.setText(user.getLocation());
-        phone .setText(user.getPhone_number());
-    }
+        if(user.getName()!=null)
+            firstName.setText(user.getName());
+        if(user.getLastName()!=null)
+            lastName.setText(user.getLastName());
+        if(user.getLocation()!=null)
+            city.setText(user.getLocation());
+        if(user.getPhone_number()!=null)
+            phone .setText(user.getPhone_number());
 
+            ratingBar.setRating(user.getRate());
+    }
     public boolean onCreateOptionsMenu(Menu menu) {
         //check if current user opening his profile
         if(checkUser(userId)){
