@@ -25,6 +25,7 @@ import com.serveic_provider.service_provider.adapters.ProviderServiceAdapter;
 import com.serveic_provider.service_provider.serviceProvider.Service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class ProviderHomeActivity extends AppCompatActivity {
 
@@ -41,6 +42,7 @@ public class ProviderHomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.provider_homepage);
         setTitle("Service Provider");
+        updateServicesStatus();
         profile_button = (ImageView)findViewById(R.id.profile_button);
         final Intent intent1 = new Intent(ProviderHomeActivity.this, ProfileActivity.class);
         profile_button.setOnClickListener(new View.OnClickListener() {
@@ -72,8 +74,6 @@ public class ProviderHomeActivity extends AppCompatActivity {
 
 
     private void buildList() {
-
-
         //user reference
         FirebaseUser FBuser;
         //get user
@@ -116,7 +116,7 @@ public class ProviderHomeActivity extends AppCompatActivity {
                 Service service = dataSnapshot.getValue(Service.class);
                 //adding the service to the ArrayList
                 //if the service has no provider assigned yet
-                if(service.getProvider_id().equals("none")){
+                if(service.getProvider_id().equals("none") && service.getStatus().equals("pending")){
                     //if the provider has not decline the service before (provider's id is in the potential providers ids)
                     if(service.getPotentialProvidersIds().contains(userId)) {
                         //then display the service for hte provider
@@ -172,5 +172,99 @@ public class ProviderHomeActivity extends AppCompatActivity {
             finish();
         }
         return true;
+    }
+
+    //updates the services' status for all the services
+    private void updateServicesStatus() {
+        //user reference
+        FirebaseUser FBuser;
+        //get user
+        FBuser = FirebaseAuth.getInstance().getCurrentUser();
+        String userId = FBuser.getUid();
+
+
+        providerServicesRef = FirebaseDatabase.getInstance().getReference().child("provider_services").child(userId);
+
+        //provider_services listener
+        providerServicesRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    //serviceId = requester ID + service number
+                    String serviceId = snapshot.getValue(String.class);
+                    String requesterId = serviceId.substring(0,serviceId.indexOf("_"));
+                    String serviceNumber = serviceId.substring(serviceId.indexOf("_")+1);
+                    //getting the service using the service id
+                    updateServiceStatus(requesterId, serviceNumber);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+
+
+    }
+
+    //update a service status for a single service
+    private void updateServiceStatus(String requesterId, String serviceNumber) {
+
+        final DatabaseReference requesterServicesRef = FirebaseDatabase.getInstance().getReference().child("requester_services").child(requesterId).child(serviceNumber);
+        //provider_services listener
+        requesterServicesRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Service service = dataSnapshot.getValue(Service.class);
+                    // service is pending and has a provider
+                    if(service.getStatus().equals("pending") && !service.getProvider_id().equals("none")) {
+                        if(isTimePassed(service))
+                            requesterServicesRef.child("status").setValue("in progress");
+                        // service is pending and has no provider
+                    }else if(service.getStatus().equals("pending") && service.getProvider_id().equals("none")){
+                        if(isTimePassed(service))
+                            requesterServicesRef.child("status").setValue("deleted");
+                    }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });//end of updating services
+    }
+
+    //returns true if time has passed else return false
+    private boolean isTimePassed(Service service) {
+        // get current date info
+        final int currentDay = Calendar.getInstance().getTime().getDate();
+        final int currentMonth = Calendar.getInstance().getTime().getMonth()+1;
+        final int currentYear = Calendar.getInstance().getTime().getYear()+1900;
+        final int currentHour = Calendar.getInstance().getTime().getHours();
+        final int currentMinuet = Calendar.getInstance().getTime().getMinutes();
+
+        //get service date info
+        String[] serviceDateString = service.getDate().split("/");
+        int serviceDay = Integer.parseInt(serviceDateString[1]);
+        int serviceMonth = Integer.parseInt(serviceDateString[0]);
+        int serviceYear = Integer.parseInt("20" + serviceDateString[2]);
+        String[] serviceStartTime = service.getStartTime().split(":");
+
+        if (serviceYear < currentYear)
+            return true;
+        else if (serviceYear == currentYear)
+            if (serviceMonth < currentMonth)
+                return true;
+            else if (serviceMonth == currentMonth)
+                if (serviceDay < currentDay)
+                    return true;
+                else if (serviceDay == currentDay)
+                    if (Integer.parseInt(serviceStartTime[0]) < currentHour)
+                        return true;
+                    else if (Integer.parseInt(serviceStartTime[0]) == currentHour)
+                        if (Integer.parseInt(serviceStartTime[1]) <= currentMinuet)
+                            return true;
+
+        return false;
     }
 }

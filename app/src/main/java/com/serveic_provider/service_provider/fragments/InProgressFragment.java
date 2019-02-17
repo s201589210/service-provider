@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.firebase.client.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -23,6 +24,7 @@ import com.serveic_provider.service_provider.adapters.ServiceAdapter;
 import com.serveic_provider.service_provider.serviceProvider.Service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -42,6 +44,7 @@ public class InProgressFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.services_fragment, container, false);
+        updateServicesStatus();
         penddingServices = new ArrayList<Service>();
         //auth table reference
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -166,4 +169,59 @@ public class InProgressFragment extends Fragment {
 
         return view;
     }//on create method
+
+    private void updateServicesStatus() {
+        final int currentDay = Calendar.getInstance().getTime().getDate();
+        final int currentMonth = Calendar.getInstance().getTime().getMonth()+1;
+        final int currentYear = Calendar.getInstance().getTime().getYear()+1900;
+        final int currentHour = Calendar.getInstance().getTime().getHours();
+        final int currentMinuet = Calendar.getInstance().getTime().getMinutes();
+
+        //user reference
+        FirebaseUser FBuser;
+        //get user
+        FBuser = FirebaseAuth.getInstance().getCurrentUser();
+        String userId = FBuser.getUid();
+
+        final DatabaseReference requesterServicesRef = FirebaseDatabase.getInstance().getReference().child("requester_services").child(userId);
+
+        //provider_services listener
+        requesterServicesRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Service service = snapshot.getValue(Service.class);
+                    //get service date info
+                    String[] serviceDateString = service.getDate().split("/");
+
+                    if(service.getStatus().equals("pending")) {
+                        int serviceDay = Integer.parseInt(serviceDateString[1]);
+                        int serviceMonth = Integer.parseInt(serviceDateString[0]);
+                        int serviceYear = Integer.parseInt("20" + serviceDateString[2]);
+                        String[] serviceStartTime = service.getStartTime().split(":");
+
+                        if (serviceYear < currentYear)
+                            requesterServicesRef.child(service.getService_id()).child("status").setValue("in progress");
+                        else if (serviceYear == currentYear)
+                            if (serviceMonth < currentMonth)
+                                requesterServicesRef.child(service.getService_id()).child("status").setValue("in progress");
+                            else if (serviceMonth == currentMonth)
+                                if (serviceDay < currentDay)
+                                    requesterServicesRef.child(service.getService_id()).child("status").setValue("in progress");
+                                else if (serviceDay == currentDay)
+                                    if (Integer.parseInt(serviceStartTime[0]) < currentHour)
+                                        requesterServicesRef.child(service.getService_id()).child("status").setValue("in progress");
+                                    else if (Integer.parseInt(serviceStartTime[0]) == currentHour)
+                                        if (Integer.parseInt(serviceStartTime[1]) <= currentMinuet)
+                                            requesterServicesRef.child(service.getService_id()).child("status").setValue("in progress");
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });//end of updating services
+    }
 }
