@@ -170,6 +170,11 @@ public class LoginActivity extends AppCompatActivity {
         return password.equals("");
     }
 
+    @Override
+    public void onBackPressed() {
+        //do nothing
+    }
+
     private void setTokenId(final String userId) {
         FirebaseInstanceId.getInstance().getInstanceId()
                 .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {

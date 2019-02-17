@@ -4,20 +4,27 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.firebase.client.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 
 public class RequesterHomeActivity extends AppCompatActivity {
     ImageView profile_button;
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_requester_home_page);
+        updateServicesStatus();
         profile_button = (ImageView)findViewById(R.id.profile_button);
 
         final Intent intent1 = new Intent(RequesterHomeActivity.this, ProfileActivity.class);
@@ -26,8 +33,6 @@ public class RequesterHomeActivity extends AppCompatActivity {
                 //check type of the user
                 //current user id
                 String currnetUserId ;
-                //auth table reference
-                FirebaseAuth mAuth = FirebaseAuth.getInstance();;
                 //user reference
                 FirebaseUser FBuser;
                 //dRef
@@ -97,5 +102,24 @@ public class RequesterHomeActivity extends AppCompatActivity {
 
     public void goToMyServicesPage(View view) {
         startActivity(new Intent(this,MyServicesActivity.class));
+    }
+
+    private void updateServicesStatus() {
+        Log.v("MyTag", ServerValue.TIMESTAMP.toString());
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.logout,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.logout){
+            mAuth.signOut();
+            startActivity(new Intent(this, LoginActivity.class)); //Go back to home page
+            finish();
+        }
+        return true;
     }
 }

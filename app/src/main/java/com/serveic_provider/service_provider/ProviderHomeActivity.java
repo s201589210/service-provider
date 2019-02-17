@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -17,6 +19,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.serveic_provider.service_provider.adapters.ProviderServiceAdapter;
 import com.serveic_provider.service_provider.serviceProvider.Service;
@@ -28,6 +31,8 @@ public class ProviderHomeActivity extends AppCompatActivity {
     DatabaseReference providerServicesRef;
     FirebaseDatabase mDatabase;
     String userId;
+    //auth table reference
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
     ArrayList<Service> pendingServices = new ArrayList<Service>();
     ImageView profile_button;
 
@@ -44,7 +49,7 @@ public class ProviderHomeActivity extends AppCompatActivity {
                 //current user id
                 String currnetUserId ;
                 //auth table reference
-                FirebaseAuth mAuth = FirebaseAuth.getInstance();;
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
                 //user reference
                 FirebaseUser FBuser;
                 //dRef
@@ -64,9 +69,10 @@ public class ProviderHomeActivity extends AppCompatActivity {
 
     }
 
+
+
     private void buildList() {
-        //auth table reference
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
 
         //user reference
         FirebaseUser FBuser;
@@ -151,5 +157,20 @@ public class ProviderHomeActivity extends AppCompatActivity {
         ProviderServiceAdapter adapter = new ProviderServiceAdapter(this, pendingServices);
         pendingServicesListView.setAdapter(adapter);
         pendingServicesListView.setClickable(true);
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.logout,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.logout){
+            mAuth.signOut();
+            startActivity(new Intent(this, LoginActivity.class)); //Go back to home page
+            finish();
+        }
+        return true;
     }
 }
