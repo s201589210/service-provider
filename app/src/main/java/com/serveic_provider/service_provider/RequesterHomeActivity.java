@@ -1,6 +1,7 @@
 package com.serveic_provider.service_provider;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,9 +14,17 @@ import android.widget.ImageView;
 import com.firebase.client.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
+import com.google.firebase.database.ValueEventListener;
+import com.serveic_provider.service_provider.serviceProvider.Service;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Map;
 
 public class RequesterHomeActivity extends AppCompatActivity {
     ImageView profile_button;
@@ -104,10 +113,6 @@ public class RequesterHomeActivity extends AppCompatActivity {
         startActivity(new Intent(this,MyServicesActivity.class));
     }
 
-    private void updateServicesStatus() {
-        Log.v("MyTag", ServerValue.TIMESTAMP.toString());
-    }
-
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.logout,menu);
         return true;
@@ -121,5 +126,77 @@ public class RequesterHomeActivity extends AppCompatActivity {
             finish();
         }
         return true;
+    }
+
+    private void updateServicesStatus() {
+
+
+        //user reference
+        FirebaseUser FBuser;
+        //get user
+        FBuser = FirebaseAuth.getInstance().getCurrentUser();
+        String userId = FBuser.getUid();
+
+        final DatabaseReference requesterServicesRef = FirebaseDatabase.getInstance().getReference().child("requester_services").child(userId);
+
+        //provider_services listener
+        requesterServicesRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Service service = snapshot.getValue(Service.class);
+                    // service is pending and has a provider
+                    if(service.getStatus().equals("pending") && !service.getProvider_id().equals("none")) {
+                        if(isTimePassed(service)) {
+                            requesterServicesRef.child(service.getService_id()).child("status").setValue("in progress");
+                        }
+                        // service is pending and has no provider
+                    }else if(service.getStatus().equals("pending") && service.getProvider_id().equals("none")){
+                        if(isTimePassed(service)) {
+                            requesterServicesRef.child(service.getService_id()).child("status").setValue("deleted");
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });//end of updating services
+    }
+
+    //returns true if time has passed else return false
+    private boolean isTimePassed(Service service) {
+        // get current date info
+        final int currentDay = Calendar.getInstance().getTime().getDate();
+        final int currentMonth = Calendar.getInstance().getTime().getMonth()+1;
+        final int currentYear = Calendar.getInstance().getTime().getYear()+1900;
+        final int currentHour = Calendar.getInstance().getTime().getHours();
+        final int currentMinuet = Calendar.getInstance().getTime().getMinutes();
+
+        //get service date info
+        String[] serviceDateString = service.getDate().split("/");
+        int serviceDay = Integer.parseInt(serviceDateString[1]);
+        int serviceMonth = Integer.parseInt(serviceDateString[0]);
+        int serviceYear = Integer.parseInt("20" + serviceDateString[2]);
+        String[] serviceStartTime = service.getStartTime().split(":");
+
+        if (serviceYear < currentYear)
+            return true;
+        else if (serviceYear == currentYear)
+            if (serviceMonth < currentMonth)
+                return true;
+            else if (serviceMonth == currentMonth)
+                if (serviceDay < currentDay)
+                    return true;
+                else if (serviceDay == currentDay)
+                    if (Integer.parseInt(serviceStartTime[0]) < currentHour)
+                        return true;
+                    else if (Integer.parseInt(serviceStartTime[0]) == currentHour)
+                        if (Integer.parseInt(serviceStartTime[1]) <= currentMinuet)
+                            return true;
+
+        return false;
     }
 }

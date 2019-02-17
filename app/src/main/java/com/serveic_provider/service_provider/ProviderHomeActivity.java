@@ -25,6 +25,7 @@ import com.serveic_provider.service_provider.adapters.ProviderServiceAdapter;
 import com.serveic_provider.service_provider.serviceProvider.Service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class ProviderHomeActivity extends AppCompatActivity {
 
@@ -41,6 +42,7 @@ public class ProviderHomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.provider_homepage);
         setTitle("Service Provider");
+        updateServicesStatus();
         profile_button = (ImageView)findViewById(R.id.profile_button);
         final Intent intent1 = new Intent(ProviderHomeActivity.this, ProfileActivity.class);
         profile_button.setOnClickListener(new View.OnClickListener() {
@@ -72,8 +74,6 @@ public class ProviderHomeActivity extends AppCompatActivity {
 
 
     private void buildList() {
-
-
         //user reference
         FirebaseUser FBuser;
         //get user
@@ -172,5 +172,60 @@ public class ProviderHomeActivity extends AppCompatActivity {
             finish();
         }
         return true;
+    }
+
+    private void updateServicesStatus() {
+        final int currentDay = Calendar.getInstance().getTime().getDate();
+        final int currentMonth = Calendar.getInstance().getTime().getMonth()+1;
+        final int currentYear = Calendar.getInstance().getTime().getYear()+1900;
+        final int currentHour = Calendar.getInstance().getTime().getHours();
+        final int currentMinuet = Calendar.getInstance().getTime().getMinutes();
+
+        //user reference
+        FirebaseUser FBuser;
+        //get user
+        FBuser = mAuth.getCurrentUser();
+        String userId = FBuser.getUid();
+
+        final DatabaseReference requesterServicesRef = FirebaseDatabase.getInstance().getReference().child("requester_services").child(userId);
+
+        //provider_services listener
+        requesterServicesRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Service service = snapshot.getValue(Service.class);
+                    //get service date info
+                    String[] serviceDateString = service.getDate().split("/");
+
+                    if(service.getStatus().equals("pending")) {
+                        int serviceDay = Integer.parseInt(serviceDateString[1]);
+                        int serviceMonth = Integer.parseInt(serviceDateString[0]);
+                        int serviceYear = Integer.parseInt("20" + serviceDateString[2]);
+                        String[] serviceStartTime = service.getStartTime().split(":");
+
+                        if (serviceYear < currentYear)
+                            requesterServicesRef.child(service.getService_id()).child("status").setValue("in progress");
+                        else if (serviceYear == currentYear)
+                            if (serviceMonth < currentMonth)
+                                requesterServicesRef.child(service.getService_id()).child("status").setValue("in progress");
+                            else if (serviceMonth == currentMonth)
+                                if (serviceDay < currentDay)
+                                    requesterServicesRef.child(service.getService_id()).child("status").setValue("in progress");
+                                else if (serviceDay == currentDay)
+                                    if (Integer.parseInt(serviceStartTime[0]) < currentHour)
+                                        requesterServicesRef.child(service.getService_id()).child("status").setValue("in progress");
+                                    else if (Integer.parseInt(serviceStartTime[0]) == currentHour)
+                                        if (Integer.parseInt(serviceStartTime[1]) <= currentMinuet)
+                                            requesterServicesRef.child(service.getService_id()).child("status").setValue("in progress");
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });//end of updating services
     }
 }
