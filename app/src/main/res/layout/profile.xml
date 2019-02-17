@@ -81,14 +81,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:layout_alignTop="@+id/phoneTextView"
                 android:layout_alignParentStart="true"
+                android:layout_alignTop="@+id/phoneTextView"
+                android:layout_marginEnd="86dp"
                 android:layout_marginStart="0dp"
                 android:layout_marginTop="64dp"
-                android:layout_marginEnd="86dp"
-                android:layout_toStartOf="@+id/ratingBar"
                 android:padding="10dp"
-                android:text="Phone:"
+                android:text="Rate:"
                 android:textSize="20dp" />
 
             <TextView
@@ -138,7 +137,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:layout_centerInParent="true"
+                android:layout_alignStart="@+id/firstNameTextView"
+                android:layout_centerVertical="true"
                 android:padding="10dp"
                 android:textSize="20dp"
                 tools:text="city" />
@@ -158,12 +158,8 @@
                 android:id="@+id/ratingBar2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/rating_label"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="164dp"
-                android:layout_marginTop="342dp"
-                android:layout_marginEnd="7dp" />
+                android:layout_alignTop="@+id/rating_label"
+                android:layout_centerHorizontal="true" />
 
 
         </RelativeLayout>

@@ -13,6 +13,14 @@
         android:layout_weight="3"
         >
 
+        <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Welcome , Please select a profission to create request:"
+            android:padding="16dp"
+            />
+
 
 
         <LinearLayout

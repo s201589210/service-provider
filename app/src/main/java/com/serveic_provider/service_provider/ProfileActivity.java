@@ -43,7 +43,7 @@ public class ProfileActivity extends AppCompatActivity {
         lastName = (TextView)findViewById(R.id.lastNameTextView);
         city = (TextView)findViewById(R.id.cityTextView);
         phone =(TextView)findViewById(R.id.phoneTextView);
-        ratingBar =(RatingBar)findViewById(R.id.ratingBar);
+        ratingBar =(RatingBar)findViewById(R.id.ratingBar2);
 
         //get user id from last activity
         Bundle extras = getIntent().getExtras();
