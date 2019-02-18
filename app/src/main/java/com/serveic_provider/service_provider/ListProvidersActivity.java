@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -45,6 +46,7 @@ public class ListProvidersActivity extends AppCompatActivity {
     String requsterID;
     String providerID;
     String serviceID;
+    ProgressBar spinner;
 
     DatabaseReference requesterServicesRef;
     DatabaseReference providerServicesRef;
@@ -61,6 +63,9 @@ public class ListProvidersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_providers);
         setTitle("Select Providers");
+
+        spinner = (ProgressBar)findViewById(R.id.progressBar1);
+        spinner.setVisibility(View.VISIBLE);
 
         providerList = new ArrayList<User>();
         Log.v("onCreate","222");
@@ -243,6 +248,7 @@ public class ListProvidersActivity extends AppCompatActivity {
                 User user = dataSnapshot.getValue(User.class);
                 user.setUid(providerID);
                 providerList.add(user);
+                spinner.setVisibility(View.GONE);
                 Log.v("addingInfo",providerList.get(0).getName());
                 //display the list
                 setList();
