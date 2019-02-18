@@ -6,7 +6,9 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -28,6 +30,7 @@ public class ProfileActivity extends AppCompatActivity {
     TextView phone;
     RatingBar ratingBar;
     String userId = "";
+     ProgressBar spinner;
 
     Button editBtn;
     Button updateBtn;
@@ -44,6 +47,11 @@ public class ProfileActivity extends AppCompatActivity {
         city = (TextView)findViewById(R.id.cityTextView);
         phone =(TextView)findViewById(R.id.phoneTextView);
         ratingBar =(RatingBar)findViewById(R.id.ratingBar2);
+        spinner = (ProgressBar)findViewById(R.id.progressBar1);
+
+        spinner.setVisibility(View.VISIBLE);
+
+
 
         //get user id from last activity
         Bundle extras = getIntent().getExtras();
@@ -102,6 +110,8 @@ public class ProfileActivity extends AppCompatActivity {
             phone .setText(user.getPhone_number());
 
             ratingBar.setRating(user.getRate());
+        spinner.setVisibility(View.GONE);
+
     }
     public boolean onCreateOptionsMenu(Menu menu) {
         //check if current user opening his profile
