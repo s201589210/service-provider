@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -34,6 +36,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class LoginActivity extends AppCompatActivity {
+    ProgressBar spinner;
+    LinearLayout loginElements;
+
+
     // For debugging
     private static final String TAG = "LoginActivity";
 
@@ -68,6 +74,10 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         // Binding the UI elements
         ButterKnife.bind(this);
+
+        spinner = (ProgressBar)findViewById(R.id.progressBar1);
+        loginElements= (LinearLayout) findViewById(R.id.login_Elements);
+        spinner.setVisibility(View.GONE);
     }
 
     // Assigning onClick for the sign IN using Butterknife instead of the onClick on the XML file
@@ -75,6 +85,9 @@ public class LoginActivity extends AppCompatActivity {
     public void login() {
         String email = emailText.getText().toString().trim();
         String password = passwordText.getText().toString().trim();
+
+        showSpenner();
+
         // Checking for an empty fields
         if(!isEmailEmpty(email) && !isPasswordEmpty(password))
             //FirebaseAuth method
@@ -104,14 +117,20 @@ public class LoginActivity extends AppCompatActivity {
                                 Log.w(TAG, "signInWithEmail:failure", task.getException());
                                 Toast.makeText(LoginActivity.this, "Authentication failed.",
                                         Toast.LENGTH_SHORT).show();
+
+                                hideSpenner();
+
                                 updateUI(null);
                             }
                         }
                     });
         // Empty fields
-        else
+        else{
             Toast.makeText(LoginActivity.this, "One of the fields is empty",
                     Toast.LENGTH_SHORT).show();
+            hideSpenner();
+
+        }
     }
 
     // User will go to the suited interface
@@ -192,4 +211,22 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
     }
+
+
+    public void showSpenner(){
+        spinner = (ProgressBar)findViewById(R.id.progressBar1);
+        loginElements= (LinearLayout) findViewById(R.id.login_Elements);
+
+        spinner.setVisibility(View.VISIBLE);
+        loginElements.setVisibility(View.GONE);
+
+    }
+    public void hideSpenner(){
+        spinner = (ProgressBar)findViewById(R.id.progressBar1);
+        loginElements= (LinearLayout) findViewById(R.id.login_Elements);
+
+        spinner.setVisibility(View.GONE);
+        loginElements.setVisibility(View.VISIBLE);
+    }
+
 }
