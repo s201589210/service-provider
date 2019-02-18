@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.serveic_provider.service_provider.R;
+import com.serveic_provider.service_provider.Utils;
 import com.serveic_provider.service_provider.adapters.ServiceAdapter;
 import com.serveic_provider.service_provider.serviceProvider.Service;
 
@@ -43,7 +44,7 @@ public class DeletedFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.services_fragment, container, false);
-        updateServicesStatus();
+        Utils.updateServiceStatus();
         penddingServices = new ArrayList<Service>();
         //auth table reference
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -169,74 +170,4 @@ public class DeletedFragment extends Fragment {
         return view;
     }//on create method
 
-    private void updateServicesStatus() {
-
-
-        //user reference
-        FirebaseUser FBuser;
-        //get user
-        FBuser = FirebaseAuth.getInstance().getCurrentUser();
-        String userId = FBuser.getUid();
-
-        final DatabaseReference requesterServicesRef = FirebaseDatabase.getInstance().getReference().child("requester_services").child(userId);
-
-        //provider_services listener
-        requesterServicesRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Service service = snapshot.getValue(Service.class);
-
-                    // service is pending and has a provider
-                    if(service.getStatus().equals("pending") && !service.getProvider_id().equals("none")) {
-                        if(isTimePassed(service))
-                            requesterServicesRef.child(service.getService_id()).child("status").setValue("in progress");
-                        // service is pending and has no provider
-                    }else if(service.getStatus().equals("pending") && service.getProvider_id().equals("none")){
-                        if(isTimePassed(service))
-                            requesterServicesRef.child(service.getService_id()).child("status").setValue("deleted");
-                    }
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });//end of updating services
-    }
-
-    //returns true if time has passed else return false
-    private boolean isTimePassed(Service service) {
-        // get current date info
-        final int currentDay = Calendar.getInstance().getTime().getDate();
-        final int currentMonth = Calendar.getInstance().getTime().getMonth()+1;
-        final int currentYear = Calendar.getInstance().getTime().getYear()+1900;
-        final int currentHour = Calendar.getInstance().getTime().getHours();
-        final int currentMinuet = Calendar.getInstance().getTime().getMinutes();
-
-        //get service date info
-        String[] serviceDateString = service.getDate().split("/");
-        int serviceDay = Integer.parseInt(serviceDateString[1]);
-        int serviceMonth = Integer.parseInt(serviceDateString[0]);
-        int serviceYear = Integer.parseInt("20" + serviceDateString[2]);
-        String[] serviceStartTime = service.getStartTime().split(":");
-
-        if (serviceYear < currentYear)
-            return true;
-        else if (serviceYear == currentYear)
-            if (serviceMonth < currentMonth)
-                return true;
-            else if (serviceMonth == currentMonth)
-                if (serviceDay < currentDay)
-                    return true;
-                else if (serviceDay == currentDay)
-                    if (Integer.parseInt(serviceStartTime[0]) < currentHour)
-                        return true;
-                    else if (Integer.parseInt(serviceStartTime[0]) == currentHour)
-                        if (Integer.parseInt(serviceStartTime[1]) <= currentMinuet)
-                            return true;
-
-        return false;
-    }
 }
