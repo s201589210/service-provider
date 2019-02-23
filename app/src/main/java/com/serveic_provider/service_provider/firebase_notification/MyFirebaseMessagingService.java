@@ -31,10 +31,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private static final String TAG = "FirebaseMessagingServic";
 
-    public MyFirebaseMessagingService() {
-
-    }
-
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
@@ -107,10 +103,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat
                 .Builder(this, getString(R.string.default_notification_channel_id))
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.drawable.icon)
                 .setContentTitle(title)
                 .setContentText(messageBody)
-                .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
 
