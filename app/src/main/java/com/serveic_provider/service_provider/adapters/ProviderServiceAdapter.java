@@ -99,31 +99,18 @@ public class ProviderServiceAdapter extends ArrayAdapter<Service> {
         declineButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*final DatabaseReference potentialProvidersRef = FirebaseDatabase.getInstance().getReference().child("requester_services").child(currentService.getRequester_id()).child(currentService.getRequester_id()).child("potentialProvidersIds");
-                potentialProvidersRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        int counter =0;
-                        Log.v("MyTag",counter+"");
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                            String potentialProviderId = snapshot.getValue(String.class);
-                            Log.v("MyTag",counter+"");
-                            if (potentialProviderId.equals(userId)){
-                                removeProvider(counter,potentialProvidersRef);
-                                return;
-                            }
-                            counter++;
-                        }
-                        Log.v("MyTag",counter+"");
-                    }
-                    private void removeProvider(int counter, DatabaseReference potentialProvidersRef) {
-                        Log.v("MyTag",counter+"");
-                        potentialProvidersRef.child(counter+"").removeValue();
-                    }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                    }
-                });//end of getting requester name*/
+                //update the Potential Providers list locally
+                currentService.getPotentialProvidersIds().remove(userId);
+
+                //if the list is empty add dummy provider so that the list does not get deleted in the database
+                if(currentService.getPotentialProvidersIds().isEmpty())
+                    currentService.getPotentialProvidersIds().add("none");
+
+                //update the database service value
+                final DatabaseReference potentialProvidersRef = FirebaseDatabase.getInstance().getReference().child("requester_services").child(currentService.getRequester_id()).child(currentService.getService_id());
+                potentialProvidersRef.setValue(currentService);
+
+                //update UI
                 makeItemsInvisible();
 
             }
@@ -133,7 +120,14 @@ public class ProviderServiceAdapter extends ArrayAdapter<Service> {
         undoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //currentService.getPotentialProvidersIds().add(userId);
+                //update the Potential Providers list locally
+                currentService.getPotentialProvidersIds().add(userId);
+
+                //update the database service value
+                final DatabaseReference potentialProvidersRef = FirebaseDatabase.getInstance().getReference().child("requester_services").child(currentService.getRequester_id()).child(currentService.getService_id());
+                potentialProvidersRef.setValue(currentService);
+
+                //update UI
                 makeItemsVisible();
             }
         });
