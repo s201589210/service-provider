@@ -129,6 +129,7 @@ public class ProfileActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.edit_profile_button){
             startActivity(new Intent(this,EditProfileActivity.class));
+            finish();
         }
 
         return true;
