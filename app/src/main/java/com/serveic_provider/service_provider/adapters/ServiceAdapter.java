@@ -33,6 +33,8 @@ import com.serveic_provider.service_provider.serviceProvider.Service;
 import com.serveic_provider.service_provider.serviceProvider.User;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ServiceAdapter extends ArrayAdapter<Service> {
 
@@ -297,22 +299,25 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
     public void writeNotificaitonToFBDB(String fromUserId, String toUserId,
                                         String messageText, final Service service) {
         String requesterServiceId = service.getRequester_id()+"_"+service.getService_id();
+        Map<String, Object> notification = new HashMap<>();
+        notification.put("message", messageText);
+        notification.put("from", fromUserId);
+        notification.put("serviceId", requesterServiceId);
 
         DatabaseReference notificationsRef = FirebaseDatabase.getInstance().getReference()
-                .child("user_notifications").child(toUserId).push();
-        notificationsRef.child("message").setValue(messageText);
-        notificationsRef.child("from").setValue(fromUserId);
-        notificationsRef.child("serviceId").setValue(requesterServiceId).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Toast.makeText(context, "Notifiaction Sent", Toast.LENGTH_SHORT).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(context, "Error in Sending Notification", Toast.LENGTH_SHORT).show();
-            }
-        });
+                .child("user_notifications");
+        notificationsRef.child(toUserId).push().setValue(notification)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(context, "Notifiaction Sent", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(context, "Error in Sending Notification", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
 
