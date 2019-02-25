@@ -55,16 +55,7 @@ public class Utils {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Service service = snapshot.getValue(Service.class);
-
-                    // service is pending and has a provider
-                    if(service.getStatus().equals("pending") && !service.getProvider_id().equals("none")) {
-                        if(isTimePassed(service))
-                            requesterServicesRef.child(service.getService_id()).child("status").setValue("in progress");
-                        // service is pending and has no provider
-                    }else if(service.getStatus().equals("pending") && service.getProvider_id().equals("none")){
-                        if(isTimePassed(service))
-                            requesterServicesRef.child(service.getService_id()).child("status").setValue("deleted");
-                    }
+                    updateService(service, requesterServicesRef);
                 }
 
             }
@@ -107,21 +98,30 @@ public class Utils {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Service service = dataSnapshot.getValue(Service.class);
-                // service is pending and has a provider
-                if(service.getStatus().equals("pending") && !service.getProvider_id().equals("none")) {
-                    if(isTimePassed(service))
-                        requesterServicesRef.child("status").setValue("in progress");
-                    // service is pending and has no provider
-                }else if(service.getStatus().equals("pending") && service.getProvider_id().equals("none")){
-                    if(isTimePassed(service))
-                        requesterServicesRef.child("status").setValue("deleted");
-                }
+                updateService(service, requesterServicesRef);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });//end of updating services
+    }
+
+    private static void updateService(Service service, DatabaseReference requesterServicesRef) {
+        //if a service is in "pending" check for its time
+        if(service.getStatus().equals("pending")) {
+            //if time has past check if it has a provider
+            if (isTimePassed(service)) {
+                //if it does have a provider then it becomes "in progress"
+                if (!service.getProvider_id().equals("none")){
+                    requesterServicesRef.child(service.getService_id()).child("status").setValue("in progress");
+                }
+                //it it does not have a provider then it becomes "deleted"
+                else{
+                    requesterServicesRef.child(service.getService_id()).child("status").setValue("deleted");
+                }
+            }
+        }
     }
 
     private static boolean isTimePassed(Service service) {
