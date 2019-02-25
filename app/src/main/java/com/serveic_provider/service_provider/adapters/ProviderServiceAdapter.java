@@ -107,8 +107,8 @@ public class ProviderServiceAdapter extends ArrayAdapter<Service> {
                     currentService.getPotentialProvidersIds().add("none");
 
                 //update the database service value
-                final DatabaseReference potentialProvidersRef = FirebaseDatabase.getInstance().getReference().child("requester_services").child(currentService.getRequester_id()).child(currentService.getService_id());
-                potentialProvidersRef.setValue(currentService);
+                final DatabaseReference potentialProvidersRef = FirebaseDatabase.getInstance().getReference().child("requester_services").child(currentService.getRequester_id()).child(currentService.getService_id()).child("potentialProvidersIds");
+                potentialProvidersRef.setValue(currentService.getPotentialProvidersIds());
 
                 //update UI
                 makeItemsInvisible();
@@ -124,8 +124,8 @@ public class ProviderServiceAdapter extends ArrayAdapter<Service> {
                 currentService.getPotentialProvidersIds().add(userId);
 
                 //update the database service value
-                final DatabaseReference potentialProvidersRef = FirebaseDatabase.getInstance().getReference().child("requester_services").child(currentService.getRequester_id()).child(currentService.getService_id());
-                potentialProvidersRef.setValue(currentService);
+                final DatabaseReference potentialProvidersRef = FirebaseDatabase.getInstance().getReference().child("requester_services").child(currentService.getRequester_id()).child(currentService.getService_id()).child("potentialProvidersIds");
+                potentialProvidersRef.setValue(currentService.getPotentialProvidersIds());
 
                 //update UI
                 makeItemsVisible();
