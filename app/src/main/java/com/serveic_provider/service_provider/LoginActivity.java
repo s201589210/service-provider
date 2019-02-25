@@ -6,10 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -72,6 +75,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        runFadeOutAnimation();
+
         // Binding the UI elements
         ButterKnife.bind(this);
 
@@ -227,6 +232,14 @@ public class LoginActivity extends AppCompatActivity {
 
         spinner.setVisibility(View.GONE);
         loginElements.setVisibility(View.VISIBLE);
+    }
+
+    private void runFadeOutAnimation(){
+        Animation a = AnimationUtils.loadAnimation(this, R.anim.fadeout);
+        a.reset();
+        RelativeLayout ll = (RelativeLayout) findViewById(R.id.login_layout);
+        ll.clearAnimation();
+        ll.startAnimation(a);
     }
 
 }
