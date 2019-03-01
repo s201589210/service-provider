@@ -24,7 +24,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="1.5"
             android:background="@color/colorPrimary"
             android:orientation="vertical">
 
@@ -37,15 +37,12 @@
                 android:layout_centerInParent="true"
                 android:background="@drawable/dyer" />
 
-            <TextView
-                android:id="@+id/emailTextView"
+            <RatingBar
+                android:id="@+id/ratingBar2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/profile_imge"
-                android:layout_centerInParent="true"
-                android:text="USER NAME"
-                android:textColor="@color/colorWhite"
-                android:textSize="20dp" />
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/profile_imge"/>
 
 
         </RelativeLayout>
@@ -157,12 +154,7 @@
                 android:textSize="20dp"
                 tools:text="Lname" />
 
-            <RatingBar
-                android:id="@+id/ratingBar2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/rating_label"
-                android:layout_centerHorizontal="true" />
+
 
             <ProgressBar
                 android:id="@+id/progressBar1"

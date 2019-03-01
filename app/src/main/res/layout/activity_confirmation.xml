@@ -4,14 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ConfirmationActivity">
+    tools:context=".ConfirmationActivity"
+    android:background="@drawable/bakground">
 
     <TextView
+        android:textSize="17dp"
+        android:textColor="#000000"
         android:id="@+id/job_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
         android:text="Job:"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profession_text_view" />
@@ -20,45 +23,54 @@
         android:id="@+id/data_job_text_view"
         android:layout_width="267dp"
         android:layout_height="23dp"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="36dp"
         android:text="Job Data"
+        android:textColor="#000000"
+        android:textSize="17dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/job_text_view"
         app:layout_constraintTop_toBottomOf="@+id/data_profession_text_view" />
 
     <TextView
+        android:textSize="17dp"
+        android:textColor="#000000"
         android:id="@+id/description_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="28dp"
         android:text="Description:"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/job_text_view" />
 
     <TextView
+
         android:id="@+id/data_description_text_view"
         android:layout_width="268dp"
         android:layout_height="22dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="32dp"
         android:text="Description Data"
+        android:textColor="#000000"
+        android:textSize="17dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.052"
         app:layout_constraintStart_toEndOf="@+id/description_text_view"
         app:layout_constraintTop_toBottomOf="@+id/data_job_text_view" />
 
     <TextView
         android:id="@+id/location_text_view"
-        android:layout_width="68dp"
+        android:layout_width="82dp"
         android:layout_height="37dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
         android:text="Location:"
+        android:textColor="#000000"
+        android:textSize="17dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/endtime_text_view" />
 
@@ -66,16 +78,20 @@
         android:id="@+id/data_location_text_view"
         android:layout_width="258dp"
         android:layout_height="42dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="20dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="16dp"
         android:text="Location Data"
+        android:textColor="#000000"
+        android:textSize="17dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.687"
         app:layout_constraintStart_toEndOf="@+id/location_text_view"
         app:layout_constraintTop_toBottomOf="@+id/data_endtime_text_view" />
 
     <TextView
+        android:textSize="17dp"
+        android:textColor="#000000"
         android:id="@+id/date_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -89,12 +105,14 @@
         android:id="@+id/data_date_text_view"
         android:layout_width="264dp"
         android:layout_height="22dp"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="24dp"
         android:text="Date Data"
+        android:textColor="#000000"
+        android:textSize="17dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.481"
         app:layout_constraintStart_toEndOf="@+id/date_text_view"
         app:layout_constraintTop_toBottomOf="@+id/data_description_text_view" />
 
@@ -102,9 +120,11 @@
         android:id="@+id/starttime_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
         android:text="Start Time:"
+        android:textColor="#000000"
+        android:textSize="17dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/date_text_view" />
 
@@ -112,12 +132,14 @@
         android:id="@+id/data_starttime_text_view"
         android:layout_width="271dp"
         android:layout_height="19dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
         android:text="Start Time Data"
+        android:textColor="#000000"
+        android:textSize="17dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.17"
         app:layout_constraintStart_toEndOf="@+id/starttime_text_view"
         app:layout_constraintTop_toBottomOf="@+id/data_date_text_view" />
 
@@ -125,9 +147,11 @@
         android:id="@+id/endtime_text_view"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="36dp"
         android:text="End Time:"
+        android:textColor="#000000"
+        android:textSize="17dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/starttime_text_view" />
 
@@ -135,61 +159,77 @@
         android:id="@+id/data_endtime_text_view"
         android:layout_width="271dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="20dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="40dp"
         android:text="End Time Data"
+        android:textColor="#000000"
+        android:textSize="17dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.233"
         app:layout_constraintStart_toEndOf="@+id/endtime_text_view"
         app:layout_constraintTop_toBottomOf="@+id/data_starttime_text_view" />
 
     <TextView
+        android:textSize="17dp"
+        android:textColor="#000000"
         android:id="@+id/profession_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="48dp"
         android:text="Profession:"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:textSize="17dp"
+        android:textColor="#000000"
         android:id="@+id/data_profession_text_view"
         android:layout_width="276dp"
         android:layout_height="19dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="48dp"
         android:text="Profession Data"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/profession_text_view"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+
+
+    </LinearLayout>
+
     <Button
         android:id="@+id/confirm_button"
-        android:layout_width="wrap_content"
+        android:layout_width="230dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginBottom="12dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="76dp"
+        android:layout_marginStart="8dp"
         android:background="@color/colorPrimary"
         android:text="Confirm"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/report_button"
-        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintBottom_toTopOf="@+id/report_button"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/report_button"
-        android:layout_width="wrap_content"
+        android:layout_width="230dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="84dp"
-        android:layout_marginBottom="76dp"
-        android:background="@color/colorPrimary"
+        android:layout_marginBottom="28dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/rounderd_corner"
+        android:textColor="@color/colorPrimary"
         android:text="Report"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

@@ -2,6 +2,7 @@ package com.serveic_provider.service_provider;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,12 +39,25 @@ public class ProviderHomeActivity extends AppCompatActivity {
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     ArrayList<Service> pendingServices = new ArrayList<Service>();
     ImageView profile_button;
+    android.support.v4.widget.SwipeRefreshLayout pullToRefresh ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.provider_homepage);
         setTitle("Service Provider");
+        pullToRefresh=(android.support.v4.widget.SwipeRefreshLayout) findViewById(R.id.pullToRefresh);
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //update code
+             //   myListView.invalidateViews();
+
+                pullToRefresh.setRefreshing(false);
+            }
+        });
+
         Utils.updateServiceStatus();
         profile_button = (ImageView)findViewById(R.id.profile_button);
         final Intent intent1 = new Intent(ProviderHomeActivity.this, ProfileActivity.class);

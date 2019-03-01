@@ -3,14 +3,13 @@
 xmlns:android="http://schemas.android.com/apk/res/android"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-android:background="@drawable/bg"
+android:background="@drawable/backrepeat"
 android:orientation="vertical"
     android:id="@+id/splash">
 <TextView
     android:layout_width="match_parent"
     android:layout_height="0dp"
-    android:layout_weight="1.2"
-    android:text="1"/>
+    android:layout_weight="1.2" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -22,5 +21,5 @@ android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="0dp"
     android:layout_weight="1.2"
-    android:text="3"/>
+   />
 </LinearLayout>

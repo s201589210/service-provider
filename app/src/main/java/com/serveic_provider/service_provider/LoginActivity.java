@@ -1,6 +1,7 @@
 package com.serveic_provider.service_provider;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -31,6 +33,7 @@ import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.serveic_provider.service_provider.firebase_notification.MyFirebaseMessagingService;
+import com.serveic_provider.service_provider.serviceProvider.FontsOverride;
 import com.serveic_provider.service_provider.serviceProvider.User;
 
 
@@ -39,7 +42,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class LoginActivity extends AppCompatActivity {
-    ProgressBar spinner;
+    pl.droidsonroids.gif.GifImageView spinner;
     LinearLayout loginElements;
 
 
@@ -75,14 +78,18 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         runFadeOutAnimation();
 
         // Binding the UI elements
         ButterKnife.bind(this);
 
-        spinner = (ProgressBar)findViewById(R.id.progressBar1);
+        spinner = (pl.droidsonroids.gif.GifImageView)findViewById(R.id.progressBar1);
         loginElements= (LinearLayout) findViewById(R.id.login_Elements);
         spinner.setVisibility(View.GONE);
+
+
+
     }
 
     // Assigning onClick for the sign IN using Butterknife instead of the onClick on the XML file
@@ -219,7 +226,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     public void showSpenner(){
-        spinner = (ProgressBar)findViewById(R.id.progressBar1);
+        spinner = (pl.droidsonroids.gif.GifImageView)findViewById(R.id.progressBar1);
         loginElements= (LinearLayout) findViewById(R.id.login_Elements);
 
         spinner.setVisibility(View.VISIBLE);
@@ -227,7 +234,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
     public void hideSpenner(){
-        spinner = (ProgressBar)findViewById(R.id.progressBar1);
+        spinner = (pl.droidsonroids.gif.GifImageView)findViewById(R.id.progressBar1);
         loginElements= (LinearLayout) findViewById(R.id.login_Elements);
 
         spinner.setVisibility(View.GONE);

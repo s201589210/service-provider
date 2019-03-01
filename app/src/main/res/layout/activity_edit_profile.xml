@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="@color/colorPrimary"
+            android:background="@color/colorPrimarySuperDark"
             android:orientation="vertical">
 
 
@@ -34,15 +34,7 @@
                 android:layout_centerInParent="true"
                 android:background="@drawable/dyer" />
 
-            <TextView
-                android:id="@+id/edit_profile_email_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/edit_profile_profile_imge"
-                android:layout_centerInParent="true"
-                android:text="USER NAME"
-                android:textColor="@color/colorWhite"
-                android:textSize="20dp" />
+
 
 
         </RelativeLayout>
@@ -52,7 +44,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2.5"
-            android:text="3">
+            android:text="3"
+            android:background="@color/backgroundcolor">
 
 
             <TextView
@@ -97,22 +90,34 @@
                 android:text="City:"
                 android:textSize="20dp" />
 
+
             <EditText
                 android:id="@+id/edit_profile_first_name_edit_text"
-                android:layout_width="wrap_content"
+                android:layout_width="232dp"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@id/edit_profile_first_name_label"
-                android:layout_centerHorizontal="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignTop="@+id/edit_profile_first_name_label"
+                android:layout_marginEnd="15dp"
+                android:ems="10"
                 android:padding="10dp"
+                android:maxLines="1"
                 android:textSize="20dp"
-                tools:text="Fname" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/description_text_view" />
+
+
+
 
             <EditText
                 android:id="@+id/edit_profile_phone_edit_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
                 android:layout_below="@id/edit_profile_city_edit_text"
+                android:layout_width="232dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="15dp"
+                android:ems="10"
                 android:layout_centerHorizontal="true"
                 android:padding="10dp"
                 android:textSize="20dp"
@@ -120,19 +125,24 @@
 
             <EditText
                 android:id="@+id/edit_profile_city_edit_text"
-                android:layout_width="wrap_content"
+                android:layout_width="232dp"
                 android:layout_height="wrap_content"
-
-                android:layout_centerInParent="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="15dp"
+                android:ems="10"
+                android:layout_centerHorizontal="true"
                 android:padding="10dp"
                 android:textSize="20dp"
+                android:layout_centerInParent="true"
                 tools:text="city" />
 
             <EditText
-                android:id="@+id/edit_profile_last_name_edit_text"
-                android:layout_width="wrap_content"
+                android:layout_width="232dp"
                 android:layout_height="wrap_content"
-
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="15dp"
+                android:ems="10"
+                android:id="@+id/edit_profile_last_name_edit_text"
                 android:layout_below="@id/edit_profile_first_name_label"
                 android:layout_centerHorizontal="true"
                 android:padding="10dp"

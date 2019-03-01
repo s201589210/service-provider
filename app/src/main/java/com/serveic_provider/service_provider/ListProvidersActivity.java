@@ -46,7 +46,7 @@ public class ListProvidersActivity extends AppCompatActivity {
     String requsterID;
     String providerID;
     String serviceID;
-    ProgressBar spinner;
+    pl.droidsonroids.gif.GifImageView spinner;
 
     DatabaseReference requesterServicesRef;
     DatabaseReference providerServicesRef;
@@ -64,7 +64,7 @@ public class ListProvidersActivity extends AppCompatActivity {
         setContentView(R.layout.list_providers);
         setTitle("Select Providers");
 
-        spinner = (ProgressBar)findViewById(R.id.progressBar1);
+        spinner = (pl.droidsonroids.gif.GifImageView)findViewById(R.id.progressBar1);
         spinner.setVisibility(View.VISIBLE);
 
         providerList = new ArrayList<User>();

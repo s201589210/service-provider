@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/login_layout"
+    android:background="@drawable/bakground"
     >
 
 
@@ -25,12 +26,11 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:layout_marginTop="@dimen/linear_fab_margin"
-        android:layout_marginLeft="@dimen/linear_fab_margin"
-        android:layout_marginRight="@dimen/linear_fab_margin"
+        android:fontFamily="@sty"
+        android:gravity="center"
         android:text="WELCOME :)"
-        />
+        android:textSize="30dp" />
 
 
     <ImageView
@@ -75,46 +75,56 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_marginTop="@dimen/linear_fab_margin"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <Button
-            android:id="@+id/sign_up_button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/sign_up"
-            android:textAlignment="center"
-            android:layout_weight="1"
-            android:singleLine="true"
-            android:padding="5dp"
-            />
-
-
 
 
         <Button
             android:id="@+id/sign_in_button"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/sign_in"
             android:textAlignment="center"
-            android:layout_weight="1"
             android:singleLine="true"
             android:padding="5dp"
 
-            />
 
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Dont have account?"
+                android:textAlignment="center"
+                android:gravity="center"/>
+
+        <Button
+            android:id="@+id/sign_up_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:singleLine="true"
+            android:text="@string/sign_up"
+            android:textColor="@color/colorPrimaryDark"
+            android:background="@drawable/rounderd_corner"/>
+        </LinearLayout>
     </LinearLayout>
 
 
 </LinearLayout>
 
-    <ProgressBar
+    <pl.droidsonroids.gif.GifImageView
         android:id="@+id/progressBar1"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="172dp"
+        android:layout_height="172dp"
+        android:src="@drawable/loading_rotation"
         android:layout_centerInParent="true" />
 
 </RelativeLayout>

@@ -28,30 +28,35 @@ public class ProfileActivity extends AppCompatActivity {
     TextView lastName;
     TextView city;
     TextView phone;
+    TextView type;
     RatingBar ratingBar;
     String userId = "";
-     ProgressBar spinner;
+    pl.droidsonroids.gif.GifImageView spinner;
+    de.hdodenhof.circleimageview.CircleImageView profilepic;
 
     Button editBtn;
     Button updateBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.profile);
+        setContentView(R.layout.material_design_profile_screen_xml_ui_design);
         setTitle("Profile");
 
 
         //assign all view fields
         firstName = (TextView)findViewById(R.id.firstNameTextView);
-        lastName = (TextView)findViewById(R.id.lastNameTextView);
+      lastName = (TextView)findViewById(R.id.lastNameTextView);
         city = (TextView)findViewById(R.id.cityTextView);
         phone =(TextView)findViewById(R.id.phoneTextView);
         ratingBar =(RatingBar)findViewById(R.id.ratingBar2);
-        spinner = (ProgressBar)findViewById(R.id.progressBar1);
+        type =(TextView)findViewById(R.id.typeTextView);
+        profilepic = (de.hdodenhof.circleimageview.CircleImageView)findViewById(R.id.profile_image);
+        spinner = (pl.droidsonroids.gif.GifImageView)findViewById(R.id.progressBar1);
 
         spinner.setVisibility(View.VISIBLE);
 
-
+        //this is themethod to set an imge
+        //profilepic.setImageResource(R.drawable.bakground);
 
         //get user id from last activity
         Bundle extras = getIntent().getExtras();
@@ -102,12 +107,14 @@ public class ProfileActivity extends AppCompatActivity {
     public void setFields(User user){
         if(user.getName()!=null)
             firstName.setText(user.getName());
-        if(user.getLastName()!=null)
+       if(user.getLastName()!=null)
             lastName.setText(user.getLastName());
         if(user.getLocation()!=null)
             city.setText(user.getLocation());
         if(user.getPhone_number()!=null)
             phone .setText(user.getPhone_number());
+        if(user.getToken_id()!=null)
+            type .setText(user.getType());
 
             ratingBar.setRating(user.getRate());
         spinner.setVisibility(View.GONE);
