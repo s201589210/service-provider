@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +38,8 @@ public class FinishedFragment extends Fragment {
     ArrayList<String> requestersIDs = new ArrayList<String>();
     DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
     String userType;
+    android.support.v4.widget.SwipeRefreshLayout pullToRefresh ;
+
 
     public FinishedFragment() {
 
@@ -45,6 +49,38 @@ public class FinishedFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.services_fragment, container, false);
         Utils.updateServiceStatus();
+        buildHistory();
+        pullToRefresh = (android.support.v4.widget.SwipeRefreshLayout) view.findViewById(R.id.pullToRefresh);
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //update code
+                clearHistory();
+                refresh();
+                pullToRefresh.setRefreshing(false);
+            }
+        });
+
+        return view;
+    }
+
+    public void refresh(){
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.detach(this).attach(this).commit();
+
+
+    }
+    private void clearHistory() {
+        penddingServices.clear();
+        ListView listView = (ListView) view.findViewById(R.id.pending_services_listview);
+        ServiceAdapter adapter = new ServiceAdapter(FinishedFragment.this.getActivity(), penddingServices, R.color.colorWhite);
+        listView.setAdapter(adapter);
+        listView.setClickable(true);
+    }
+
+
+    public void buildHistory(){
+
         penddingServices = new ArrayList<Service>();
         //auth table reference
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -167,6 +203,5 @@ public class FinishedFragment extends Fragment {
 
 
 
-        return view;
     }//on create method
 }

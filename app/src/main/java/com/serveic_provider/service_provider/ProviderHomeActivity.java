@@ -52,9 +52,8 @@ public class ProviderHomeActivity extends AppCompatActivity {
             @Override
             public void onRefresh() {
                 //update code
-             //   myListView.invalidateViews();
-
-                pullToRefresh.setRefreshing(false);
+                clearList();
+                buildList();
             }
         });
 
@@ -118,7 +117,7 @@ public class ProviderHomeActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });//end of getting location
-
+        pullToRefresh.setRefreshing(false);
     }
 
     private void addServiceToPendingList(String requesterId, String serviceNumber) {
@@ -150,6 +149,14 @@ public class ProviderHomeActivity extends AppCompatActivity {
     }
 
     private void setList() {
+        ListView pendingServicesListView = findViewById(R.id.provider_pending_services_listview);
+        ProviderServiceAdapter adapter = new ProviderServiceAdapter(this, pendingServices);
+        pendingServicesListView.setAdapter(adapter);
+        pendingServicesListView.setClickable(true);
+    }
+
+    private void clearList() {
+        pendingServices.clear();
         ListView pendingServicesListView = findViewById(R.id.provider_pending_services_listview);
         ProviderServiceAdapter adapter = new ProviderServiceAdapter(this, pendingServices);
         pendingServicesListView.setAdapter(adapter);

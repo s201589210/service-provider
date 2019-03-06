@@ -4,10 +4,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -20,6 +23,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.serveic_provider.service_provider.R;
+import com.serveic_provider.service_provider.adapters.ProviderServiceAdapter;
 import com.serveic_provider.service_provider.adapters.ServiceAdapter;
 import com.serveic_provider.service_provider.serviceProvider.Service;
 
@@ -28,7 +32,7 @@ import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
-public class InProgressFragment extends Fragment {
+public class InProgressFragment extends Fragment   {
     View view;
     DatabaseReference typeRef;
     FirebaseDatabase mDatabase;
@@ -36,6 +40,7 @@ public class InProgressFragment extends Fragment {
     ArrayList<String> requestersIDs = new ArrayList<String>();
     DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
     String userType;
+    android.support.v4.widget.SwipeRefreshLayout pullToRefresh ;
 
     public InProgressFragment() {
 
@@ -44,7 +49,49 @@ public class InProgressFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.services_fragment, container, false);
+
         updateServicesStatus();
+        buildHistory();
+
+        pullToRefresh=(android.support.v4.widget.SwipeRefreshLayout) view.findViewById(R.id.pullToRefresh);
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //update code
+                clearHistory();
+                refresh();
+                pullToRefresh.setRefreshing(false);
+            }
+        });
+
+
+
+
+
+
+        return view;
+    }//on create method
+
+
+    public void refresh(){
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.detach(this).attach(this).commit();
+
+
+    }
+    private void clearHistory() {
+        penddingServices.clear();
+        ListView listView = (ListView) view.findViewById(R.id.pending_services_listview);
+        ServiceAdapter adapter = new ServiceAdapter(InProgressFragment.this.getActivity(), penddingServices, R.color.colorWhite);
+        listView.setAdapter(adapter);
+        listView.setClickable(true);
+    }
+
+
+    private void buildHistory() {
+
+
+
         penddingServices = new ArrayList<Service>();
         //auth table reference
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -166,9 +213,7 @@ public class InProgressFragment extends Fragment {
 
 
 
-
-        return view;
-    }//on create method
+    }
 
     private void updateServicesStatus() {
         final int currentDay = Calendar.getInstance().getTime().getDate();

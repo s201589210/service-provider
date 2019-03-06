@@ -3,6 +3,7 @@ package com.serveic_provider.service_provider;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,6 +34,8 @@ public class ProfileActivity extends AppCompatActivity {
     String userId = "";
     pl.droidsonroids.gif.GifImageView spinner;
     de.hdodenhof.circleimageview.CircleImageView profilepic;
+    android.support.v4.widget.SwipeRefreshLayout pullToRefresh ;
+
 
     Button editBtn;
     Button updateBtn;
@@ -41,6 +44,15 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.material_design_profile_screen_xml_ui_design);
         setTitle("Profile");
+
+        pullToRefresh=(android.support.v4.widget.SwipeRefreshLayout) findViewById(R.id.pullToRefresh);
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                buildProfile(userId);
+                pullToRefresh.setRefreshing(false);
+            }
+        });
 
 
         //assign all view fields

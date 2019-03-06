@@ -4,9 +4,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,6 +35,10 @@ public class PendingFragment extends Fragment {
     ArrayList<String> requestersIDs = new ArrayList<String>();
     DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
     String userType;
+    android.support.v4.widget.SwipeRefreshLayout pullToRefresh ;
+    ServiceAdapter adapter;
+
+
 
     public PendingFragment() {
 
@@ -41,7 +48,45 @@ public class PendingFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.services_fragment, container, false);
         Utils.updateServiceStatus();
-        penddingServices = new ArrayList<Service>();
+        buildHistory();
+
+
+        pullToRefresh=(android.support.v4.widget.SwipeRefreshLayout) view.findViewById(R.id.pullToRefresh);
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                clearHistory();
+                refresh();
+
+
+
+            }
+        });
+
+
+
+
+
+
+
+        return view;
+    }//on create method
+
+   public void refresh(){
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.detach(this).attach(this).commit();
+
+
+   }
+
+    private void buildHistory() {
+
+
+
+
+        //penddingServices = new ArrayList<Service>();
+        adapter = new ServiceAdapter(PendingFragment.this.getActivity(), penddingServices, R.color.colorWhite);
+
         //auth table reference
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         //user reference
@@ -77,14 +122,22 @@ public class PendingFragment extends Fragment {
                                 String job = service.getJob();
                                 String status = service.getStatus();
                                 // Log.v("potato", "test");
+
+
+
                                 if (status.equals("pending")) {
                                     penddingServices.add(service);
+                                    adapter.notifyDataSetChanged();
+
+
+
                                 }
 
                                 ListView listView = (ListView) view.findViewById(R.id.pending_services_listview);
                                 // adapter knows how to create list items for each item in the list.
-                                ServiceAdapter adapter = new ServiceAdapter(PendingFragment.this.getActivity(), penddingServices, R.color.colorWhite);
                                 // {@link ListView} will display list items for each {@link Word} in the list.
+                              //  adapter.notifyDataSetChanged();
+                                pullToRefresh.setRefreshing(false);
                                 listView.setAdapter(adapter);
                                 listView.setClickable(true);
                             }
@@ -94,7 +147,7 @@ public class PendingFragment extends Fragment {
                         }
                     }); }
 
-                    //if statment for provider type
+                //if statment for provider type
                 else  if (userType.equals("provider")){
                     //refrence to get all requesters id for the provider
                     DatabaseReference ServicesRef = rootRef.child("provider_services").child(userId);
@@ -109,7 +162,7 @@ public class PendingFragment extends Fragment {
                                 String requesterID = parts[0];
                                 String serviceNumber = parts[1];
                                 ////////////////////////////
-     DatabaseReference ServicesRef = rootRef.child("requester_services").child(requesterID).child(serviceNumber);
+                                DatabaseReference ServicesRef = rootRef.child("requester_services").child(requesterID).child(serviceNumber);
                                 ServicesRef.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -118,14 +171,21 @@ public class PendingFragment extends Fragment {
                                         String job = service.getJob();
                                         String status = service.getStatus();
 
+                                        penddingServices.clear();
+                                        adapter.notifyDataSetChanged();
+
                                         if (status.equals("pending") && service.getProvider_id().equals(userId)) {
+
                                             penddingServices.add(service);
+                                            adapter.notifyDataSetChanged();
+
+
                                         }
 
                                         ListView listView = (ListView) view.findViewById(R.id.pending_services_listview);
                                         // adapter knows how to create list items for each item in the list.
-                                        ServiceAdapter adapter = new ServiceAdapter(PendingFragment.this.getActivity(), penddingServices, R.color.colorWhite);
                                         // {@link ListView} will display list items for each {@link Word} in the list.
+                                        pullToRefresh.setRefreshing(false);
                                         listView.setAdapter(adapter);
                                         listView.setClickable(true);
 
@@ -139,7 +199,7 @@ public class PendingFragment extends Fragment {
 
 
 
-                       }
+                        }
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
                         }
@@ -161,8 +221,24 @@ public class PendingFragment extends Fragment {
 //*//
 
 
+    }
 
 
-        return view;
-    }//on create method
+    private void clearHistory() {
+
+        penddingServices.clear();
+        adapter.notifyDataSetChanged();
+        pullToRefresh.setRefreshing(false);
+
+        ListView listView = (ListView) view.findViewById(R.id.pending_services_listview);
+        // adapter knows how to create list items for each item in the list.
+        // {@link ListView} will display list items for each {@link Word} in the list.
+        pullToRefresh.setRefreshing(false);
+        listView.setAdapter(adapter);
+        listView.setClickable(true);
+
+
+
+    }
+
 }
