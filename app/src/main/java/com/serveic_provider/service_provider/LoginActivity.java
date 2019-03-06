@@ -33,7 +33,7 @@ import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.serveic_provider.service_provider.firebase_notification.MyFirebaseMessagingService;
-import com.serveic_provider.service_provider.serviceProvider.FontsOverride;
+//import com.serveic_provider.service_provider.serviceProvider.FontsOverride;
 import com.serveic_provider.service_provider.serviceProvider.User;
 
 

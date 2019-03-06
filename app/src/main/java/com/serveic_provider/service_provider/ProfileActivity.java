@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -20,7 +21,16 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.serveic_provider.service_provider.adapters.ProvAdaptor;
+import com.serveic_provider.service_provider.adapters.RateAdaptor;
+import com.serveic_provider.service_provider.adapters.ServiceAdapter;
+import com.serveic_provider.service_provider.fragments.InProgressFragment;
+import com.serveic_provider.service_provider.serviceProvider.Comment;
+import com.serveic_provider.service_provider.serviceProvider.Rate;
+import com.serveic_provider.service_provider.serviceProvider.Service;
 import com.serveic_provider.service_provider.serviceProvider.User;
+
+import java.util.ArrayList;
 
 public class ProfileActivity extends AppCompatActivity {
     final FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
@@ -32,6 +42,8 @@ public class ProfileActivity extends AppCompatActivity {
     TextView type;
     RatingBar ratingBar;
     String userId = "";
+    ArrayList<Rate> rateList = new ArrayList<Rate>();
+    RateAdaptor adapter;
     pl.droidsonroids.gif.GifImageView spinner;
     de.hdodenhof.circleimageview.CircleImageView profilepic;
     android.support.v4.widget.SwipeRefreshLayout pullToRefresh ;
@@ -44,6 +56,7 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.material_design_profile_screen_xml_ui_design);
         setTitle("Profile");
+        rateList = new ArrayList<Rate>();
 
         pullToRefresh=(android.support.v4.widget.SwipeRefreshLayout) findViewById(R.id.pullToRefresh);
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -57,7 +70,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         //assign all view fields
         firstName = (TextView)findViewById(R.id.firstNameTextView);
-      lastName = (TextView)findViewById(R.id.lastNameTextView);
+        lastName = (TextView)findViewById(R.id.lastNameTextView);
         city = (TextView)findViewById(R.id.cityTextView);
         phone =(TextView)findViewById(R.id.phoneTextView);
         ratingBar =(RatingBar)findViewById(R.id.ratingBar2);
@@ -89,6 +102,8 @@ public class ProfileActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
                 setFields(user);
+                buildCommentList();
+
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -130,6 +145,49 @@ public class ProfileActivity extends AppCompatActivity {
 
             ratingBar.setRating(user.getRate());
         spinner.setVisibility(View.GONE);
+
+    }
+
+    public void buildCommentList(){
+        //get comments from db
+        DatabaseReference userCommentRef;
+        userCommentRef = mDatabase.getReference("rates").child(userId);
+        userCommentRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    //getting the rate object
+                    final Rate rate  = snapshot.getValue(Rate.class);
+                    //gt the rater obj
+
+
+                    DatabaseReference raterRef;
+                    raterRef = mDatabase.getReference("user_profiles").child(userId);
+                    raterRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
+                            User raterObj = dataSnapshot1.getValue(User.class);
+                            rate.setRaterName(raterObj.getName());
+                            rateList.add(rate);
+
+                            ListView listView = (ListView) findViewById(R.id.rateList);
+                            adapter = new RateAdaptor(ProfileActivity.this, rateList);
+                            listView.setAdapter(adapter);
+                            listView.setClickable(true);
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                        }
+                    });
+
+
+                }
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
 
     }
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -113,6 +113,7 @@ public class RateActivity extends AppCompatActivity {
         FBuser = mAuth.getCurrentUser();
         //get id
         currnetUserId = FBuser.getUid();
+        rate.setRaterId(currnetUserId);
         userProfileRef_type = mDatabase.getReference("user_profiles").child(currnetUserId).child("type");
         userProfileRef_type.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -187,6 +188,8 @@ public class RateActivity extends AppCompatActivity {
         r.setServiceId(service.getService_id());
         r.setRate(entrdRate);
         r.setComment(comment);
+        r.setProfession(service.getProfession());
+        r.setJob(service.getJob());
         return r;
     }
     public void transit(){

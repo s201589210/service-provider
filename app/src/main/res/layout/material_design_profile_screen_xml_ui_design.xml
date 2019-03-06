@@ -189,10 +189,17 @@
                     android:id="@+id/progressBar1"
                     android:layout_width="172dp"
                     android:layout_height="172dp"
-                    android:src="@drawable/loading_rotation"
-                    android:layout_centerInParent="true" />
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/loading_rotation" />
 
-    </RelativeLayout>
+                <ListView
+                    android:id="@+id/rateList"
+                    android:layout_width="match_parent"
+                    android:layout_height="147dp"
+                    android:layout_below="@+id/city_label"
+                    android:layout_marginTop="6dp" />
+
+            </RelativeLayout>
 
 
         </LinearLayout>

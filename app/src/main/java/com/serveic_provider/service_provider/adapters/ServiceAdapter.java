@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -28,7 +27,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.serveic_provider.service_provider.ProfileActivity;
 import com.serveic_provider.service_provider.R;
 import com.serveic_provider.service_provider.RateActivity;
-import com.serveic_provider.service_provider.serviceProvider.Profile;
 import com.serveic_provider.service_provider.serviceProvider.Service;
 import com.serveic_provider.service_provider.serviceProvider.User;
 
@@ -111,7 +109,7 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
         //setting the profile btn listener
         setProfListener();
 
-        View textcontainer = listItemView.findViewById(R.id.text_container);
+        View textcontainer = listItemView.findViewById(R.id.commentContainer_container);
         int color = ContextCompat.getColor(getContext(),colorid);
         textcontainer.setBackgroundColor(color);
 

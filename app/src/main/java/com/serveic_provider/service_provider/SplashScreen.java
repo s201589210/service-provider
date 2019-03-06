@@ -50,10 +50,6 @@ public class SplashScreen extends Activity {
             }
         }, SPLASH_DISPLAY_LENGTH);
 
-
-
-
-
     }
 
     private void runFadeInAnimation(){

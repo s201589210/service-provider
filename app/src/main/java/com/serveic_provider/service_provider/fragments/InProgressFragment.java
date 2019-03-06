@@ -63,12 +63,6 @@ public class InProgressFragment extends Fragment   {
                 pullToRefresh.setRefreshing(false);
             }
         });
-
-
-
-
-
-
         return view;
     }//on create method
 

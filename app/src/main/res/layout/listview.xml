@@ -13,7 +13,7 @@
         android:layout_height="@dimen/list_item_height" />
 
     <LinearLayout
-        android:id="@+id/text_container"
+        android:id="@+id/commentContainer_container"
         android:layout_width="match_parent"
         android:layout_height="@dimen/list_item_height"
         android:layout_alignParentTop="true"

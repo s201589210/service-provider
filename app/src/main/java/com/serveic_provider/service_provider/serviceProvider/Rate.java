@@ -1,6 +1,8 @@
 package com.serveic_provider.service_provider.serviceProvider;
 
 public class Rate {
+    private String raterId;
+    private String raterName;
     private String requesterId;
     private String providerId;
     private String serviceId;
@@ -67,5 +69,21 @@ public class Rate {
 
     public void setJob(String job) {
         this.job = job;
+    }
+
+    public String getRaterId() {
+        return raterId;
+    }
+
+    public void setRaterId(String raterId) {
+        this.raterId = raterId;
+    }
+
+    public String getRaterName() {
+        return raterName;
+    }
+
+    public void setRaterName(String raterName) {
+        this.raterName = raterName;
     }
 }
