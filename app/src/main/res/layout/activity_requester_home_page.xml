@@ -1,349 +1,405 @@
 <?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:id="@+id/drawer_layout"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:fitsSystemWindows="true"
+tools:openDrawer="start">
 
-
-<LinearLayout android:layout_height="match_parent"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@color/backgroundcolor">
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
 
-
-
-    <LinearLayout
-        android:orientation="vertical"
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="3"
-        >
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
 
-        <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Welcome , Please select a profission to create request:"
-            android:padding="16dp"
-            />
-
-
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="center">
-
-
-
-            <ImageView
-                android:id="@+id/prof_dyer"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/dyer"
-                android:scaleType="fitCenter"
-                android:padding="15dp"
-                android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:onClick="onDyerClick"
-                />
-
-            <ImageView
-                android:id="@+id/prof_builder"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/builder"
-                android:scaleType="fitCenter"
-                android:padding="15dp"
-                android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:onClick="onBuilderClick"
-                />
-
-
-
-            <ImageView
-                android:id="@+id/prof_carpenter"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/carpenter"
-                android:scaleType="fitCenter"
-                android:padding="15dp"
-                android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:onClick="onCarpenterClick"
-                />
-
-
-
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center">
-
-
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:scaleType="fitCenter"
-                android:textAlignment="center"
-                android:text="DYER"/>
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:scaleType="fitCenter"
-                android:textAlignment="center"
-                android:text="BUILDER"/>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:scaleType="fitCenter"
-                android:textAlignment="center"
-                android:text="CARPENTER"/>
-
-
-
-
-
-        </LinearLayout>
-
-
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="center">
-
-
-
-            <ImageView
-                android:id="@+id/prof_courier"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/mechanic"
-                android:scaleType="fitCenter"
-                android:padding="15dp"
-                android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:onClick="onCourierClick"
-                />
-
-            <ImageView
-                android:id="@+id/prof_electrician"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/electrician"
-                android:scaleType="fitCenter"
-                android:padding="15dp"
-                android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:onClick="onElectricianClick"
-                />
-
-            <ImageView
-                android:id="@+id/prof_maid"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:padding="15dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/maid"
-                android:onClick="onMaidClick"
-                />
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center">
-
-
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:scaleType="fitCenter"
-                android:textAlignment="center"
-                android:text="MECHANIC"/>
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:scaleType="fitCenter"
-                android:textAlignment="center"
-                android:text="ELECTRICIAN"/>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:scaleType="fitCenter"
-                android:textAlignment="center"
-                android:text="MAID"/>
-
-
-
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="center">
-
-
-
-            <ImageView
-                android:id="@+id/prof_gardener"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/gardener"
-                android:scaleType="fitCenter"
-                android:padding="15dp"
-                android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:onClick="onGardenerClick"
-                />
-
-            <ImageView
-                android:id="@+id/prof_plumber"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/plumber"
-                android:scaleType="fitCenter"
-                android:padding="15dp"
-                android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:onClick="onPlumberClick"/>
-
-            <ImageView
-                android:id="@+id/prof_welder"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/welder"
-                android:scaleType="fitCenter"
-                android:padding="15dp"
-                android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:onClick="onWelderClick"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center">
-
-
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:scaleType="fitCenter"
-                android:textAlignment="center"
-                android:text="GARDENER"/>
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:scaleType="fitCenter"
-                android:textAlignment="center"
-                android:text="PLUMBER"/>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:scaleType="fitCenter"
-                android:textAlignment="center"
-                android:text="WELDER"/>
-
-
-
-
-
-        </LinearLayout>
-
-
-
-
-    </LinearLayout>
-
-
-    <LinearLayout
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.3"
-        android:gravity="center"
-        android:layout_marginTop="16dp"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context=".MainActivity"
+        tools:showIn="@layout/activity_requester_home_page">
 
-        <ImageView
-            android:background="@color/browser_actions_divider_color"
-            android:id="@+id/myServices_button"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:scaleType="fitCenter"
-            android:padding="15dp"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:onClick="goToMyServicesPage"
-            android:clickable="true"
-            android:src="@drawable/my_services"/>
-
-        <ImageView
-            android:id="@+id/home_button"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@drawable/home"
-            android:scaleType="fitCenter"
-            android:padding="15dp"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:clickable="true"/>
-
-        <ImageView
-            android:id="@+id/profile_button"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/browser_actions_divider_color"
-            android:clickable="true"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:padding="15dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/fui_ic_anonymous_white_24dp" />
+        <LinearLayout android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:background="@color/backgroundcolor">
 
 
-    </LinearLayout>
-</LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="3"
+                >
+
+                <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Welcome , Please select a profission to create request:"
+                    android:padding="16dp"
+                    />
+
+
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+
+
+                    <ImageView
+                        android:id="@+id/prof_dyer"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:src="@drawable/dyer"
+                        android:scaleType="fitCenter"
+                        android:padding="15dp"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:onClick="onDyerClick"
+                        />
+
+                    <ImageView
+                        android:id="@+id/prof_builder"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:src="@drawable/builder"
+                        android:scaleType="fitCenter"
+                        android:padding="15dp"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:onClick="onBuilderClick"
+                        />
+
+
+
+                    <ImageView
+                        android:id="@+id/prof_carpenter"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:src="@drawable/carpenter"
+                        android:scaleType="fitCenter"
+                        android:padding="15dp"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:onClick="onCarpenterClick"
+                        />
+
+
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:scaleType="fitCenter"
+                        android:textAlignment="center"
+                        android:text="DYER"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:scaleType="fitCenter"
+                        android:textAlignment="center"
+                        android:text="BUILDER"/>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:scaleType="fitCenter"
+                        android:textAlignment="center"
+                        android:text="CARPENTER"/>
+
+
+
+
+
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+
+
+                    <ImageView
+                        android:id="@+id/prof_courier"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:src="@drawable/mechanic"
+                        android:scaleType="fitCenter"
+                        android:padding="15dp"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:onClick="onCourierClick"
+                        />
+
+                    <ImageView
+                        android:id="@+id/prof_electrician"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:src="@drawable/electrician"
+                        android:scaleType="fitCenter"
+                        android:padding="15dp"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:onClick="onElectricianClick"
+                        />
+
+                    <ImageView
+                        android:id="@+id/prof_maid"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:padding="15dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/maid"
+                        android:onClick="onMaidClick"
+                        />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:scaleType="fitCenter"
+                        android:textAlignment="center"
+                        android:text="MECHANIC"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:scaleType="fitCenter"
+                        android:textAlignment="center"
+                        android:text="ELECTRICIAN"/>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:scaleType="fitCenter"
+                        android:textAlignment="center"
+                        android:text="MAID"/>
+
+
+
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+
+
+                    <ImageView
+                        android:id="@+id/prof_gardener"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:src="@drawable/gardener"
+                        android:scaleType="fitCenter"
+                        android:padding="15dp"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:onClick="onGardenerClick"
+                        />
+
+                    <ImageView
+                        android:id="@+id/prof_plumber"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:src="@drawable/plumber"
+                        android:scaleType="fitCenter"
+                        android:padding="15dp"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:onClick="onPlumberClick"/>
+
+                    <ImageView
+                        android:id="@+id/prof_welder"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:src="@drawable/welder"
+                        android:scaleType="fitCenter"
+                        android:padding="15dp"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:onClick="onWelderClick"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:scaleType="fitCenter"
+                        android:textAlignment="center"
+                        android:text="GARDENER"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:scaleType="fitCenter"
+                        android:textAlignment="center"
+                        android:text="PLUMBER"/>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:scaleType="fitCenter"
+                        android:textAlignment="center"
+                        android:text="WELDER"/>
+
+
+
+
+
+                </LinearLayout>
+
+
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.3"
+                android:gravity="center"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:background="@color/browser_actions_divider_color"
+                    android:id="@+id/myServices_button"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:scaleType="fitCenter"
+                    android:padding="15dp"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:onClick="goToMyServicesPage"
+                    android:clickable="true"
+                    android:src="@drawable/my_services"/>
+
+                <ImageView
+                    android:id="@+id/home_button"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/home"
+                    android:scaleType="fitCenter"
+                    android:padding="15dp"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:clickable="true"/>
+
+                <ImageView
+                    android:id="@+id/profile_button"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/browser_actions_divider_color"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:padding="15dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/fui_ic_anonymous_white_24dp" />
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.design.widget.CoordinatorLayout>
+
+<android.support.design.widget.NavigationView
+    android:id="@+id/nav_view"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_gravity="start"
+    android:fitsSystemWindows="true"
+    android:background="@color/colorAccent"
+    app:headerLayout="@layout/nav_header_main"
+    app:menu="@menu/activity_requester_home_drawer" >
+
+</android.support.design.widget.NavigationView>
+
+</android.support.v4.widget.DrawerLayout>

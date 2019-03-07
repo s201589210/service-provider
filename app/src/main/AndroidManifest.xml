@@ -45,7 +45,7 @@
         <activity android:name=".MyServicesActivity" />
         <activity android:name=".ListProvidersActivity" />
         <activity android:name=".ProviderHomeActivity" />
-        <activity android:name=".RequesterHomeActivity" />
+        <activity android:name=".RequesterHomeActivity"/>
         <activity android:name=".CreateServiceActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".RateActivity" />

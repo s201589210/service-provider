@@ -429,4 +429,8 @@
     <string name="sign_up">SIGN UP</string>
     <string name="sign_in">SIGN IN</string>
     <string name="default_notification_channel_id">SP_CH_33</string>
+    <string name="navigation_drawer_open">open Navigation Drawer</string>
+    <string name="navigation_drawer_close">close Navigation Drawer</string>
+    <string name="open_drawer">open</string>
+    <string name="close_drawer">close</string>
 </resources>

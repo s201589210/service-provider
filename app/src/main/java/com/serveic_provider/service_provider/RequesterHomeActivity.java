@@ -1,34 +1,40 @@
 package com.serveic_provider.service_provider;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
-import com.firebase.client.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ServerValue;
-import com.google.firebase.database.ValueEventListener;
-import com.serveic_provider.service_provider.serviceProvider.Service;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Map;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
+import android.widget.ListView;
+import android.widget.ShareActionProvider;
 
-public class RequesterHomeActivity extends AppCompatActivity {
+import java.util.ArrayList;
+
+public class RequesterHomeActivity extends Activity {
     ImageView profile_button;
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+    ShareActionProvider mShareActionProvider;
+    String[] listArray;
+    ListView drawerListView;
+    ActionBarDrawerToggle mActionBarDrawerToggle;
+    DrawerLayout mDrawerLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,12 +63,16 @@ public class RequesterHomeActivity extends AppCompatActivity {
                 startActivity(intent1);
             }
         });
+
     }
 
     // Not allowing back button
     @Override
     public void onBackPressed() {
-
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        }
     }
 
     public void onDyerClick(View view) {
