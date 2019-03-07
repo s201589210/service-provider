@@ -1,29 +1,29 @@
 package com.serveic_provider.service_provider;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
 import android.widget.ListView;
 import android.widget.ShareActionProvider;
+import android.widget.TextView;
+import android.widget.Toolbar;
 
-import java.util.ArrayList;
 
 public class RequesterHomeActivity extends Activity {
     ImageView profile_button;
@@ -34,11 +34,16 @@ public class RequesterHomeActivity extends Activity {
     ListView drawerListView;
     ActionBarDrawerToggle mActionBarDrawerToggle;
     DrawerLayout mDrawerLayout;
+    DrawerLayout drawer;
+    Context context = this;
 
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_requester_home_page);
+        setUpToolBar();
         Utils.updateServiceStatus();
         profile_button = (ImageView)findViewById(R.id.profile_button);
 
@@ -64,12 +69,33 @@ public class RequesterHomeActivity extends Activity {
             }
         });
 
+
+    }
+
+    private void setUpToolBar() {
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ImageView drawerButton = findViewById(R.id.drawer_button);
+        drawerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawer.openDrawer(GravityCompat.START);
+            }
+        });
+
+        TextView logoutButton = findViewById(R.id.logout_button);
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAuth.signOut();
+                startActivity(new Intent(context, LoginActivity.class)); //Go back to home page
+                finish();
+            }
+        });
     }
 
     // Not allowing back button
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         }
@@ -121,20 +147,5 @@ public class RequesterHomeActivity extends Activity {
 
     public void goToMyServicesPage(View view) {
         startActivity(new Intent(this,MyServicesActivity.class));
-    }
-
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.logout,menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.logout){
-            mAuth.signOut();
-            startActivity(new Intent(this, LoginActivity.class)); //Go back to home page
-            finish();
-        }
-        return true;
     }
 }
