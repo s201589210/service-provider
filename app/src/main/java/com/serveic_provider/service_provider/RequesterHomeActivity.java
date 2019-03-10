@@ -5,37 +5,32 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
-import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.serveic_provider.service_provider.serviceProvider.User;
 
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.widget.ListView;
-import android.widget.ShareActionProvider;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
 
 public class RequesterHomeActivity extends Activity {
-    ImageView profile_button;
-    FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
-    ShareActionProvider mShareActionProvider;
-    String[] listArray;
-    ListView drawerListView;
-    ActionBarDrawerToggle mActionBarDrawerToggle;
-    DrawerLayout mDrawerLayout;
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
     DrawerLayout drawer;
     Context context = this;
+    boolean drawerIsSet = false;
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -44,32 +39,8 @@ public class RequesterHomeActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_requester_home_page);
         setUpToolBar();
+
         Utils.updateServiceStatus();
-        profile_button = (ImageView)findViewById(R.id.profile_button);
-
-        final Intent intent1 = new Intent(RequesterHomeActivity.this, ProfileActivity.class);
-        profile_button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //check type of the user
-                //current user id
-                String currnetUserId ;
-                //user reference
-                FirebaseUser FBuser;
-                //dRef
-                DatabaseReference userProfileRef_type;
-                //get user
-                FBuser = mAuth.getCurrentUser();
-                //get id
-                currnetUserId = FBuser.getUid();
-                final Bundle bundle1 = new Bundle();
-                bundle1.putString("userId",currnetUserId);
-                intent1.putExtras(bundle1);
-                Log.w("ClickedHH",currnetUserId);
-                startActivity(intent1);
-            }
-        });
-
-
     }
 
     private void setUpToolBar() {
@@ -78,6 +49,10 @@ public class RequesterHomeActivity extends Activity {
         drawerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!drawerIsSet){
+                    setUpDrawer();
+                    drawerIsSet = true;
+                }
                 drawer.openDrawer(GravityCompat.START);
             }
         });
@@ -91,6 +66,37 @@ public class RequesterHomeActivity extends Activity {
                 finish();
             }
         });
+    }
+
+    private void setUpDrawer() {
+        findViewById(R.id.drawer_profile_layout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(context, ProfileActivity.class));
+                drawer.closeDrawer(GravityCompat.START);
+            }
+        });
+        //auth table reference
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        //user reference
+        FirebaseUser FBuser;
+        //get user
+        FBuser = mAuth.getCurrentUser();
+        final String userId = FBuser.getUid();
+        DatabaseReference userProfileRef_type;
+        userProfileRef_type = FirebaseDatabase.getInstance().getReference("user_profiles").child(userId);
+        userProfileRef_type.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                ((TextView)findViewById(R.id.drawer_username)).setText(user.getName()+ " " + user.getLastName());
+                ((TextView)findViewById(R.id.drawer_user_type)).setText(user.getType());
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+
     }
 
     // Not allowing back button
@@ -145,7 +151,8 @@ public class RequesterHomeActivity extends Activity {
         RequesterHomeActivity.this.startActivity(myIntent);
     }
 
-    public void goToMyServicesPage(View view) {
-        startActivity(new Intent(this,MyServicesActivity.class));
+    public void goToMyServices(MenuItem item) {
+        startActivity(new Intent(this, MyServicesActivity.class));
+        drawer.closeDrawer(GravityCompat.START);
     }
 }

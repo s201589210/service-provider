@@ -48,9 +48,6 @@ public class ProfileActivity extends AppCompatActivity {
     de.hdodenhof.circleimageview.CircleImageView profilepic;
     android.support.v4.widget.SwipeRefreshLayout pullToRefresh ;
 
-
-    Button editBtn;
-    Button updateBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
