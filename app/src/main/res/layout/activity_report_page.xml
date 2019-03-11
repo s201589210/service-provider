@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_vertical"
+    android:background="@drawable/bakground"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="Sorry for your experiance , please tell us what happend:" />
+
+    <CheckBox
+        android:id="@+id/report1_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_marginLeft="5dp"
+        android:text="Wasn't there at the time"
+        android:textAppearance="?android:textAppearanceLarge" />
+
+
+    <CheckBox
+        android:id="@+id/report2_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_marginLeft="5dp"
+        android:text="Acting rude"
+        android:textAppearance="?android:textAppearanceLarge" />
+
+
+    <CheckBox
+        android:id="@+id/report3_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_marginLeft="5dp"
+        android:text="Conflict in the agreed price"
+        android:textAppearance="?android:textAppearanceLarge" />
+
+
+    <CheckBox
+        android:id="@+id/report4_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_marginLeft="5dp"
+        android:text="Bad Service"
+        android:textAppearance="?android:textAppearanceLarge" />
+
+
+    <CheckBox
+        android:id="@+id/report5_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Other"
+        android:padding="5dp"
+        android:layout_marginLeft="5dp"
+        android:textAppearance="?android:textAppearanceLarge" />
+
+    <Button
+        android:layout_width="270dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/report_button"
+        android:layout_gravity="center"
+        android:text="send report"
+      />
+
+</LinearLayout>

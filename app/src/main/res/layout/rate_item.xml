@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="150dp"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:padding="5dp"
+    android:background="@color/colorWhite">
 
     <TextView
         android:id="@+id/providerName_textView"
@@ -50,11 +52,10 @@
 
     <RatingBar
         android:id="@+id/rateRatingBar"
-        android:layout_width="139dp"
+        android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="9dp"
+        android:layout_alignTop="@+id/providerName_textView"
+        android:layout_marginStart="-81dp"
         android:layout_toEndOf="@+id/providerName_textView"
         android:padding="0dp"
         android:scaleX="0.3"

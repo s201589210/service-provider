@@ -27,6 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.serveic_provider.service_provider.ProfileActivity;
 import com.serveic_provider.service_provider.R;
 import com.serveic_provider.service_provider.RateActivity;
+import com.serveic_provider.service_provider.Report;
 import com.serveic_provider.service_provider.serviceProvider.Service;
 import com.serveic_provider.service_provider.serviceProvider.User;
 
@@ -282,6 +283,17 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
             confirmBtn.setVisibility(View.GONE);
             reportBtn.setVisibility(View.GONE);
         }
+        //on click add service to intent and indicate user to be report
+        final Intent intent = new Intent(this.getContext(), Report.class);
+        reportBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                final Bundle bundle = new Bundle();
+                bundle.putSerializable("service",s);
+                intent.putExtras(bundle);
+                getContext().startActivity(intent);
+            }
+        });
+
 
         //on click set and send notification to other user in the service
         confirmBtn.setOnClickListener(new View.OnClickListener() {

@@ -48,6 +48,7 @@
         <activity android:name=".RequesterHomeActivity"/>
         <activity android:name=".CreateServiceActivity" />
         <activity android:name=".ProfileActivity" />
+        <activity android:name=".Report"/>
         <activity android:name=".RateActivity" />
     </application>
 
