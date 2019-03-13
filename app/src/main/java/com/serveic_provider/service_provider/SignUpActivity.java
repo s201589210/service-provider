@@ -27,6 +27,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.serveic_provider.service_provider.serviceProvider.User;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.regex.Pattern;
 
 import butterknife.BindView;
@@ -144,10 +147,10 @@ public class SignUpActivity extends AppCompatActivity {
                                 String firstName = firstNametext.getText().toString().trim().toLowerCase();
                                 String lastName = lastNametext.getText().toString().trim().toLowerCase();
                                 user.setName(firstName + " " + lastName);
+                                user.setReg_date(getCurrentDate());
+
                                 // Using both the unique userId and user object to write the type and location under user_profiles/$userId
                                 writeUserToFBDB(userId, user);
-
-
 
                                 if(type.equals("requester")) {
                                     updateUI(FBuser);
@@ -268,7 +271,6 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
-
     private void makeProfessionVisible() {
         // Getting the type from the radio buttons to show the prpfession
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
@@ -290,7 +292,17 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
+    // Getting the date
+    private String getCurrentDate() {
 
+        Date c = Calendar.getInstance().getTime();
+        System.out.println("Current time => " + c);
+
+        SimpleDateFormat df = new SimpleDateFormat("MM/dd/yy");
+        String formattedDate = df.format(c);
+        return formattedDate;
+
+    }
     // Changing the UI if the user is authenticated
     private void updateUI(FirebaseUser user) {
         // Checking if the user is authenticated

@@ -37,11 +37,9 @@ public class ProvAdaptor extends BaseAdapter {
     ImageView image;
     TextView username;
     TextView profession;
-    TextView city;
     RatingBar rate;
     TextView raterNum;
     TextView description;
-    TextView location;
     ImageView ivCheckBox;
     TextView profBtn;
 
@@ -81,11 +79,9 @@ public class ProvAdaptor extends BaseAdapter {
             username = (TextView)view.findViewById(R.id.provider_name_text_view);
             profession = (TextView) view.findViewById(R.id.profession_text_view);
             image = (ImageView) view.findViewById(R.id.image);
-            city = (TextView) view.findViewById(R.id.city_text_view);
             rate = (RatingBar) view.findViewById(R.id.rating_bar);
             raterNum = (TextView) view.findViewById(R.id.number_of_reviews);
             description = (TextView) view.findViewById(R.id.serviceDesc);
-            location = (TextView) view.findViewById(R.id.location);
             profBtn = (TextView)view.findViewById(R.id.profileBtn);
 
         }
@@ -96,11 +92,9 @@ public class ProvAdaptor extends BaseAdapter {
         username.setText(user.getName());
         profession.setText(user.getProfession());
         //image
-        city.setText(user.getLocation());
         rate.setRating(user.getRate());
         raterNum.setText("");
         description.setText("");
-        location.setText("");
         setProfListener(user.getUid());
 
         if (user.isSelected())

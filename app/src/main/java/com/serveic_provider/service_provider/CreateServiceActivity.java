@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -58,18 +59,17 @@ public class CreateServiceActivity extends AppCompatActivity
     String jobTitle;
 
     String profession;
-
     String description;
     String date;
     String startTime;
     String endTime;
-    String neighbor;
     String city;
-    int building;
+    String location;
 
     String whichPicker;
 
     String PROMPT_FOR_JOB = "Select Job";
+    int LOCATION_REQUEST = 66;
 
     ArrayList<String> JOBS = new ArrayList<String>();
 
@@ -91,11 +91,8 @@ public class CreateServiceActivity extends AppCompatActivity
     EditText toEditText;
     @BindView(R.id.city_spinner)
     Spinner citySpinner;
-    @BindView(R.id.neighbor_spinner)
-    Spinner neighborSpinner;
-    @BindView(R.id.building_edit_text)
-    EditText buildingEditText;
-
+    @BindView(R.id.location_button)
+    Button locationButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +100,7 @@ public class CreateServiceActivity extends AppCompatActivity
         setContentView(R.layout.activity_create_service);
         setTitle("Create Service");
         ButterKnife.bind(this);
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             //getting the selected profession
@@ -130,6 +128,11 @@ public class CreateServiceActivity extends AppCompatActivity
         }
 
     }
+    @OnClick(R.id.location_button)
+    public void openMap(View view) {
+        Intent intent = new Intent(this, MapsActivity.class);
+        startActivityForResult(intent, LOCATION_REQUEST);
+    }
     @OnClick(R.id.date_edit_text)
     public void selectDate(View view) {
         DialogFragment datePicker = new DatePickerFragment();
@@ -147,30 +150,6 @@ public class CreateServiceActivity extends AppCompatActivity
         timePicker.show(getSupportFragmentManager(), "to time picker");
         whichPicker = "to time picker";
     }
-    @OnItemSelected(R.id.city_spinner)
-    public void selectCity(View view) {
-        //temp array to hold all neighbors to the selected city
-        String[] tempArray = new String[1];
-        String city = citySpinner.getSelectedItem().toString();
-        Log.e("dfs",city);
-        if(!city.equals("")){
-            if(city.equals("Dammam")){
-                tempArray = getResources().getStringArray(R.array.dammam_neighbors);}
-            else if(city.equals("Dhahran")){
-                tempArray = getResources().getStringArray(R.array.dhahran_neighbors);}
-            else if(city.equals("Riyadh")) {
-                tempArray = getResources().getStringArray(R.array.riyadh_neighbors);
-            }
-            else{
-                tempArray[0] = "not specified yet";
-            }
-
-            ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
-                    this, android.R.layout.simple_spinner_item, tempArray );
-            neighborSpinner.setAdapter(spinnerArrayAdapter);
-        }
-    }
-
 
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
@@ -190,8 +169,6 @@ public class CreateServiceActivity extends AppCompatActivity
             toEditText.setText(hour + ":" + minute);
     }
 
-
-
     public boolean validateCreateForm() {
 
         String jobSelected = jobSpinner.getSelectedItem().toString().toLowerCase();
@@ -200,8 +177,7 @@ public class CreateServiceActivity extends AppCompatActivity
         String fromTimeText = fromEditText.getText().toString().toLowerCase();
         String toTimeText = toEditText.getText().toString().toLowerCase();
         String cityText = citySpinner.getSelectedItem().toString().toLowerCase();
-        String neighborText = neighborSpinner.getSelectedItem().toString().toLowerCase();
-        int buildingText = Integer.parseInt(buildingEditText.getText().toString());
+        String locationButtonText = locationButton.getText().toString().toLowerCase();
 
         if (jobSelected.equals(PROMPT_FOR_JOB)) {
             Toast.makeText(CreateServiceActivity.this, "Please select a job",
@@ -232,12 +208,8 @@ public class CreateServiceActivity extends AppCompatActivity
             Toast.makeText(CreateServiceActivity.this, "please enter a city", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (neighborText.isEmpty()) {
-            Toast.makeText(CreateServiceActivity.this, "please enter a neighbor", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if (buildingText==0) {
-            Toast.makeText(CreateServiceActivity.this, "please enter a building number", Toast.LENGTH_SHORT).show();
+        if (locationButtonText.equals("set location")) {
+            Toast.makeText(CreateServiceActivity.this, "please set the location", Toast.LENGTH_SHORT).show();
             return false;
         }
         if (descriptionText.isEmpty()){
@@ -250,8 +222,6 @@ public class CreateServiceActivity extends AppCompatActivity
         startTime = fromTimeText;
         endTime = toTimeText;
         city = cityText;
-        building = buildingText;
-        neighbor = neighborText;
 
         return true;
     }
@@ -267,11 +237,30 @@ public class CreateServiceActivity extends AppCompatActivity
         service.setEndTime(endTime);
         service.setStatus("pending");
         service.setProvider_id("none");
+        service.setLocation(location);
         service.setRequester_id(requsterID);
         service.setCity(city);
-        service.setBuilding(building);
-        service.setNeighbor(neighbor);
         return service;
+    }
+
+    public void onActivityResult(int requestCode, int resultCode,
+                                 Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == LOCATION_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                Bundle locationExtras = data.getExtras();
+                if (locationExtras != null) {
+                    location = locationExtras.getString("location");
+                    Log.d("location", location);
+//                    city = locationExtras.getString("city");
+//                    Log.d("city", city);
+                    Toast.makeText(CreateServiceActivity.this, "Location is set successfully",
+                    Toast.LENGTH_SHORT).show();
+                    locationButton.setText("Change Location ?");
+                }
+            }
+        }
     }
 
     public void readJobsFromFBDB() {
@@ -310,7 +299,5 @@ public class CreateServiceActivity extends AppCompatActivity
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         jobSpinner.setAdapter(adapter2);
     }
-
-
 
 }

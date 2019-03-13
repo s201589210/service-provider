@@ -17,6 +17,7 @@ public class User {
     private int id ;
 	private boolean isSelected;
 	private String token_id;
+	private String reg_date;
 
     public User(int is_baned, String phone_number, String type, String profession, String serviceCounter) {
 		this.is_baned = is_baned;
@@ -172,5 +173,13 @@ public class User {
 
 	public void setToken_id(String token_id) {
 		this.token_id = token_id;
+	}
+
+	public String getReg_date() {
+		return reg_date;
+	}
+
+	public void setReg_date(String reg_date) {
+		this.reg_date = reg_date;
 	}
 }

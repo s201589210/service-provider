@@ -2,6 +2,8 @@ package com.serveic_provider.service_provider.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,18 +37,22 @@ public class ProviderServiceAdapter extends ArrayAdapter<Service> {
     FirebaseUser FBuser= mAuth.getCurrentUser();
     final String userId = FBuser.getUid();
 
+    // for the location
+    double locationLat;
+    double locationLng;
+
     //requster_location reference
 
     TextView jobTextView;
     TextView descriptionTextView;
     TextView dateTextView;
     TextView timeTextView;
-    TextView locationTextView;
     TextView profissionTextView;
     TextView requesterNameTextView;
     Button acceptButton;
     Button declineButton;
     Button undoButton;
+    Button locationButton;
 
     public ProviderServiceAdapter(Activity context, ArrayList<Service> serviceArrayList) {
         super(context,0, serviceArrayList);
@@ -66,10 +72,10 @@ public class ProviderServiceAdapter extends ArrayAdapter<Service> {
         descriptionTextView = (TextView) listItemView.findViewById(R.id.item_description);
         dateTextView = (TextView) listItemView.findViewById(R.id.item_date);
         timeTextView = (TextView) listItemView.findViewById(R.id.item_time);
-        locationTextView = (TextView) listItemView.findViewById(R.id.item_location);
         profissionTextView = (TextView) listItemView.findViewById(R.id.item_profission);
         acceptButton = (Button) listItemView.findViewById(R.id.accept_service_button);
         declineButton = (Button) listItemView.findViewById(R.id.decline_service_button);
+        locationButton = (Button) listItemView.findViewById(R.id.location_service_button);
         requesterNameTextView = (TextView) listItemView.findViewById(R.id.item_requester_name);
 
         final Service currentService = (Service) getItem(position);
@@ -82,7 +88,6 @@ public class ProviderServiceAdapter extends ArrayAdapter<Service> {
         descriptionTextView.setText(currentService.getDescription());
         dateTextView.setText(currentService.getDate());
         timeTextView.setText(currentService.getStartTime()+" - " + currentService.getEndTime());
-        locationTextView.setText(currentService.getCity()+", "+ currentService.getNeighbor());
         profissionTextView.setText("("+currentService.getProfession()+")");
 
         //set accept button value
@@ -115,7 +120,18 @@ public class ProviderServiceAdapter extends ArrayAdapter<Service> {
 
             }
         });
-
+        // set location button value
+        if(currentService.getLocation()!=null){
+            locationLat = Double.parseDouble(currentService.getLocation().split(",")[0]);
+            locationLng = Double.parseDouble(currentService.getLocation().split(",")[1]);
+        }
+        locationButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                String url = "http://maps.google.com/maps?daddr=" + locationLat + "," + locationLng;
+                final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                getContext().startActivity(intent);
+            }
+        });
         //set undo button value
         undoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,7 +162,6 @@ public class ProviderServiceAdapter extends ArrayAdapter<Service> {
         descriptionTextView.setVisibility(View.VISIBLE);
         dateTextView.setVisibility(View.VISIBLE);
         timeTextView.setVisibility(View.VISIBLE);
-        locationTextView.setVisibility(View.VISIBLE);
         profissionTextView.setVisibility(View.VISIBLE);
         requesterNameTextView.setVisibility(View.VISIBLE);
         acceptButton.setVisibility(View.VISIBLE);
@@ -160,7 +175,6 @@ public class ProviderServiceAdapter extends ArrayAdapter<Service> {
         descriptionTextView.setVisibility(View.INVISIBLE);
         dateTextView.setVisibility(View.INVISIBLE);
         timeTextView.setVisibility(View.INVISIBLE);
-        locationTextView.setVisibility(View.INVISIBLE);
         profissionTextView.setVisibility(View.INVISIBLE);
         requesterNameTextView.setVisibility(View.INVISIBLE);
         acceptButton.setVisibility(View.INVISIBLE);

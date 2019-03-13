@@ -14,8 +14,7 @@ public class Service implements Serializable {
 	private String description;
 	private String status;
 	private String city;
-	private String neighbor;
-	private int building;
+	private String location;
 	private int rate;
 	private String job;
 	private String startTime;
@@ -29,12 +28,11 @@ public class Service implements Serializable {
 
 
 	public Service(){}
-	public Service(String date, String description, String city, String neighbor, int building, String startTime, String endTime, String provider_id, int rate, String status) {
+	public Service(String date, String description, String city, String location, String startTime, String endTime, String provider_id, int rate, String status) {
 		this.date = date;
 		this.description = description;
 		this.city = city;
-		this.neighbor = neighbor;
-		this.building = building;
+		this.location = location;
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.provider_id = provider_id;
@@ -43,8 +41,6 @@ public class Service implements Serializable {
 	}
 	public Service(String provider_id){this.provider_id = provider_id;}
 	public void create() { }
-
-
 	public String getDate() {
 		return date;
 	}
@@ -59,10 +55,12 @@ public class Service implements Serializable {
 	}
 	public String getCity() { return city; }
 	public void setCity(String city) { this.city = city; }
-	public String getNeighbor() { return neighbor; }
-	public void setNeighbor(String neighbor) { this.neighbor = neighbor; }
-	public int getBuilding() { return building; }
-	public void setBuilding(int building) { this.building = building; }
+	public String getLocation() {
+		return location;
+	}
+	public void setLocation(String location) {
+		this.location = location;
+	}
 	public String getProvider_id() { return provider_id; }
 	public void setProvider_id(String provider_id) { this.provider_id = provider_id; }
 	public int getRate() { return rate; }

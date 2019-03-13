@@ -3,6 +3,7 @@ package com.serveic_provider.service_provider.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -15,6 +16,8 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,6 +27,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.serveic_provider.service_provider.MapsActivity;
 import com.serveic_provider.service_provider.ProfileActivity;
 import com.serveic_provider.service_provider.R;
 import com.serveic_provider.service_provider.RateActivity;
@@ -49,19 +53,20 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
     DatabaseReference userRates;
 
     String uid;
+    double locationLat;
+    double locationLng;
 
     TextView rateBtn;
     TextView confirmBtn;
     TextView reportBtn;
     TextView provNameTextView;
     TextView professionTextView;
-    TextView locationTextView;
-    TextView cityTextView;
     TextView raterNumTextView;
     TextView descriptionTextView;
     RatingBar ratingBar;
     ImageView imageBox;
     TextView profBtn;
+    TextView locatBtn;
     public ServiceAdapter(Activity context, ArrayList<Service> words, int color) {
         super(context, 0, words);
         colorid=color;
@@ -87,12 +92,11 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
         //declare all view fields
         rateBtn = (TextView)listItemView.findViewById(R.id.rateBtn);
         profBtn = (TextView)listItemView.findViewById(R.id.profileBtn);
+        locatBtn = (TextView)listItemView.findViewById(R.id.locationBtn);
         confirmBtn = (TextView)listItemView.findViewById(R.id.confirmBtn);
         reportBtn = (TextView)listItemView.findViewById(R.id.reportBtn);
         provNameTextView = (TextView) listItemView.findViewById(R.id.provider_name_text_view);
         professionTextView = (TextView) listItemView.findViewById(R.id.profession_text_view);
-        locationTextView = (TextView) listItemView.findViewById(R.id.location);
-        cityTextView = (TextView) listItemView.findViewById(R.id.city_text_view);
         raterNumTextView = (TextView) listItemView.findViewById(R.id.number_of_reviews);
         descriptionTextView = (TextView) listItemView.findViewById(R.id.serviceDesc);
         ratingBar = (RatingBar) listItemView.findViewById(R.id.rating_bar);
@@ -105,10 +109,12 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
         //if status is in progress show both confirm and report btns
         confirmCheck(service);
         //setting all fields
-        setServiceFields( service,professionTextView, locationTextView, cityTextView, descriptionTextView);
+        setServiceFields( service,professionTextView, descriptionTextView);
         setProviderFields(service);
         //setting the profile btn listener
         setProfListener();
+        //setting the location btn listener
+        setLocationListener();
 
         View textcontainer = listItemView.findViewById(R.id.commentContainer_container);
         int color = ContextCompat.getColor(getContext(),colorid);
@@ -120,13 +126,9 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
         return listItemView;
 
     }
-    public void setServiceFields(Service s,TextView professionTextView,TextView locationTextView,TextView cityTextView,TextView descriptionTextView){
+    public void setServiceFields(Service s,TextView professionTextView,TextView descriptionTextView){
         if(s.getProfession()!=null)
             professionTextView.setText(s.getProfession());
-        if(s.getNeighbor()!=null)
-            locationTextView.setText(s.getNeighbor());
-        if(s.getCity()!=null)
-            cityTextView.setText(s.getCity());
         if(s.getDescription()!=null)
             descriptionTextView.setText(s.getDescription());
         if(s.getImage()!=null){
@@ -135,6 +137,10 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
         }
         else{
             imageBox.setVisibility(View.GONE);
+        }
+        if(s.getLocation()!=null){
+            locationLat = Double.parseDouble(s.getLocation().split(",")[0]);
+            locationLng = Double.parseDouble(s.getLocation().split(",")[1]);
         }
     }
     public void setProviderFields(final Service s){
@@ -226,6 +232,16 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
                 getContext().startActivity(intent1);
             }
         });
+    }
+    public void setLocationListener(){
+        String url = "http://maps.google.com/maps?daddr=" + locationLat + "," + locationLng;
+        final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        locatBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                getContext().startActivity(intent);
+            }
+        });
+
     }
     public void getUserProf(final String userId){
         userRef = mDatabase.getReference("user_profiles").child(userId);

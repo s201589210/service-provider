@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="130dp"
+    android:layout_height="150dp"
     card_view:cardCornerRadius="7dp"
     card_view:cardUseCompatPadding="true"
     card_view:cardElevation="5dp"
@@ -59,16 +59,15 @@
                 android:textColor="@android:color/black" />
 
 
-            <TextView
-                android:id="@+id/city_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="25dp"
-                android:layout_marginRight="10dp"
-                android:gravity="end"
-                android:text=" city"
-                android:textAppearance="?android:textAppearanceMedium"
-
-                android:textColor="@android:color/black" />
+            <Button
+                android:id="@+id/locationBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Location"
+                android:textAppearance="?android:textAppearanceSmall"
+                android:focusable="false"
+                android:textSize="8sp" />
 
         </LinearLayout>
 
@@ -129,6 +128,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="+"
+                android:textAppearance="?android:textAppearanceSmall"
                 android:focusable="false"
                 android:textSize="8sp" />
 
@@ -150,16 +150,6 @@
             android:layout_height="0dp"
             android:layout_weight="1.5"
             android:orientation="horizontal">
-
-
-            <TextView
-                android:id="@+id/location"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:paddingRight="5dp"
-                android:text="lacation "
-                android:textColor="@android:color/black"
-                android:textSize="12sp" />
 
             <View
                 android:layout_width="10dp"
