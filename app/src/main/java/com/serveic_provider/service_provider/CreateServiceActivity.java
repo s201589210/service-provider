@@ -200,8 +200,19 @@ public class CreateServiceActivity extends AppCompatActivity
         String fromTimeText = fromEditText.getText().toString().toLowerCase();
         String toTimeText = toEditText.getText().toString().toLowerCase();
         String cityText = citySpinner.getSelectedItem().toString().toLowerCase();
-        String neighborText = neighborSpinner.getSelectedItem().toString().toLowerCase();
-        int buildingText = Integer.parseInt(buildingEditText.getText().toString());
+        String neighborText;
+        int buildingText;
+
+        try{
+            neighborText = neighborSpinner.getSelectedItem().toString().toLowerCase();
+        }catch (Exception e){
+            neighborText = "";
+        }
+        try{
+            buildingText = Integer.parseInt(buildingEditText.getText().toString());
+        }catch (Exception e){
+            buildingText = 0;
+        }
 
         if (jobSelected.equals(PROMPT_FOR_JOB)) {
             Toast.makeText(CreateServiceActivity.this, "Please select a job",
