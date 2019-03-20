@@ -3,6 +3,7 @@ package com.serveic_provider.service_provider.serviceProvider;
 public class User {
 	private String uid;
 	private int is_baned;
+	private int is_active;
 	private String phone_number;
 	private String type;
     private String profession;
