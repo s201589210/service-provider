@@ -116,7 +116,10 @@ public class ProviderServiceAdapter extends ArrayAdapter<Service> {
                 potentialProvidersRef.setValue(currentService.getPotentialProvidersIds());
 
                 //update UI
-                makeItemsInvisible();
+                finalListItemView.setVisibility(View.GONE);
+
+                //fix to make the declining make the current view invisible (not the last one) and remove the "finalListItemView.setVisibility(View.GONE)" above
+                //makeItemsInvisible();
 
             }
         });
