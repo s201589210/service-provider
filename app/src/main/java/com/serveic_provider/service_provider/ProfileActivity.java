@@ -21,6 +21,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.like.LikeButton;
+import com.like.OnLikeListener;
 import com.serveic_provider.service_provider.adapters.ProvAdaptor;
 import com.serveic_provider.service_provider.adapters.RateAdaptor;
 import com.serveic_provider.service_provider.adapters.ServiceAdapter;
@@ -47,6 +49,7 @@ public class ProfileActivity extends AppCompatActivity {
     pl.droidsonroids.gif.GifImageView spinner;
     de.hdodenhof.circleimageview.CircleImageView profilepic;
     android.support.v4.widget.SwipeRefreshLayout pullToRefresh ;
+    LikeButton heart_botton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +77,7 @@ public class ProfileActivity extends AppCompatActivity {
         type =(TextView)findViewById(R.id.typeTextView);
         profilepic = (de.hdodenhof.circleimageview.CircleImageView)findViewById(R.id.profile_image);
         spinner = (pl.droidsonroids.gif.GifImageView)findViewById(R.id.progressBar1);
+        heart_botton = findViewById(R.id.heart_button);
 
         spinner.setVisibility(View.VISIBLE);
 
@@ -88,6 +92,30 @@ public class ProfileActivity extends AppCompatActivity {
         if(!userId.equals("none")){
             buildProfile(userId);
         }
+        //remove the favorite botton "heart_botton" from the original user
+        if (checkUser(userId)){
+            heart_botton.setVisibility(View.GONE);
+        }
+
+        heart_botton.setOnLikeListener(new OnLikeListener() {
+            @Override
+            public void liked(LikeButton likeButton) {
+
+            }
+
+            @Override
+            public void unLiked(LikeButton likeButton) {
+
+            }
+        });
+
+    }
+    public boolean haveFavorite(String userId){
+        //check user in db
+        DatabaseReference favoriteRef;
+        favoriteRef = mDatabase.getReference("favorite");
+
+        return false;
     }
     public void buildProfile(String userId){
 

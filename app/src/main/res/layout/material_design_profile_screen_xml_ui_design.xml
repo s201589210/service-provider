@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.v4.widget.SwipeRefreshLayout
-    android:id="@+id/pullToRefresh"
+<android.support.v4.widget.SwipeRefreshLayout android:id="@+id/pullToRefresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_weight="10"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -60,13 +60,15 @@
             android:elevation="4dp">
 
 
-            <ImageView
-                android:id="@+id/add_friend"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
+            <com.like.LikeButton
+                app:icon_type="heart"
+                app:icon_size="20dp"
+                android:id="@+id/heart_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_toLeftOf="@+id/drop_down_option_menu" />
+
+
 
             <ImageView
                 android:id="@+id/drop_down_option_menu"

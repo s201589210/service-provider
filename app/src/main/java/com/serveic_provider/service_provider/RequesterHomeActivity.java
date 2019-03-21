@@ -174,4 +174,8 @@ public class RequesterHomeActivity extends Activity {
         startActivity(new Intent(this, MyServicesActivity.class));
         drawer.closeDrawer(GravityCompat.START);
     }
+    public void goToMyFavourite(MenuItem item) {
+        startActivity(new Intent(this, FavouriteListActivity.class));
+        drawer.closeDrawer(GravityCompat.START);
+    }
 }

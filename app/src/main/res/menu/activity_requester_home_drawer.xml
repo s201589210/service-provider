@@ -21,6 +21,13 @@
             android:icon="@drawable/ic_menu_manage"
             android:title="Website"
             android:checkable="false"/>
+        <item
+            android:id="@+id/nav_favourite"
+            android:icon="@drawable/ic_favorite"
+            android:onClick="goToMyFavourite"
+            android:title="Favourite"
+            android:checkable="false"/>
+
     </group>
 
     <item android:title="Communicate">
