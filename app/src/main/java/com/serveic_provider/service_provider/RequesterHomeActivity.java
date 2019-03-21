@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -69,10 +70,28 @@ public class RequesterHomeActivity extends Activity {
     }
 
     private void setUpDrawer() {
+        final Intent intent1 = new Intent(this, ProfileActivity.class);
         findViewById(R.id.drawer_profile_layout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(context, ProfileActivity.class));
+                //check type of the user
+                //current user id
+                String currnetUserId ;
+                //auth table reference
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                //user reference
+                FirebaseUser FBuser;
+                //dRef
+                DatabaseReference userProfileRef_type;
+                //get user
+                FBuser = mAuth.getCurrentUser();
+                //get id
+                currnetUserId = FBuser.getUid();
+                final Bundle bundle1 = new Bundle();
+                bundle1.putString("userId",currnetUserId);
+                intent1.putExtras(bundle1);
+                Log.w("ClickedHH",currnetUserId);
+                startActivity(intent1);
                 drawer.closeDrawer(GravityCompat.START);
             }
         });
