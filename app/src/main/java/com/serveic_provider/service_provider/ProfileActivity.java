@@ -1,19 +1,22 @@
 package com.serveic_provider.service_provider;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -21,14 +24,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.serveic_provider.service_provider.adapters.ProvAdaptor;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.serveic_provider.service_provider.adapters.RateAdaptor;
-import com.serveic_provider.service_provider.adapters.ServiceAdapter;
-import com.serveic_provider.service_provider.fragments.InProgressFragment;
-import com.serveic_provider.service_provider.serviceProvider.Comment;
 import com.serveic_provider.service_provider.serviceProvider.Rate;
-import com.serveic_provider.service_provider.serviceProvider.Service;
 import com.serveic_provider.service_provider.serviceProvider.User;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -45,14 +46,19 @@ public class ProfileActivity extends AppCompatActivity {
     ArrayList<Rate> rateList = new ArrayList<Rate>();
     RateAdaptor adapter;
     pl.droidsonroids.gif.GifImageView spinner;
-    de.hdodenhof.circleimageview.CircleImageView profilepic;
+    ImageView profilepic;
     android.support.v4.widget.SwipeRefreshLayout pullToRefresh ;
+    FirebaseStorage storage;
+    StorageReference storageReference;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.material_design_profile_screen_xml_ui_design);
         setTitle("Profile");
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
         rateList = new ArrayList<Rate>();
 
         pullToRefresh=(android.support.v4.widget.SwipeRefreshLayout) findViewById(R.id.pullToRefresh);
@@ -72,12 +78,12 @@ public class ProfileActivity extends AppCompatActivity {
         phone =(TextView)findViewById(R.id.phoneTextView);
         ratingBar =(RatingBar)findViewById(R.id.ratingBar2);
         type =(TextView)findViewById(R.id.typeTextView);
-        profilepic = (de.hdodenhof.circleimageview.CircleImageView)findViewById(R.id.profile_image);
+        profilepic = (ImageView)findViewById(R.id.profile_image);
         spinner = (pl.droidsonroids.gif.GifImageView)findViewById(R.id.progressBar1);
 
         spinner.setVisibility(View.VISIBLE);
 
-        //this is themethod to set an imge
+        //this is the method to set an imge
         //profilepic.setImageResource(R.drawable.bakground);
 
         //get user id from last activity
@@ -89,7 +95,7 @@ public class ProfileActivity extends AppCompatActivity {
             buildProfile(userId);
         }
     }
-    public void buildProfile(String userId){
+    public void buildProfile(final String userId){
 
         //build user obj from db
         DatabaseReference userProfileRef_type;
@@ -98,12 +104,36 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
+                displayImage(userId);
                 setFields(user);
                 buildCommentList();
 
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+
+    }
+
+    public void displayImage(String userId){
+        storageReference.child("userImages/"+userId+"/profileImage").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                if(uri!=null) {
+
+                    // Got the download URL for ''
+                    Log.w("imageLink", uri.toString());
+                    String imgUrl = uri.toString();
+                    Picasso.get()
+                            .load(imgUrl)
+                            .into(profilepic);
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
             }
         });
 

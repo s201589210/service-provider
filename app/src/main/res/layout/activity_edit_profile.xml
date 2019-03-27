@@ -26,15 +26,42 @@
             android:background="@color/colorPrimarySuperDark"
             android:orientation="vertical">
 
+            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/profile_image"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="166dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="149dp"
+                android:src="@drawable/dyer"
+                app:civ_border_color="#bbdefb"
+                app:civ_border_width="2dp" />
 
-            <ImageView
-                android:id="@+id/edit_profile_profile_imge"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_centerInParent="true"
-                android:background="@drawable/dyer" />
+            <Button
+                android:id="@+id/imgUpld"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/profile_image"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="107dp"
+                android:layout_toEndOf="@+id/imgEdt"
+                android:text="Upload"
+                android:visibility="invisible" />
 
-
+            <Button
+                android:id="@+id/imgEdt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/profile_image"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="126dp"
+                android:layout_marginTop="4dp"
+                android:text="Edit" />
 
 
         </RelativeLayout>
