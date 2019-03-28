@@ -24,6 +24,7 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".BandAccount"></activity>
         <activity android:name=".InactiveAccount" />
+        <activity android:name=".ServiceActivity" />
         <activity android:name=".EditProfileActivity" /> <!-- Firebase Messaaging -->
         <service android:name=".firebase_notification.MyFirebaseMessagingService">
             <intent-filter>

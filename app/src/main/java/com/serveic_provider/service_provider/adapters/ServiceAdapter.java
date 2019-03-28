@@ -34,6 +34,7 @@ import com.serveic_provider.service_provider.ProfileActivity;
 import com.serveic_provider.service_provider.R;
 import com.serveic_provider.service_provider.RateActivity;
 import com.serveic_provider.service_provider.Report;
+import com.serveic_provider.service_provider.ServiceActivity;
 import com.serveic_provider.service_provider.serviceProvider.Profile;
 import com.serveic_provider.service_provider.serviceProvider.Service;
 import com.serveic_provider.service_provider.serviceProvider.User;
@@ -93,12 +94,12 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
                     R.layout.service_listview, parent, false);
         };
 
-        final Intent intent1 = new Intent(this.getContext(), ProfileActivity.class);
+        final Intent intent1 = new Intent(this.getContext(), ServiceActivity.class);
         RelativeLayout serviceContainer = listItemView.findViewById(R.id.service_container);
         serviceContainer.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 final Bundle bundle1 = new Bundle();
-                bundle1.putString("userId",uid);
+                bundle1.putSerializable("service",service);
                 intent1.putExtras(bundle1);
                 getContext().startActivity(intent1);
             }
@@ -118,7 +119,7 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
         imageBox = (ImageView) listItemView.findViewById(R.id.image);
         uid="-";
         // Get the {@link AndroidFlavor} object located at this position in the list
-        final Service service = getItem(position);
+        service = getItem(position);
         //if status is finished show the rate btn
         rateCheck(service);
         //if status is in progress show both confirm and report btns
