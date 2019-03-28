@@ -7,12 +7,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +34,7 @@ import com.serveic_provider.service_provider.ProfileActivity;
 import com.serveic_provider.service_provider.R;
 import com.serveic_provider.service_provider.RateActivity;
 import com.serveic_provider.service_provider.Report;
+import com.serveic_provider.service_provider.serviceProvider.Profile;
 import com.serveic_provider.service_provider.serviceProvider.Service;
 import com.serveic_provider.service_provider.serviceProvider.User;
 
@@ -88,7 +91,19 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
         if(listItemView == null) {
             listItemView = LayoutInflater.from(getContext()).inflate(
                     R.layout.service_listview, parent, false);
-        }
+        };
+
+        final Intent intent1 = new Intent(this.getContext(), ProfileActivity.class);
+        RelativeLayout serviceContainer = listItemView.findViewById(R.id.service_container);
+        serviceContainer.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                final Bundle bundle1 = new Bundle();
+                bundle1.putString("userId",uid);
+                intent1.putExtras(bundle1);
+                getContext().startActivity(intent1);
+            }
+        });
+
         //declare all view fields
         rateBtn = (TextView)listItemView.findViewById(R.id.rateBtn);
         profBtn = (TextView)listItemView.findViewById(R.id.profileBtn);
