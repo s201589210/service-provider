@@ -183,4 +183,12 @@ public class User {
 	public void setReg_date(String reg_date) {
 		this.reg_date = reg_date;
 	}
+
+	public int getIs_active() {
+		return is_active;
+	}
+
+	public void setIs_active(int is_active) {
+		this.is_active = is_active;
+	}
 }

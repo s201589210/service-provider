@@ -1,7 +1,6 @@
 package com.serveic_provider.service_provider;
 
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,9 +11,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -30,9 +27,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
-import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.firebase.messaging.FirebaseMessagingService;
-import com.serveic_provider.service_provider.firebase_notification.MyFirebaseMessagingService;
 //import com.serveic_provider.service_provider.serviceProvider.FontsOverride;
 import com.serveic_provider.service_provider.serviceProvider.User;
 
@@ -172,7 +166,16 @@ public class LoginActivity extends AppCompatActivity {
                 user = dataSnapshot.getValue(User.class);
                 // Changing the UI here to solve the problem of the program continuing execution
                 // before the Firebase get the data. This solves the problem Othman stating
-                updateUI(FBuser);
+                if(user.getIs_baned()==1){
+                    startActivity(new Intent(LoginActivity.this, InactiveAccount.class));
+                    hideSpenner();
+                }
+                else if(user.getIs_active()==0){
+                    startActivity(new Intent(LoginActivity.this, InactiveAccount.class));
+                    hideSpenner();
+                }
+                else
+                    updateUI(FBuser);
             }
 
             @Override
