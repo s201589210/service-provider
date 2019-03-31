@@ -36,7 +36,7 @@
                 android:layout_marginStart="166dp"
                 android:layout_marginTop="25dp"
                 android:layout_marginEnd="149dp"
-                android:src="@drawable/dyer"
+                tools:src="@drawable/dyer"
                 app:civ_border_color="#bbdefb"
                 app:civ_border_width="2dp" />
 

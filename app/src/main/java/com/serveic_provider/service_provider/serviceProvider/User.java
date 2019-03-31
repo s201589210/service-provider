@@ -9,6 +9,7 @@ public class User {
     private String profession;
 	private int age;
 	private int available;
+	private int penalty_points =0;
 	private String image;
 	private String location;
 	private String serviceCounter = "0";
@@ -20,12 +21,13 @@ public class User {
 	private String token_id;
 	private String reg_date;
 
-    public User(int is_baned, String phone_number, String type, String profession, String serviceCounter) {
+    public User(int is_baned, String phone_number, String type, String profession, String serviceCounter,int penalty_points) {
 		this.is_baned = is_baned;
 		this.phone_number = phone_number;
 		this.type = type;
 		this.profession = profession;
 		this.serviceCounter = serviceCounter;
+		this.penalty_points =penalty_points ;
 	}
 
 	public User(){
@@ -66,9 +68,18 @@ public class User {
 		this.type = type;
 	}
 
+	public void setPenalty_points(int penalty_points) {
+		this.penalty_points = penalty_points;
+	}
+
+	public int getPenalty_points() {
+		return penalty_points;
+	}
+
 	public int getIs_baned() {
 		return is_baned;
 	}
+
 
 	public void setIs_baned(int is_baned) {
 		this.is_baned = is_baned;

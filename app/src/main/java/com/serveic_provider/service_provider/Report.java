@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,8 +27,9 @@ import org.w3c.dom.Text;
 public class Report extends AppCompatActivity {
     CheckBox penalty1 ,penalty2,penalty3,penalty4,penalty5;
     Button reportButton;
-    FirebaseDatabase mDatabase;
+    FirebaseDatabase mDatabase  = FirebaseDatabase.getInstance();;
     Service service;
+    String userId;
 
 
     @Override
@@ -51,20 +54,7 @@ public class Report extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                mDatabase = FirebaseDatabase.getInstance();
-                DatabaseReference penaltypoints = mDatabase.getReference().child("user_profiles").child("HFPdxSNW9bcE2D8oupLIU1KcKiq2").child("penalty_points");
-
-                penaltypoints.addListenerForSingleValueEvent(new ValueEventListener() {
-
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        int oldPoints  = dataSnapshot.getValue(int.class);
-                        calculatePoint(oldPoints);
-                    }
-
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                    }
-                });
+                reportProcess();
 
 
             }
@@ -75,7 +65,7 @@ public class Report extends AppCompatActivity {
 
 
     }
-    public void calculatePoint(int oldPoints){
+    public void calculatePoint(int oldPoints,String userId){
         int penaltyPoint=oldPoints;
 
         penalty1 =(CheckBox) findViewById(R.id.report1_checkbox);
@@ -99,11 +89,85 @@ public class Report extends AppCompatActivity {
         if (penalty5.isChecked()){
             penaltyPoint=penaltyPoint+5;}
 
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("user_profiles").child("HFPdxSNW9bcE2D8oupLIU1KcKiq2");
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("user_profiles").child(userId);
         mDatabase.child("penalty_points").setValue(penaltyPoint);
 
 
+        if (penaltyPoint>=30){
+            mDatabase.child("is_baned").setValue(1);}
+
+
     }
+
+
+
+    public void reportProcess(){
+        //current user id
+        String currnetUserId ;
+        //auth table reference
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();;
+        //user reference
+        FirebaseUser FBuser;
+        //dRef
+        DatabaseReference userProfileRef_type;
+        //get user
+        FBuser = mAuth.getCurrentUser();
+        //get id
+        currnetUserId = FBuser.getUid();
+        //rate.setRaterId(currnetUserId);
+        userProfileRef_type = mDatabase.getReference("user_profiles").child(currnetUserId).child("type");
+        userProfileRef_type.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String type = dataSnapshot.getValue(String.class);
+
+                if(type.equals("provider")){
+                    userId = service.getRequester_id();
+
+                }
+                else{
+                    userId = service.getProvider_id();
+
+                }
+
+
+                DatabaseReference penaltyRef = FirebaseDatabase.getInstance().getReference("user_profiles").child(userId).child("penalty_points");
+                penaltyRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        int points = dataSnapshot.getValue(int.class);
+
+                        calculatePoint(points , userId);
+                    }
+
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
+
+                });
+
+
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+
+    }
+
+
+
+
+
+
+
+
+
+
 
 
 }
