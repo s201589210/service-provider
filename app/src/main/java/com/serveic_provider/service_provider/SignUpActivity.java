@@ -146,7 +146,8 @@ public class SignUpActivity extends AppCompatActivity {
                                 // Setting the name of the user
                                 String firstName = firstNametext.getText().toString().trim().toLowerCase();
                                 String lastName = lastNametext.getText().toString().trim().toLowerCase();
-                                user.setName(firstName + " " + lastName);
+                                user.setName(firstName);
+                                user.setLastName(lastName);
                                 user.setReg_date(getCurrentDate());
 
                                 // Using both the unique userId and user object to write the type and location under user_profiles/$userId
