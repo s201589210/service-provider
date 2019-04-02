@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -46,6 +48,7 @@ public class ProfileActivity extends AppCompatActivity {
     String userId = "";
     ArrayList<Rate> rateList = new ArrayList<Rate>();
     RateAdaptor adapter;
+    ArrayList<String> favouriteProviderIdList = new ArrayList<String>();
     pl.droidsonroids.gif.GifImageView spinner;
     de.hdodenhof.circleimageview.CircleImageView profilepic;
     android.support.v4.widget.SwipeRefreshLayout pullToRefresh ;
@@ -100,23 +103,130 @@ public class ProfileActivity extends AppCompatActivity {
         heart_botton.setOnLikeListener(new OnLikeListener() {
             @Override
             public void liked(LikeButton likeButton) {
-
+                addToFavourite(userId);
             }
 
             @Override
             public void unLiked(LikeButton likeButton) {
+                deleteFromFavourite(userId);
 
             }
         });
 
     }
-    public boolean haveFavorite(String userId){
-        //check user in db
-        DatabaseReference favoriteRef;
-        favoriteRef = mDatabase.getReference("favorite");
 
-        return false;
+    private void deleteFromFavourite(final String userId) {
+        //auth table reference
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();;
+        //user reference
+        FirebaseUser FBuser;
+        //user_profiles reference
+        final FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
+        //get user
+        FBuser = mAuth.getCurrentUser();
+        //get id
+        final String requsterID = FBuser.getUid();
+
+        DatabaseReference userProfileRef;
+        userProfileRef = mDatabase.getReference("user_profiles").child(userId);
+        userProfileRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //construct new user === firebase user
+                User user = dataSnapshot.getValue(User.class);
+                user.setUid(requsterID);
+                favouriteProviderIdList = user.getFavouriteProvidersIds();
+                String provId;
+                for(int i =1;i <favouriteProviderIdList.size();i++){
+                    provId = favouriteProviderIdList.get(i);
+                    if(provId.equals(userId))
+                        favouriteProviderIdList.remove(provId);
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
+
+    private void addToFavourite(final String userId) {
+        //auth table reference
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();;
+        //user reference
+        FirebaseUser FBuser;
+        //user_profiles reference
+        final FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
+        //get user
+        FBuser = mAuth.getCurrentUser();
+        //get id
+        final String requsterID = FBuser.getUid();
+
+        DatabaseReference userProfileRef;
+        userProfileRef = mDatabase.getReference("user_profiles").child(userId);
+        userProfileRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //construct new user === firebase user
+                User user = dataSnapshot.getValue(User.class);
+                user.setUid(requsterID);
+                favouriteProviderIdList = user.getFavouriteProvidersIds();
+                favouriteProviderIdList.add(userId);
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+    }
+
+    /*/ public void insertProviderService(final String providerID, final String requester_serviceCounter){
+         //auth table reference
+         FirebaseAuth mAuth = FirebaseAuth.getInstance();;
+         //user reference
+         FirebaseUser FBuser;
+         //user_profiles reference
+         final FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
+         //get user
+         FBuser = mAuth.getCurrentUser();
+         //get id
+         String requsterID = FBuser.getUid();
+         // set the serviceID
+         serviceID = requsterID + "_" + requester_serviceCounter;
+         //user profile reference
+         userProfileRef_serviceCounter = mDatabase.getReference("user_profiles").child(providerID).child("serviceCounter");
+         //service counter listener
+         userProfileRef_serviceCounter.addListenerForSingleValueEvent(new ValueEventListener() {
+             String serviceCounter;
+             @Override
+             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                 serviceCounter = dataSnapshot.getValue(String.class);
+                 //Service service = buildProviderService(providerID);
+
+                 //insert service to user id in the requster_services node
+                 providerServicesRef.child(providerID).child(serviceCounter).setValue(serviceID)
+                         .addOnSuccessListener(new OnSuccessListener<Void>() {
+                             Integer intServiceCounter = Integer.parseInt(serviceCounter) + 1;
+                             @Override
+                             public void onSuccess(Void aVoid) {userProfileRef_serviceCounter.setValue(intServiceCounter+"");
+                                 Log.d("tag", "writeUserType:success");
+                             }
+                         });//end insertion refrence
+             }//end of counter on data change listner
+
+             @Override
+             public void onCancelled(@NonNull DatabaseError databaseError) {
+             }
+         });//end of counter listner
+     }//end of inserting service/*/
     public void buildProfile(String userId){
 
         //build user obj from db

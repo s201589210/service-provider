@@ -1,5 +1,7 @@
 package com.serveic_provider.service_provider.serviceProvider;
 
+import java.util.ArrayList;
+
 public class User {
 	private String uid;
 	private int is_baned;
@@ -19,6 +21,7 @@ public class User {
 	private boolean isSelected;
 	private String token_id;
 	private String reg_date;
+	private ArrayList<String> favouriteProvidersIds;
 
     public User(int is_baned, String phone_number, String type, String profession, String serviceCounter) {
 		this.is_baned = is_baned;
@@ -44,6 +47,14 @@ public class User {
 	}
 
 	public void getProfile() {
+	}
+
+	public ArrayList<String> getFavouriteProvidersIds() {
+		return favouriteProvidersIds;
+	}
+
+	public void setFavouriteProvidersIds(ArrayList<String> favouriteProvidersIds) {
+		this.favouriteProvidersIds = favouriteProvidersIds;
 	}
 
 	public void logout() {

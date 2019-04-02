@@ -35,21 +35,12 @@ public class FavouriteListActivity extends Activity {
     ArrayList<String> selectedProviders = new ArrayList<String>();
     ProvAdaptor adapter;
 
-    String name;
-    String company;
-    String location;
-    String profession;
-    String city;
-    Service service;
+
     String requsterID;
-    String providerID;
-    String serviceID;
     pl.droidsonroids.gif.GifImageView spinner;
 
-    DatabaseReference requesterServicesRef;
+
     DatabaseReference providerServicesRef;
-    DatabaseReference userProfileRef_serviceCounter;
-    DatabaseReference locationRef;
     DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
 
     @BindView(R.id.create_button)
@@ -67,7 +58,7 @@ public class FavouriteListActivity extends Activity {
 
         providerList = new ArrayList<User>();
         Log.v("onCreate","222");
-        //get information based with last activity
+
 
         //auth table reference
         FirebaseAuth mAuth = FirebaseAuth.getInstance();;
@@ -81,24 +72,14 @@ public class FavouriteListActivity extends Activity {
         //get id
         requsterID = FBuser.getUid();
 
+        Log.v("potato", "before building the list");
         buildList(requsterID);
         spinner.setVisibility(View.GONE);
 
 
         final Button Btn = (Button) findViewById(R.id.create_button);
-        Btn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //insert the service to the requester node
-                //insertRequesterService();
-                Toast.makeText(FavouriteListActivity.this, "created successfully ",
-                        Toast.LENGTH_SHORT).show();
+        Btn.setVisibility(View.GONE) ;
 
-                //startActivity(new Intent(FavouriteListActivity.this, RequesterHomeActivity.class));
-
-                //set the provider id;
-                //insertRequesterService();
-            }
-        });
 
 
         ListView listView = (ListView)findViewById(R.id.lists);
@@ -133,13 +114,13 @@ public class FavouriteListActivity extends Activity {
     //appends provider to view
     public void buildList(String userID) {
         //refernce to the favourite providers
-        DatabaseReference favouriteRef = rootRef.child("favourite");
-        DatabaseReference favoiriterUsersRef = favouriteRef.child(userID);
+        DatabaseReference favouriteRef = rootRef.child("user_profiles").child("favouriteProviderIds");
         //getting providers of  favourite
-        favoiriterUsersRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        favouriteRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 //loop over all providers ids
+                Log.v("potato", "dataSnapshot");
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     String providerID = snapshot.getValue(String.class);
                     Log.v("potato", providerID);
