@@ -174,4 +174,9 @@ public class RequesterHomeActivity extends Activity {
         startActivity(new Intent(this, MyServicesActivity.class));
         drawer.closeDrawer(GravityCompat.START);
     }
+
+    public void goToMyNotifications(MenuItem item) {
+        startActivity(new Intent(this, MyNotificationsActivity.class));
+        drawer.closeDrawer(GravityCompat.START);
+    }
 }

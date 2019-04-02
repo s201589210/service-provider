@@ -1,6 +1,7 @@
 package com.serveic_provider.service_provider.adapters;
 
 import android.app.Activity;
+import android.app.LauncherActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -49,8 +51,6 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
     private Context context;
 
     private Service service;
-    private String senderId;
-    private String recieverId;
 
     final FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
     DatabaseReference userRef;
@@ -63,7 +63,6 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
     TextView rateBtn;
     TextView confirmBtn;
     TextView reportBtn;
-    TextView provNameTextView;
     TextView professionTextView;
     TextView raterNumTextView;
     TextView descriptionTextView;
@@ -111,7 +110,6 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
         locatBtn = (TextView)listItemView.findViewById(R.id.locationBtn);
         confirmBtn = (TextView)listItemView.findViewById(R.id.confirmBtn);
         reportBtn = (TextView)listItemView.findViewById(R.id.reportBtn);
-        provNameTextView = (TextView) listItemView.findViewById(R.id.provider_name_text_view);
         professionTextView = (TextView) listItemView.findViewById(R.id.profession_text_view);
         raterNumTextView = (TextView) listItemView.findViewById(R.id.number_of_reviews);
         descriptionTextView = (TextView) listItemView.findViewById(R.id.serviceDesc);
@@ -126,7 +124,8 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
         confirmCheck(service);
         //setting all fields
         setServiceFields( service,professionTextView, descriptionTextView);
-        setProviderFields(service);
+        final View finalListView = listItemView;
+        setProviderFields(service, finalListView);
         //setting the profile btn listener
         setProfListener();
         //setting the location btn listener
@@ -159,7 +158,7 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
             locationLng = Double.parseDouble(s.getLocation().split(",")[1]);
         }
     }
-    public void setProviderFields(final Service s){
+    public void setProviderFields(final Service s, final View listItemView){
         //check type of the user
         //current user id
         String currnetUserId ;
@@ -189,7 +188,7 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
                 if(!userId.equals("none")) {
                     uid = userId;
                     //get user profile
-                    getUserProf(userId);
+                    getUserProf(userId, listItemView);
                 }
              }
             @Override
@@ -259,7 +258,7 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
         });
 
     }
-    public void getUserProf(final String userId){
+    public void getUserProf(final String userId, final View listItemView){
         userRef = mDatabase.getReference("user_profiles").child(userId);
         // user profile ref
         userRef.addListenerForSingleValueEvent(new com.google.firebase.database.ValueEventListener() {
@@ -267,6 +266,7 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
             public void onDataChange(@NonNull com.google.firebase.database.DataSnapshot dataSnapshot) {
                  User user = dataSnapshot.getValue(User.class);
                 ratingBar.setRating(user.getRate());
+                TextView provNameTextView = (TextView) listItemView.findViewById(R.id.provider_name_text_view);
                 provNameTextView.setText(user.getName());
 
                 userRates = mDatabase.getReference("rates").child(userId);
