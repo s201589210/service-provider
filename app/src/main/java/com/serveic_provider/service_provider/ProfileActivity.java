@@ -47,7 +47,6 @@ public class ProfileActivity extends AppCompatActivity {
     RateAdaptor adapter;
     pl.droidsonroids.gif.GifImageView spinner;
     ImageView profilepic;
-    android.support.v4.widget.SwipeRefreshLayout pullToRefresh ;
     FirebaseStorage storage;
     StorageReference storageReference;
 
@@ -61,14 +60,6 @@ public class ProfileActivity extends AppCompatActivity {
         storageReference = storage.getReference();
         rateList = new ArrayList<Rate>();
 
-        pullToRefresh=(android.support.v4.widget.SwipeRefreshLayout) findViewById(R.id.pullToRefresh);
-        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                buildProfile(userId);
-                pullToRefresh.setRefreshing(false);
-            }
-        });
 
 
         //assign all view fields
@@ -189,7 +180,7 @@ public class ProfileActivity extends AppCompatActivity {
 
 
                     DatabaseReference raterRef;
-                    raterRef = mDatabase.getReference("user_profiles").child(userId);
+                    raterRef = mDatabase.getReference("user_profiles").child(rate.getRaterId());
                     raterRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {

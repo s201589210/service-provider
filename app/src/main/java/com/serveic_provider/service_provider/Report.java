@@ -138,6 +138,7 @@ public class Report extends AppCompatActivity {
                         int points = dataSnapshot.getValue(int.class);
 
                         calculatePoint(points , userId);
+                        transit();
                     }
 
 
@@ -163,7 +164,11 @@ public class Report extends AppCompatActivity {
 
 
 
-
+    public void transit(){
+        Toast.makeText(Report.this, "Thank you for your time", Toast.LENGTH_SHORT).show();
+        //startActivity(new Intent(RateActivity.this, ListProvidersActivity.class));
+        this.finish();
+    }
 
 
 

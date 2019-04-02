@@ -42,7 +42,7 @@
         android:layout_marginEnd="2dp"
         android:layout_marginBottom="9dp"
         android:layout_toStartOf="@+id/commentContainer_container"
-        android:src="@drawable/dyer"
+        tools:src="@drawable/dyer"
         app:civ_border_color="#bbdefb"
         app:civ_border_width="2dp" />
 
@@ -71,7 +71,7 @@
                 android:layout_height="25dp"
                 android:layout_marginRight="10dp"
                 android:gravity="end"
-                android:text=" profession"
+                tools:text=" profession"
                 android:textAppearance="?android:textAppearanceMedium"
                 android:textColor="@android:color/black" />
 
@@ -104,7 +104,7 @@
                     android:id="@+id/provider_name_text_view"
                     android:layout_width="100dp"
                     android:layout_height="25dp"
-                    android:text=" provider Name"
+                    tools:text=" provider Name"
                     android:textAppearance="?android:textAppearanceMedium"
                     android:textColor="@android:color/black" />
 
@@ -158,7 +158,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="service description"
+            tools:text="service description"
             android:textColor="@android:color/black"
             android:textSize="12sp" />
 

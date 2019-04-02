@@ -28,17 +28,16 @@
                 android:layout_height="wrap_content"
                 android:text="Welcome , Please select a profission to create request:"
                 android:padding="16dp"
+                android:layout_marginTop="50dp"
                 />
 
 
-
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:gravity="center">
-
+                android:gravity="center"
+                android:orientation="horizontal">
 
 
                 <ImageView
@@ -46,27 +45,24 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:src="@drawable/dyer"
-                    android:scaleType="fitCenter"
-                    android:padding="15dp"
                     android:clickable="true"
                     android:foreground="?android:attr/selectableItemBackground"
                     android:onClick="onDyerClick"
-                    />
+                    android:padding="15dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/dyer" />
 
                 <ImageView
                     android:id="@+id/prof_builder"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:src="@drawable/builder"
-                    android:scaleType="fitCenter"
-                    android:padding="15dp"
                     android:clickable="true"
                     android:foreground="?android:attr/selectableItemBackground"
                     android:onClick="onBuilderClick"
-                    />
-
+                    android:padding="15dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/builder" />
 
 
                 <ImageView
@@ -74,15 +70,12 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:src="@drawable/carpenter"
-                    android:scaleType="fitCenter"
-                    android:padding="15dp"
                     android:clickable="true"
                     android:foreground="?android:attr/selectableItemBackground"
                     android:onClick="onCarpenterClick"
-                    />
-
-
+                    android:padding="15dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/carpenter" />
 
 
             </LinearLayout>
@@ -267,7 +260,8 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center">
+                android:gravity="center"
+                android:layout_marginBottom="50dp">
 
 
 
