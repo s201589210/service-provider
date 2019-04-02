@@ -150,8 +150,8 @@ public class RequesterHomeActivity extends Activity {
         transit("electrician");
     }
 
-    public void onCourierClick(View view) {
-        transit("courier");
+    public void onMechanicClick(View view) {
+        transit("mechanic");
     }
 
     public void onCarpenterClick(View view) {

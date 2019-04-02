@@ -26,7 +26,7 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Welcome , Please select a profission to create request:"
+                android:text="Welcome , Please select a profession to create request:"
                 android:padding="16dp"
                 android:layout_marginTop="50dp"
                 />
@@ -139,7 +139,7 @@
                     android:padding="15dp"
                     android:clickable="true"
                     android:foreground="?android:attr/selectableItemBackground"
-                    android:onClick="onCourierClick"
+                    android:onClick="onMechanicClick"
                     />
 
                 <ImageView
