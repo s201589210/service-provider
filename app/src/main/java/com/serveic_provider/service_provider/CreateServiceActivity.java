@@ -199,11 +199,22 @@ public class CreateServiceActivity extends AppCompatActivity
                     Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (toTimeText.equals(fromTimeText)) {
-            Toast.makeText(CreateServiceActivity.this, "The from and to time cannot be" +
-                    "the same", Toast.LENGTH_SHORT).show();
+
+        int fromTimeHour = Integer.parseInt(fromTimeText.split(":")[0]);
+        int fromTimeMinute = Integer.parseInt(fromTimeText.split(":")[1]);
+        int toTimeHour = Integer.parseInt(toTimeText.split(":")[0]);
+        int toTimeMinute = Integer.parseInt(toTimeText.split(":")[1]);
+        if (fromTimeHour > toTimeHour) {
+            Toast.makeText(CreateServiceActivity.this, "The start time cannot be after or equal to the end time"
+                    , Toast.LENGTH_SHORT).show();
             return false;
         }
+        if (fromTimeHour == toTimeHour && fromTimeMinute >= toTimeMinute) {
+            Toast.makeText(CreateServiceActivity.this, "The start time cannot be after or equal to the end time"
+                    , Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
         if (cityText.isEmpty()) {
             Toast.makeText(CreateServiceActivity.this, "please enter a city", Toast.LENGTH_SHORT).show();
             return false;
