@@ -53,6 +53,7 @@ public class ProfileActivity extends AppCompatActivity {
     de.hdodenhof.circleimageview.CircleImageView profilepic;
     android.support.v4.widget.SwipeRefreshLayout pullToRefresh ;
     LikeButton heart_botton;
+    boolean isFav;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +88,7 @@ public class ProfileActivity extends AppCompatActivity {
         //this is themethod to set an imge
         //profilepic.setImageResource(R.drawable.bakground);
 
+        
         //get user id from last activity
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -101,6 +103,12 @@ public class ProfileActivity extends AppCompatActivity {
             heart_botton.setVisibility(View.GONE);
         }
 
+        // if the provider is a favourite
+
+
+        heart_botton.setLiked(isFavourite(userId));
+
+
         heart_botton.setOnLikeListener(new OnLikeListener() {
             @Override
             public void liked(LikeButton likeButton) {
@@ -114,6 +122,42 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private boolean isFavourite(final String userId) {
+        //auth table reference
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();;
+        //user reference
+        FirebaseUser FBuser;
+        //user_profiles reference
+        final FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
+        //get user
+        FBuser = mAuth.getCurrentUser();
+        //get id
+        final String requsterID = FBuser.getUid();
+
+        DatabaseReference userProfileRef;
+        userProfileRef = mDatabase.getReference().child("user_profiles").child(requsterID);
+        userProfileRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                //construct new user === firebase user
+                User user = dataSnapshot.getValue(User.class);
+                user.setUid(requsterID);
+                favouriteProviderIdList = user.getFavourite_provider_ids();
+                isFav = favouriteProviderIdList.contains(userId);
+                Log.d("tag", String.valueOf(isFav));
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        return isFav;
     }
 
     private void deleteFromFavourite(final String userId) {
@@ -140,8 +184,10 @@ public class ProfileActivity extends AppCompatActivity {
                 String provId;
                 for(int i =1;i <favouriteProviderIdList.size();i++){
                     provId = favouriteProviderIdList.get(i);
-                    if(provId.equals(userId))
+                    if(provId.equals(userId)) {
                         favouriteProviderIdList.remove(provId);
+                        mDatabase.getReference().child("user_profiles").child(requsterID).child("favourite_provider_ids").setValue(favouriteProviderIdList);
+                    }
                 }
 
 
