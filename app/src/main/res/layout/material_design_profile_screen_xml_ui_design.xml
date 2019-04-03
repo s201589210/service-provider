@@ -199,6 +199,17 @@
                     android:textSize="20dp"
                     tools:text="city" />
 
+                <TextView
+                    android:id="@+id/ReviewsTextView"
+                    android:layout_width="116dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignEnd="@+id/phone_number_label"
+                    android:layout_below="@+id/city_label"
+                    android:layout_marginEnd="-32dp"
+                    android:padding="10dp"
+                    android:textSize="20dp"
+                    android:text="Reviews:" />
+
                 <pl.droidsonroids.gif.GifImageView
                     android:id="@+id/progressBar1"
                     android:layout_width="172dp"
@@ -209,8 +220,8 @@
                 <ListView
                     android:id="@+id/rateList"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@+id/city_label"
+                    android:layout_height="250dp"
+                    android:layout_below="@+id/ReviewsTextView"
                     android:layout_marginTop="6dp"
                     android:padding="5dp"/>
 
