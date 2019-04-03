@@ -166,7 +166,7 @@ public class ProfileActivity extends AppCompatActivity {
         final String requsterID = FBuser.getUid();
 
         DatabaseReference userProfileRef;
-        userProfileRef = mDatabase.getReference("user_profiles").child(userId);
+        userProfileRef = mDatabase.getReference().child("user_profiles").child(requsterID);
         userProfileRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -188,45 +188,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     }
 
-    /*/ public void insertProviderService(final String providerID, final String requester_serviceCounter){
-         //auth table reference
-         FirebaseAuth mAuth = FirebaseAuth.getInstance();;
-         //user reference
-         FirebaseUser FBuser;
-         //user_profiles reference
-         final FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
-         //get user
-         FBuser = mAuth.getCurrentUser();
-         //get id
-         String requsterID = FBuser.getUid();
-         // set the serviceID
-         serviceID = requsterID + "_" + requester_serviceCounter;
-         //user profile reference
-         userProfileRef_serviceCounter = mDatabase.getReference("user_profiles").child(providerID).child("serviceCounter");
-         //service counter listener
-         userProfileRef_serviceCounter.addListenerForSingleValueEvent(new ValueEventListener() {
-             String serviceCounter;
-             @Override
-             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                 serviceCounter = dataSnapshot.getValue(String.class);
-                 //Service service = buildProviderService(providerID);
 
-                 //insert service to user id in the requster_services node
-                 providerServicesRef.child(providerID).child(serviceCounter).setValue(serviceID)
-                         .addOnSuccessListener(new OnSuccessListener<Void>() {
-                             Integer intServiceCounter = Integer.parseInt(serviceCounter) + 1;
-                             @Override
-                             public void onSuccess(Void aVoid) {userProfileRef_serviceCounter.setValue(intServiceCounter+"");
-                                 Log.d("tag", "writeUserType:success");
-                             }
-                         });//end insertion refrence
-             }//end of counter on data change listner
-
-             @Override
-             public void onCancelled(@NonNull DatabaseError databaseError) {
-             }
-         });//end of counter listner
-     }//end of inserting service/*/
     public void buildProfile(String userId){
 
         //build user obj from db
