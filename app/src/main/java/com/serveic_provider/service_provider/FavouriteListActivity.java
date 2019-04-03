@@ -18,6 +18,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 import com.serveic_provider.service_provider.adapters.ProvAdaptor;
 import com.serveic_provider.service_provider.serviceProvider.Service;
@@ -114,19 +115,27 @@ public class FavouriteListActivity extends Activity {
     //appends provider to view
     public void buildList(String userID) {
         //refernce to the favourite providers
-        DatabaseReference favouriteRef = rootRef.child("user_profiles").child("favouriteProviderIds");
+        DatabaseReference favouriteRef = rootRef.child("user_profiles").child(userID).child("favourite_provider_ids");
         //getting providers of  favourite
         favouriteRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 //loop over all providers ids
-                Log.v("potato", "dataSnapshot");
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    String providerID = snapshot.getValue(String.class);
-                    Log.v("potato", providerID);
-                    //add providers to providerList array
-                    addProvInfoToList(providerID);
-                }
+                GenericTypeIndicator<ArrayList<String>> t = new GenericTypeIndicator<ArrayList<String>>() {};
+                ArrayList<String> favourite_provider_ids = dataSnapshot.getValue(t);
+
+
+                    for(int i = 0 ; i < favourite_provider_ids.size(); i++){
+                        String providerID = favourite_provider_ids.get(i);
+
+                        if(!providerID.equals("none")){
+                            //add providers to providerList array
+                            addProvInfoToList(providerID);
+                        }
+                    }
+
+
+
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -143,6 +152,7 @@ public class FavouriteListActivity extends Activity {
         providerProfileRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.e("sddsa",providerID);
                 //construct new user === firebase user
                 User user = dataSnapshot.getValue(User.class);
                 user.setUid(providerID);
@@ -164,7 +174,7 @@ public class FavouriteListActivity extends Activity {
         ListView listView = (ListView) findViewById(R.id.lists);
         adapter = new ProvAdaptor(FavouriteListActivity.this, providerList);
         listView.setAdapter(adapter);
-        listView.setClickable(true);
+        listView.setClickable(false);
     }
 
 }

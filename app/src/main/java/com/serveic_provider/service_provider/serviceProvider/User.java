@@ -21,7 +21,7 @@ public class User {
 	private boolean isSelected;
 	private String token_id;
 	private String reg_date;
-	private ArrayList<String> favouriteProvidersIds;
+	private ArrayList<String> Favourite_provider_ids;
 
     public User(int is_baned, String phone_number, String type, String profession, String serviceCounter) {
 		this.is_baned = is_baned;
@@ -49,12 +49,12 @@ public class User {
 	public void getProfile() {
 	}
 
-	public ArrayList<String> getFavouriteProvidersIds() {
-		return favouriteProvidersIds;
+	public ArrayList<String> getFavourite_provider_ids() {
+		return Favourite_provider_ids;
 	}
 
-	public void setFavouriteProvidersIds(ArrayList<String> favouriteProvidersIds) {
-		this.favouriteProvidersIds = favouriteProvidersIds;
+	public void setFavourite_provider_ids(ArrayList<String> favouriteProvidersIds) {
+		this.Favourite_provider_ids = favouriteProvidersIds;
 	}
 
 	public void logout() {

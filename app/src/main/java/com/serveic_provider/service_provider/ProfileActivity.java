@@ -91,6 +91,7 @@ public class ProfileActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             userId = extras.getString("userId");
+            Log.e("sddsa",userId);
         }//end of checking extras!=null
         if(!userId.equals("none")){
             buildProfile(userId);
@@ -135,7 +136,7 @@ public class ProfileActivity extends AppCompatActivity {
                 //construct new user === firebase user
                 User user = dataSnapshot.getValue(User.class);
                 user.setUid(requsterID);
-                favouriteProviderIdList = user.getFavouriteProvidersIds();
+                favouriteProviderIdList = user.getFavourite_provider_ids();
                 String provId;
                 for(int i =1;i <favouriteProviderIdList.size();i++){
                     provId = favouriteProviderIdList.get(i);
@@ -170,13 +171,13 @@ public class ProfileActivity extends AppCompatActivity {
         userProfileRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                 //construct new user === firebase user
                 User user = dataSnapshot.getValue(User.class);
                 user.setUid(requsterID);
-                favouriteProviderIdList = user.getFavouriteProvidersIds();
+                favouriteProviderIdList = user.getFavourite_provider_ids();
                 favouriteProviderIdList.add(userId);
-
-
+                mDatabase.getReference().child("user_profiles").child(requsterID).child("favourite_provider_ids").setValue(favouriteProviderIdList);
             }
 
             @Override
