@@ -152,7 +152,7 @@ public class ProfileActivity extends AppCompatActivity {
     public void setFields(User user){
         if(user.getName()!=null)
             firstName.setText(user.getName());
-       if(user.getLastName()!=null)
+        if(user.getLastName()!=null)
             lastName.setText(user.getLastName());
         if(user.getLocation()!=null)
             city.setText(user.getLocation());
@@ -161,7 +161,7 @@ public class ProfileActivity extends AppCompatActivity {
         if(user.getToken_id()!=null)
             type .setText(user.getType());
 
-            ratingBar.setRating(user.getRate());
+    ratingBar.setRating(user.getRate());
         spinner.setVisibility(View.GONE);
 
     }

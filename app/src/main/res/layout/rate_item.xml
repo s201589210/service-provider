@@ -50,6 +50,7 @@
                 android:numStars="5"
                 android:padding="0dp"
                 android:scaleX="0.4"
+                android:isIndicator="true"
                 android:scaleY="0.4" />
 
         </LinearLayout>

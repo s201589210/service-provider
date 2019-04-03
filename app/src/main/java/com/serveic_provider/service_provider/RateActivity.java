@@ -149,15 +149,15 @@ public class RateActivity extends AppCompatActivity {
         userRateRef.addListenerForSingleValueEvent(new com.google.firebase.database.ValueEventListener() {
             @Override
             public void onDataChange(@NonNull com.google.firebase.database.DataSnapshot dataSnapshot) {
-                final Integer currRate = dataSnapshot.getValue(Integer.class);
-                final int weightedRate = calcRate(entrdRate,currRate);
+                final Double currRate = dataSnapshot.getValue(Double.class);
+                final Double weightedRate = calcRate((double)entrdRate,currRate);
                 //set new rate
                 userRates = mDatabase.getReference("rates").child(userId);
                 userRates.addListenerForSingleValueEvent(new com.google.firebase.database.ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull com.google.firebase.database.DataSnapshot dataSnapshot) {
                         int rateNum = (int)dataSnapshot.getChildrenCount();
-                        int calcRate = weightedRate + currRate * rateNum;
+                        Double calcRate = weightedRate + currRate * rateNum;
                         calcRate = calcRate /(rateNum + 1);
                         Log.w("lookAtMe","calcRate "+calcRate+"rateNum "+rateNum+"weightedRate "+weightedRate+"currRate "+currRate);
                         userRateRef.setValue(calcRate);
@@ -175,7 +175,7 @@ public class RateActivity extends AppCompatActivity {
             }
         });
     }
-    public int calcRate(int entrdRate, int currRate){
+    public Double calcRate(Double entrdRate, Double currRate){
         if(entrdRate > (currRate + 1.5) || entrdRate < (currRate - 1.5) )
             return(entrdRate/2);
         else
