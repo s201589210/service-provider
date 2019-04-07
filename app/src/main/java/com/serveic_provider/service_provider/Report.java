@@ -30,6 +30,7 @@ public class Report extends AppCompatActivity {
     FirebaseDatabase mDatabase  = FirebaseDatabase.getInstance();;
     Service service;
     String userId;
+    String reqId,serviceId;
 
 
     @Override
@@ -55,8 +56,7 @@ public class Report extends AppCompatActivity {
 
 
                 reportProcess();
-
-
+                convertStatus();
             }
 
         });
@@ -95,6 +95,9 @@ public class Report extends AppCompatActivity {
 
         if (penaltyPoint>=30){
             mDatabase.child("is_baned").setValue(1);}
+
+
+
 
 
     }
@@ -158,6 +161,13 @@ public class Report extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void convertStatus(){
+        reqId = service.getRequester_id();
+        serviceId=service.getService_id();
+        DatabaseReference statusRef = FirebaseDatabase.getInstance().getReference("requester_services").child(reqId).child(serviceId).child("status");
+        statusRef.setValue("finished");
     }
 
 
