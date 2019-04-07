@@ -96,6 +96,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
+                android:id="@+id/another_part_information"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
@@ -137,17 +138,21 @@
                     android:textAppearance="?android:textAppearanceSmall"
                     android:textColor="@android:color/black" />
 
+
+
+                <Button
+                    android:id="@+id/profileBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="+"
+                    android:textAppearance="?android:textAppearanceSmall"
+                    android:focusable="false"
+                    android:textSize="8sp" />
+
             </LinearLayout>
 
-            <Button
-                android:id="@+id/profileBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="+"
-                android:textAppearance="?android:textAppearanceSmall"
-                android:focusable="false"
-                android:textSize="8sp" />
+
 
 
         </LinearLayout>

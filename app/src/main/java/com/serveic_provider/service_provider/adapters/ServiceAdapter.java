@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
@@ -70,6 +71,7 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
     ImageView imageBox;
     TextView profBtn;
     TextView locatBtn;
+    LinearLayout anotherPerson;
     public ServiceAdapter(Activity context, ArrayList<Service> words, int color) {
         super(context, 0, words);
         colorid=color;
@@ -116,12 +118,16 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
         ratingBar = (RatingBar) listItemView.findViewById(R.id.rating_bar);
         imageBox = (ImageView) listItemView.findViewById(R.id.image);
         uid="-";
+        anotherPerson =(LinearLayout) listItemView.findViewById(R.id.another_part_information);
+
         // Get the {@link AndroidFlavor} object located at this position in the list
         service = getItem(position);
         //if status is finished show the rate btn
         rateCheck(service);
         //if status is in progress show both confirm and report btns
         confirmCheck(service);
+        //check other part information
+        acceptedCheck(service);
         //setting all fields
         setServiceFields( service,professionTextView, descriptionTextView);
         final View finalListView = listItemView;
@@ -287,6 +293,22 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
             }
         });
     }
+
+
+    public void acceptedCheck(final Service s){
+
+        if(s.getStatus().equals("deleted")||s.getStatus().equals("pending")){
+            anotherPerson.setVisibility(View.GONE);
+        }
+        else{
+            anotherPerson.setVisibility(View.VISIBLE);
+        }
+
+
+    }
+
+
+
     public void rateCheck(final Service s){
 
         if(s.getStatus().equals("finished")){
