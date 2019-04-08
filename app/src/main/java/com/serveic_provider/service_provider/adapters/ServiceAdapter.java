@@ -60,7 +60,7 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
     String uid;
     double locationLat;
     double locationLng;
-
+    TextView acceptedMessage;
     TextView message;
     TextView rateBtn;
     TextView confirmBtn;
@@ -121,6 +121,7 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
         uid="-";
         message=(TextView)listItemView.findViewById(R.id.not_accepted_message);
         anotherPerson =(LinearLayout) listItemView.findViewById(R.id.another_part_information);
+        acceptedMessage = (TextView)listItemView.findViewById(R.id.accepted_message);
 
         // Get the {@link AndroidFlavor} object located at this position in the list
         service = getItem(position);
@@ -305,6 +306,12 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
         }
         else{
             anotherPerson.setVisibility(View.VISIBLE);
+        }
+
+
+        if(s.getStatus().equals("pending") && !s.getProvider_id().equals("none")){
+            anotherPerson.setVisibility(View.VISIBLE);
+            acceptedMessage.setVisibility(View.VISIBLE);
         }
 
 

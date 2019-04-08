@@ -1,4 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    card_view:cardCornerRadius="7dp"
+    card_view:cardUseCompatPadding="true"
+    card_view:cardElevation="5dp"
+    >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="5dp">
+
+
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -13,7 +29,8 @@
         android:layout_marginEnd="8dp"
         android:text="service ID:"
         app:layout_constraintEnd_toStartOf="@+id/notification_service_id"
-        app:layout_constraintTop_toBottomOf="@+id/notification_message" />
+        app:layout_constraintTop_toBottomOf="@+id/notification_message"
+        android:textColor="#000"/>
 
     <TextView
         android:id="@+id/textView2"
@@ -23,7 +40,8 @@
         android:text=":"
         app:layout_constraintBottom_toBottomOf="@+id/notification_sender"
         app:layout_constraintStart_toEndOf="@+id/notification_sender"
-        app:layout_constraintTop_toTopOf="@+id/notification_sender" />
+        app:layout_constraintTop_toTopOf="@+id/notification_sender"
+        android:textColor="#000"/>
 
     <TextView
         android:id="@+id/notification_message"
@@ -33,7 +51,8 @@
         android:text="confirm the service"
         app:layout_constraintBottom_toBottomOf="@+id/textView2"
         app:layout_constraintStart_toEndOf="@+id/textView2"
-        app:layout_constraintTop_toTopOf="@+id/textView2" />
+        app:layout_constraintTop_toTopOf="@+id/textView2"
+        android:textColor="#000"/>
 
     <TextView
         android:id="@+id/notification_service_id"
@@ -43,7 +62,8 @@
         android:text="FD7158556543"
         app:layout_constraintBottom_toBottomOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView" />
+        app:layout_constraintTop_toTopOf="@+id/textView"
+        android:textColor="#000"/>
 
     <TextView
         android:id="@+id/notification_sender"
@@ -53,6 +73,9 @@
         android:layout_marginTop="8dp"
         android:text="other party"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="#000"/>
 
 </android.support.constraint.ConstraintLayout>
+    </FrameLayout>
+    </android.support.v7.widget.CardView>
