@@ -185,7 +185,7 @@
                 android:id="@+id/accepted_message"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Your service is Accepted !"
+                android:text="The service is Accepted !"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="#008F0B"
                 android:visibility="gone"/>

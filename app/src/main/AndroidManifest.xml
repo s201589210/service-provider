@@ -61,6 +61,7 @@
         <activity android:name=".Report" />
         <activity android:name=".RateActivity" />
         <activity android:name=".MapsActivity" />
+        <activity android:name=".WaitingScreen" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
