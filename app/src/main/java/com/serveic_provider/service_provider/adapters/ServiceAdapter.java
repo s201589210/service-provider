@@ -70,7 +70,6 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
     TextView descriptionTextView;
     RatingBar ratingBar;
     ImageView imageBox;
-    TextView profBtn;
     TextView locatBtn;
     LinearLayout anotherPerson;
     public ServiceAdapter(Activity context, ArrayList<Service> words, int color) {
@@ -109,7 +108,6 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
 
         //declare all view fields
         rateBtn = (TextView)listItemView.findViewById(R.id.rateBtn);
-        profBtn = (TextView)listItemView.findViewById(R.id.profileBtn);
         locatBtn = (TextView)listItemView.findViewById(R.id.locationBtn);
         confirmBtn = (TextView)listItemView.findViewById(R.id.confirmBtn);
         reportBtn = (TextView)listItemView.findViewById(R.id.reportBtn);
@@ -136,7 +134,7 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
         final View finalListView = listItemView;
         setProviderFields(service, finalListView);
         //setting the profile btn listener
-        setProfListener();
+        setProfListener(service,listItemView);
         //setting the location btn listener
         setLocationListener();
 
@@ -246,16 +244,58 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
         
 
     }
-    public void setProfListener(){
-        final Intent intent1 = new Intent(this.getContext(), ProfileActivity.class);
-        profBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                final Bundle bundle1 = new Bundle();
-                bundle1.putString("userId",uid);
-                intent1.putExtras(bundle1);
-                getContext().startActivity(intent1);
+    public void setProfListener(final Service s, final View listItemView){
+        //current user id
+        String currnetUserId ;
+        //auth table reference
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();;
+        //user reference
+        FirebaseUser FBuser;
+        //dRef
+        DatabaseReference userProfileRef_type;
+        //get user
+        FBuser = mAuth.getCurrentUser();
+        //get id
+        currnetUserId = FBuser.getUid();
+        userProfileRef_type = mDatabase.getReference("user_profiles").child(currnetUserId).child("type");
+        userProfileRef_type.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String type = dataSnapshot.getValue(String.class);
+                String userId;
+
+                if(type.equals("provider")){
+                    userId = s.getRequester_id();
+                }
+                else{
+                    userId = s.getProvider_id();
+                }
+                if(!userId.equals("none")) {
+                    uid = userId;
+                    //get user profile
+                    getUserProf(userId, listItemView);
+                }
+
+                final String finalUserId = userId;
+                final Intent intent1 = new Intent(listItemView.getContext(), ProfileActivity.class);
+
+
+                TextView profBtn = (TextView)listItemView.findViewById(R.id.profileBtn);
+                profBtn.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        final Bundle bundle1 = new Bundle();
+                        bundle1.putString("userId",finalUserId);
+                        intent1.putExtras(bundle1);
+                        getContext().startActivity(intent1);
+                    }
+                });
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
+
     }
     public void setLocationListener(){
         String url = "http://maps.google.com/maps?daddr=" + locationLat + "," + locationLng;
