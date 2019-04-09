@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Service Provider</string>
+    <string name="app_name">Herafi</string>
     <string name="searchServices">Search a service</string>
     <!--Sign up-& Sign in-->
     <string name="email">Email</string>
@@ -41,6 +41,7 @@
         <item>Ras Tanura</item>
         <item>Riyadh</item>
         <item>Rumailah</item>
+        <item>Safwa</item>
         <item>Saihat</item>
         <item>Sakakah</item>
         <item>Sharurah</item>
@@ -415,7 +416,7 @@
     <string-array name="professions">
         <item>Builder</item>
         <item>Carpenter</item>
-        <item>Courier</item>
+        <item>Mechanic</item>
         <item>Dyer</item>
         <item>Electrician</item>
         <item>Gardener</item>

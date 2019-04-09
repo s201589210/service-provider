@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MyNotificationsActivity">
+    tools:context=".MyNotificationsActivity"
+    android:background="@color/backgroundcolor">
 
     <ListView
         android:id="@+id/notification_list_view"

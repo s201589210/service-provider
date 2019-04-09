@@ -1,5 +1,7 @@
 package com.serveic_provider.service_provider;
 
+import android.content.Intent;
+import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -21,6 +23,10 @@ public class MyServicesActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private AppBarLayout appBarLayout;
     private ViewPager viewPager;
+    PendingFragment pendingFragment = new PendingFragment();
+    InProgressFragment inProgressFragment = new InProgressFragment();
+    FinishedFragment finishedFragment = new FinishedFragment();
+    DeletedFragment deletedFragment = new DeletedFragment();
 
 
     @Override
@@ -35,10 +41,10 @@ public class MyServicesActivity extends AppCompatActivity {
         viewPager = (ViewPager) findViewById(R.id.myServicesPager);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         //Adding Fragments
-        adapter.addFragment(new PendingFragment(), "Pending");
-        adapter.addFragment(new InProgressFragment(), "In Progress");
-        adapter.addFragment(new FinishedFragment(), "Finished");
-        adapter.addFragment(new DeletedFragment(), "Deleted");
+        adapter.addFragment(pendingFragment, "Pending");
+        adapter.addFragment(inProgressFragment, "In Progress");
+        adapter.addFragment(finishedFragment, "Finished");
+        adapter.addFragment(deletedFragment, "Deleted");
         //adapter Setup
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
@@ -47,7 +53,8 @@ public class MyServicesActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        finish();
+                Intent i = new Intent(MyServicesActivity.this,WaitingScreen.class);
+                startActivity(i);
     }
 
     @Override

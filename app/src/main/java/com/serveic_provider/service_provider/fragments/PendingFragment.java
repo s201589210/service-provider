@@ -6,11 +6,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -26,6 +27,8 @@ import com.serveic_provider.service_provider.serviceProvider.Service;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Set;
 
 public class PendingFragment extends Fragment {
     View view;
@@ -36,8 +39,6 @@ public class PendingFragment extends Fragment {
     DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
     String userType;
     android.support.v4.widget.SwipeRefreshLayout pullToRefresh ;
-    ServiceAdapter adapter;
-
 
 
     public PendingFragment() {
@@ -49,44 +50,38 @@ public class PendingFragment extends Fragment {
         view = inflater.inflate(R.layout.services_fragment, container, false);
         Utils.updateServiceStatus();
         buildHistory();
-
-
-        pullToRefresh=(android.support.v4.widget.SwipeRefreshLayout) view.findViewById(R.id.pullToRefresh);
+        pullToRefresh = (android.support.v4.widget.SwipeRefreshLayout) view.findViewById(R.id.pullToRefresh);
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                //update code
                 clearHistory();
                 refresh();
-
-
-
+                pullToRefresh.setRefreshing(false);
             }
         });
 
-
-
-
-
-
-
         return view;
-    }//on create method
+    }
 
-   public void refresh(){
+    public void refresh(){
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.detach(this).attach(this).commit();
 
 
-   }
+    }
+    private void clearHistory() {
+        penddingServices.clear();
+        ListView listView = (ListView) view.findViewById(R.id.pending_services_listview);
+        ServiceAdapter adapter = new ServiceAdapter(PendingFragment.this.getActivity(), penddingServices, R.color.colorWhite);
+        listView.setAdapter(adapter);
+        listView.setClickable(true);
+    }
 
-    private void buildHistory() {
 
+    public void buildHistory(){
 
-
-
-        //penddingServices = new ArrayList<Service>();
-        adapter = new ServiceAdapter(PendingFragment.this.getActivity(), penddingServices, R.color.colorWhite);
-
+        penddingServices = new ArrayList<Service>();
         //auth table reference
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         //user reference
@@ -122,22 +117,14 @@ public class PendingFragment extends Fragment {
                                 String job = service.getJob();
                                 String status = service.getStatus();
                                 // Log.v("potato", "test");
-
-
-
                                 if (status.equals("pending")) {
                                     penddingServices.add(service);
-                                    adapter.notifyDataSetChanged();
-
-
-
                                 }
 
                                 ListView listView = (ListView) view.findViewById(R.id.pending_services_listview);
                                 // adapter knows how to create list items for each item in the list.
+                                ServiceAdapter adapter = new ServiceAdapter(PendingFragment.this.getActivity(), penddingServices, R.color.colorWhite);
                                 // {@link ListView} will display list items for each {@link Word} in the list.
-                              //  adapter.notifyDataSetChanged();
-                                pullToRefresh.setRefreshing(false);
                                 listView.setAdapter(adapter);
                                 listView.setClickable(true);
                             }
@@ -171,21 +158,14 @@ public class PendingFragment extends Fragment {
                                         String job = service.getJob();
                                         String status = service.getStatus();
 
-                                        penddingServices.clear();
-                                        adapter.notifyDataSetChanged();
-
                                         if (status.equals("pending") && service.getProvider_id().equals(userId)) {
-
                                             penddingServices.add(service);
-                                            adapter.notifyDataSetChanged();
-
-
                                         }
 
                                         ListView listView = (ListView) view.findViewById(R.id.pending_services_listview);
                                         // adapter knows how to create list items for each item in the list.
+                                        ServiceAdapter adapter = new ServiceAdapter(PendingFragment.this.getActivity(), penddingServices, R.color.colorWhite);
                                         // {@link ListView} will display list items for each {@link Word} in the list.
-                                        pullToRefresh.setRefreshing(false);
                                         listView.setAdapter(adapter);
                                         listView.setClickable(true);
 
@@ -206,10 +186,6 @@ public class PendingFragment extends Fragment {
                     }); }
 
 
-
-
-
-
             }
 
             @Override
@@ -218,27 +194,8 @@ public class PendingFragment extends Fragment {
         });
 
 
-//*//
-
-
-    }
-
-
-    private void clearHistory() {
-
-        penddingServices.clear();
-        adapter.notifyDataSetChanged();
-        pullToRefresh.setRefreshing(false);
-
-        ListView listView = (ListView) view.findViewById(R.id.pending_services_listview);
-        // adapter knows how to create list items for each item in the list.
-        // {@link ListView} will display list items for each {@link Word} in the list.
-        pullToRefresh.setRefreshing(false);
-        listView.setAdapter(adapter);
-        listView.setClickable(true);
 
 
 
-    }
-
+    }//on create method
 }

@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -47,7 +48,6 @@ public class ProfileActivity extends AppCompatActivity {
     RateAdaptor adapter;
     pl.droidsonroids.gif.GifImageView spinner;
     ImageView profilepic;
-    android.support.v4.widget.SwipeRefreshLayout pullToRefresh ;
     FirebaseStorage storage;
     StorageReference storageReference;
 
@@ -61,14 +61,6 @@ public class ProfileActivity extends AppCompatActivity {
         storageReference = storage.getReference();
         rateList = new ArrayList<Rate>();
 
-        pullToRefresh=(android.support.v4.widget.SwipeRefreshLayout) findViewById(R.id.pullToRefresh);
-        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                buildProfile(userId);
-                pullToRefresh.setRefreshing(false);
-            }
-        });
 
 
         //assign all view fields
@@ -94,6 +86,50 @@ public class ProfileActivity extends AppCompatActivity {
         if(!userId.equals("none")){
             buildProfile(userId);
         }
+
+
+
+
+//this method remove the conflict between scrollview and listview
+        ListView lv = (ListView)findViewById(R.id.rateList);
+
+        lv.setOnTouchListener(new ListView.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        // Disallow ScrollView to intercept touch events.
+                        v.getParent().requestDisallowInterceptTouchEvent(true);
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        // Allow ScrollView to intercept touch events.
+                        v.getParent().requestDisallowInterceptTouchEvent(false);
+                        break;
+                }
+
+                // Handle ListView touch events.
+                v.onTouchEvent(event);
+                return true;
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
     public void buildProfile(final String userId){
 
@@ -161,7 +197,7 @@ public class ProfileActivity extends AppCompatActivity {
     public void setFields(User user){
         if(user.getName()!=null)
             firstName.setText(user.getName());
-       if(user.getLastName()!=null)
+        if(user.getLastName()!=null)
             lastName.setText(user.getLastName());
         if(user.getLocation()!=null)
             city.setText(user.getLocation());
@@ -170,7 +206,7 @@ public class ProfileActivity extends AppCompatActivity {
         if(user.getToken_id()!=null)
             type .setText(user.getType());
 
-            ratingBar.setRating(user.getRate());
+    ratingBar.setRating(user.getRate());
         spinner.setVisibility(View.GONE);
 
     }
@@ -189,7 +225,7 @@ public class ProfileActivity extends AppCompatActivity {
 
 
                     DatabaseReference raterRef;
-                    raterRef = mDatabase.getReference("user_profiles").child(userId);
+                    raterRef = mDatabase.getReference("user_profiles").child(rate.getRaterId());
                     raterRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
@@ -237,5 +273,10 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }

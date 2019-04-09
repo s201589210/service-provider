@@ -1,186 +1,249 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bakground"
-    tools:context=".ServiceActivity">
+    android:background="@color/backgroundcolor"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/service_activity_job_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="Job:"
-        android:textColor="#000000"
-        android:textSize="17dp"
-        app:layout_constraintBottom_toTopOf="@+id/service_activity_description_text_view"
-        app:layout_constraintEnd_toStartOf="@+id/service_activity_data_job_text_view"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/service_activity_profession_text_view" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/service_activity_data_job_text_view"
-        android:layout_width="267dp"
-        android:layout_height="23dp"
-        android:text="Job Data"
-        android:textColor="@color/browser_actions_title_color"
-        android:textSize="17dp"
-        app:layout_constraintBottom_toTopOf="@+id/service_activity_data_description_text_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/service_activity_job_text_view"
-        app:layout_constraintTop_toBottomOf="@+id/service_activity_data_profession_text_view" />
+        <ImageView
+            android:id="@+id/header_cover_image"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/backrepeat" />
 
-    <TextView
-        android:id="@+id/service_activity_description_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Description:"
-        android:textColor="#000000"
-        android:textSize="17dp"
-        app:layout_constraintBottom_toTopOf="@+id/service_activity_date_text_view"
-        app:layout_constraintEnd_toStartOf="@+id/service_activity_data_description_text_view"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/service_activity_job_text_view" />
 
-    <TextView
+        <ImageButton
+            android:id="@+id/lift"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/right"
+            android:layout_marginEnd="39dp"
+            android:background="@drawable/profile_circular_border_imageview"
+            android:elevation="5dp"
+            android:padding="20dp"
+            android:scaleType="centerCrop" />
 
-        android:id="@+id/service_activity_data_description_text_view"
-        android:layout_width="268dp"
-        android:layout_height="22dp"
-        android:text="Description Data"
-        android:textColor="@color/browser_actions_title_color"
-        android:textSize="17dp"
-        app:layout_constraintBottom_toTopOf="@+id/service_activity_data_date_text_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/service_activity_description_text_view"
-        app:layout_constraintTop_toBottomOf="@+id/service_activity_data_job_text_view" />
 
-    <Button
-        android:id="@+id/service_activity_data_location_button"
-        android:layout_width="258dp"
-        android:layout_height="42dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="go to location"
-        android:textColor="#000000"
-        android:textSize="17dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.8" />
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/right"
+            android:layout_marginEnd="39dp"
+            android:background="@drawable/profile_circular_border_imageview"
+            android:elevation="5dp"
+            android:padding="20dp"
+            android:text="To:"
+            android:textColor="#fff"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:scaleType="centerCrop" />
 
-    <TextView
-        android:id="@+id/service_activity_date_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Date:"
-        android:textColor="#000000"
-        android:textSize="17dp"
-        app:layout_constraintBottom_toTopOf="@+id/service_activity_starttime_text_view"
-        app:layout_constraintEnd_toStartOf="@+id/service_activity_data_date_text_view"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/service_activity_description_text_view" />
 
-    <TextView
-        android:id="@+id/service_activity_data_date_text_view"
-        android:layout_width="264dp"
-        android:layout_height="22dp"
-        android:text="Date Data"
-        android:textColor="@color/browser_actions_title_color"
-        android:textSize="17dp"
-        app:layout_constraintBottom_toTopOf="@+id/service_activity_data_starttime_text_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/service_activity_date_text_view"
-        app:layout_constraintTop_toBottomOf="@+id/service_activity_data_description_text_view" />
+        <TextView
+            android:id="@+id/service_activity_data_endtime_text_view"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/right"
+            android:layout_marginEnd="39dp"
+            android:elevation="5dp"
+            android:padding="20dp"
+            android:text="99:99"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textColor="#fff"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:scaleType="centerCrop" />
 
-    <TextView
-        android:id="@+id/service_activity_starttime_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Start Time:"
-        android:textColor="#000000"
-        android:textSize="17dp"
-        app:layout_constraintBottom_toTopOf="@+id/service_activity_endtime_text_view"
-        app:layout_constraintEnd_toStartOf="@+id/service_activity_data_starttime_text_view"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/service_activity_date_text_view" />
 
-    <TextView
-        android:id="@+id/service_activity_data_starttime_text_view"
-        android:layout_width="271dp"
-        android:layout_height="19dp"
-        android:text="Start Time Data"
-        android:textColor="@color/browser_actions_title_color"
-        android:textSize="17dp"
-        app:layout_constraintBottom_toTopOf="@+id/service_activity_data_endtime_text_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/service_activity_starttime_text_view"
-        app:layout_constraintTop_toBottomOf="@+id/service_activity_data_date_text_view" />
+        <ImageButton
+            android:id="@+id/right"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="33dp"
+            android:layout_marginTop="145dp"
+            android:background="@drawable/profile_circular_border_imageview"
+            android:elevation="5dp"
+            android:padding="20dp"
+            android:scaleType="centerCrop" />
 
-    <TextView
-        android:id="@+id/service_activity_endtime_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="End Time:"
-        android:textColor="#000000"
-        android:textSize="17dp"
-        app:layout_constraintBottom_toTopOf="@+id/service_activity_data_location_button"
-        app:layout_constraintEnd_toStartOf="@+id/service_activity_data_endtime_text_view"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/service_activity_starttime_text_view" />
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="33dp"
+            android:layout_marginTop="145dp"
 
-    <TextView
-        android:id="@+id/service_activity_data_endtime_text_view"
-        android:layout_width="271dp"
-        android:layout_height="wrap_content"
-        android:text="End Time Data"
-        android:textColor="@color/browser_actions_title_color"
-        android:textSize="17dp"
-        app:layout_constraintBottom_toTopOf="@+id/service_activity_data_location_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/service_activity_endtime_text_view"
-        app:layout_constraintTop_toBottomOf="@+id/service_activity_data_starttime_text_view" />
+            android:elevation="5dp"
+            android:padding="20dp"
+            android:text="From:"
+            android:textColor="#fff"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:scaleType="centerCrop" />
 
-    <TextView
-        android:id="@+id/service_activity_profession_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Profession:"
-        android:textColor="#000000"
-        android:textSize="17dp"
-        app:layout_constraintBottom_toTopOf="@+id/service_activity_job_text_view"
-        app:layout_constraintEnd_toStartOf="@+id/service_activity_data_profession_text_view"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/service_activity_data_profession_text_view"
-        android:layout_width="276dp"
-        android:layout_height="19dp"
-        android:text="Profession Data"
-        android:textColor="@color/browser_actions_title_color"
-        android:textSize="17dp"
-        app:layout_constraintBottom_toTopOf="@+id/service_activity_data_job_text_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/service_activity_profession_text_view"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/service_activity_data_starttime_text_view"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="33dp"
+            android:layout_marginTop="145dp"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:elevation="5dp"
+            android:padding="20dp"
+            android:text="99:99"
+            android:textColor="#fff"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:scaleType="centerCrop" />
 
-</android.support.constraint.ConstraintLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/profile_layout"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_below="@+id/header_cover_image"
+            android:background="@color/colorPrimarySuperDark"
+            android:elevation="4dp">
+
+
+            <ImageView
+                android:id="@+id/add_friend"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_toLeftOf="@+id/drop_down_option_menu" />
+
+            <ImageView
+                android:id="@+id/drop_down_option_menu"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp" />
+
+            <TextView
+                android:id="@+id/service_activity_data_job_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/service_activity_data_profession_text_view"
+                android:layout_centerHorizontal="true"
+                android:textColor="#fff"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:padding="5dp"
+
+                tools:text="jop" />
+
+            <TextView
+                android:id="@+id/service_activity_data_date_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/service_activity_data_job_text_view"
+                android:textColor="#fff"
+                android:textSize="24sp"
+                tools:text="dd/mm/yyyy"
+                android:padding="5dp"
+                />
+
+
+
+            <TextView
+                android:id="@+id/service_activity_data_profession_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+
+                android:textColor="#fff"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:padding="5dp"
+                tools:text="Profission" />
+
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/profile_layout"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/DescrptionView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:padding="10dp"
+                android:text="Description:"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/service_activity_data_description_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/DescrptionView"
+                android:layout_centerHorizontal="true"
+                android:padding="15dp"
+                android:textSize="20dp"
+                tools:text="Description" />
+
+
+            <Button
+                android:id="@+id/service_activity_data_location_button"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="go to location"
+                android:textColor="#000000"
+                android:textSize="17dp" />
+
+
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+
+
+
+    </RelativeLayout>
+
+
+
+</ScrollView>
+

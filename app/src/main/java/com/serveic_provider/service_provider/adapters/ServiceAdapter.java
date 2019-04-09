@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
@@ -59,7 +60,8 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
     String uid;
     double locationLat;
     double locationLng;
-
+    TextView acceptedMessage;
+    TextView message;
     TextView rateBtn;
     TextView confirmBtn;
     TextView reportBtn;
@@ -68,8 +70,8 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
     TextView descriptionTextView;
     RatingBar ratingBar;
     ImageView imageBox;
-    TextView profBtn;
     TextView locatBtn;
+    LinearLayout anotherPerson;
     public ServiceAdapter(Activity context, ArrayList<Service> words, int color) {
         super(context, 0, words);
         colorid=color;
@@ -106,7 +108,6 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
 
         //declare all view fields
         rateBtn = (TextView)listItemView.findViewById(R.id.rateBtn);
-        profBtn = (TextView)listItemView.findViewById(R.id.profileBtn);
         locatBtn = (TextView)listItemView.findViewById(R.id.locationBtn);
         confirmBtn = (TextView)listItemView.findViewById(R.id.confirmBtn);
         reportBtn = (TextView)listItemView.findViewById(R.id.reportBtn);
@@ -116,18 +117,24 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
         ratingBar = (RatingBar) listItemView.findViewById(R.id.rating_bar);
         imageBox = (ImageView) listItemView.findViewById(R.id.image);
         uid="-";
+        message=(TextView)listItemView.findViewById(R.id.not_accepted_message);
+        anotherPerson =(LinearLayout) listItemView.findViewById(R.id.another_part_information);
+        acceptedMessage = (TextView)listItemView.findViewById(R.id.accepted_message);
+
         // Get the {@link AndroidFlavor} object located at this position in the list
         service = getItem(position);
         //if status is finished show the rate btn
         rateCheck(service);
         //if status is in progress show both confirm and report btns
         confirmCheck(service);
+        //check other part information
+        acceptedCheck(service);
         //setting all fields
         setServiceFields( service,professionTextView, descriptionTextView);
         final View finalListView = listItemView;
         setProviderFields(service, finalListView);
         //setting the profile btn listener
-        setProfListener();
+        setProfListener(service,listItemView);
         //setting the location btn listener
         setLocationListener();
 
@@ -237,16 +244,58 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
         
 
     }
-    public void setProfListener(){
-        final Intent intent1 = new Intent(this.getContext(), ProfileActivity.class);
-        profBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                final Bundle bundle1 = new Bundle();
-                bundle1.putString("userId",uid);
-                intent1.putExtras(bundle1);
-                getContext().startActivity(intent1);
+    public void setProfListener(final Service s, final View listItemView){
+        //current user id
+        String currnetUserId ;
+        //auth table reference
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();;
+        //user reference
+        FirebaseUser FBuser;
+        //dRef
+        DatabaseReference userProfileRef_type;
+        //get user
+        FBuser = mAuth.getCurrentUser();
+        //get id
+        currnetUserId = FBuser.getUid();
+        userProfileRef_type = mDatabase.getReference("user_profiles").child(currnetUserId).child("type");
+        userProfileRef_type.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String type = dataSnapshot.getValue(String.class);
+                String userId;
+
+                if(type.equals("provider")){
+                    userId = s.getRequester_id();
+                }
+                else{
+                    userId = s.getProvider_id();
+                }
+                if(!userId.equals("none")) {
+                    uid = userId;
+                    //get user profile
+                    getUserProf(userId, listItemView);
+                }
+
+                final String finalUserId = userId;
+                final Intent intent1 = new Intent(listItemView.getContext(), ProfileActivity.class);
+
+
+                TextView profBtn = (TextView)listItemView.findViewById(R.id.profileBtn);
+                profBtn.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        final Bundle bundle1 = new Bundle();
+                        bundle1.putString("userId",finalUserId);
+                        intent1.putExtras(bundle1);
+                        getContext().startActivity(intent1);
+                    }
+                });
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
+
     }
     public void setLocationListener(){
         String url = "http://maps.google.com/maps?daddr=" + locationLat + "," + locationLng;
@@ -287,6 +336,29 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
             }
         });
     }
+
+
+    public void acceptedCheck(final Service s){
+
+        if(s.getStatus().equals("deleted")|| s.getProvider_id().equals("none")){
+            anotherPerson.setVisibility(View.GONE);
+            message.setVisibility(View.VISIBLE);
+        }
+        else{
+            anotherPerson.setVisibility(View.VISIBLE);
+        }
+
+
+        if(s.getStatus().equals("pending") && !s.getProvider_id().equals("none") ){
+            anotherPerson.setVisibility(View.VISIBLE);
+            acceptedMessage.setVisibility(View.VISIBLE);
+        }
+
+
+    }
+
+
+
     public void rateCheck(final Service s){
 
         if(s.getStatus().equals("finished")){
