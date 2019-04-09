@@ -81,9 +81,24 @@ public class LoginActivity extends AppCompatActivity {
         spinner = (pl.droidsonroids.gif.GifImageView)findViewById(R.id.progressBar1);
         loginElements= (LinearLayout) findViewById(R.id.login_Elements);
         spinner.setVisibility(View.GONE);
+        loginG();
 
 
-
+    }
+    //automatically log in if the user is logged in
+    public void loginG(){
+        if(FirebaseAuth.getInstance().getCurrentUser()!=null){
+            showSpenner();
+            FBuser = mAuth.getCurrentUser();
+            final String userId = FBuser.getUid();
+            // setting the token which used for notification
+            setTokenId(userId);
+            // Notifying the user
+            Toast.makeText(LoginActivity.this, "Authentication succeeded",
+                    Toast.LENGTH_SHORT).show();
+            // reading the data
+            readUserTypeFromFBDB(userId);
+        }
     }
 
     // Assigning onClick for the sign IN using Butterknife instead of the onClick on the XML file
@@ -108,7 +123,6 @@ public class LoginActivity extends AppCompatActivity {
                                 // user.getEmail() return the email in String
                                 FBuser = mAuth.getCurrentUser();
                                 final String userId = FBuser.getUid();
-
                                 // setting the token which used for notification
                                 setTokenId(userId);
 
@@ -218,7 +232,6 @@ public class LoginActivity extends AppCompatActivity {
                             Log.w(TAG, "getInstanceId failed", task.getException());
                             return;
                         }
-
                         // Stored under user id in user_profiles
                         String token = task.getResult().getToken();
                         Log.d(TAG, "current token: " + token);

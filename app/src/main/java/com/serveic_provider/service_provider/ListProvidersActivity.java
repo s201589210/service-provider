@@ -77,18 +77,25 @@ public class ListProvidersActivity extends AppCompatActivity {
              Log.v("extraPass","222");
             //build the providers list
             buildList(service.getCity());
+
+
         }//end of checking extras!=null
 
        final Button Btn = (Button) findViewById(R.id.create_button);
         Btn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //insert the service to the requester node
-                insertRequesterService();
-                Toast.makeText(ListProvidersActivity.this, "created successfully ",
-                        Toast.LENGTH_SHORT).show();
+                //if the selected provider list is not empty insert the service to the requester node
+                if(noneSelected()){
+                    Toast.makeText(ListProvidersActivity.this, "please select at least one provider ",
+                            Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    insertRequesterService();
+                    Toast.makeText(ListProvidersActivity.this, "created successfully ",
+                            Toast.LENGTH_SHORT).show();
 
-                startActivity(new Intent(ListProvidersActivity.this, RequesterHomeActivity.class));
-
+                    startActivity(new Intent(ListProvidersActivity.this, RequesterHomeActivity.class));
+                }
                 //set the provider id;
                 //insertRequesterService();
             }
@@ -158,7 +165,6 @@ public class ListProvidersActivity extends AppCompatActivity {
                                     insertProviderService(u.getUid(), tempCounter);
                                 }
 
-
                                 Log.d("tag", "writeUserType:success");
                             }
                         });//end insertion refrence
@@ -222,12 +228,21 @@ public class ListProvidersActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 //loop over all providers ids
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    String providerID = snapshot.getValue(String.class);
-                    Log.v("potato", providerID);
-                    //add providers to providerList array
-                    addProvInfoToList(providerID);
+                if (dataSnapshot.exists()){
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        String providerID = snapshot.getValue(String.class);
+                        Log.v("potato", providerID);
+                        //add providers to providerList array
+                        addProvInfoToList(providerID);
+                    }
                 }
+                else{
+                    Toast.makeText(ListProvidersActivity.this, "There are no provider in this city",
+                            Toast.LENGTH_SHORT).show();
+                    spinner.setVisibility(View.GONE);
+
+                }
+
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -252,7 +267,6 @@ public class ListProvidersActivity extends AppCompatActivity {
                 Log.v("addingInfo",providerList.get(0).getName());
                 //display the list
                 setList();
-
             }
 
             @Override
@@ -267,7 +281,13 @@ public class ListProvidersActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
         listView.setClickable(true);
     }
-
+    public boolean noneSelected(){
+        for(User u : providerList){
+            if(u.isSelected())
+              return false;
+        }
+        return true;
+    }
 
 
 }
