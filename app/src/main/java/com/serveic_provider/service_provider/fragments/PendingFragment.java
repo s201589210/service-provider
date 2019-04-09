@@ -186,10 +186,6 @@ public class PendingFragment extends Fragment {
                     }); }
 
 
-
-
-
-
             }
 
             @Override
@@ -197,8 +193,6 @@ public class PendingFragment extends Fragment {
             }
         });
 
-
-//*//
 
 
 

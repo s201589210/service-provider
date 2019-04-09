@@ -21,6 +21,10 @@ public class MyServicesActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private AppBarLayout appBarLayout;
     private ViewPager viewPager;
+    PendingFragment pendingFragment = new PendingFragment();
+    InProgressFragment inProgressFragment = new InProgressFragment();
+    FinishedFragment finishedFragment = new FinishedFragment();
+    DeletedFragment deletedFragment = new DeletedFragment();
 
 
     @Override
@@ -35,10 +39,10 @@ public class MyServicesActivity extends AppCompatActivity {
         viewPager = (ViewPager) findViewById(R.id.myServicesPager);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         //Adding Fragments
-        adapter.addFragment(new PendingFragment(), "Pending");
-        adapter.addFragment(new InProgressFragment(), "In Progress");
-        adapter.addFragment(new FinishedFragment(), "Finished");
-        adapter.addFragment(new DeletedFragment(), "Deleted");
+        adapter.addFragment(pendingFragment, "Pending");
+        adapter.addFragment(inProgressFragment, "In Progress");
+        adapter.addFragment(finishedFragment, "Finished");
+        adapter.addFragment(deletedFragment, "Deleted");
         //adapter Setup
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
