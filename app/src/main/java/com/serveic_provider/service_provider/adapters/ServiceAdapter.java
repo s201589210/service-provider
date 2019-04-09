@@ -309,7 +309,7 @@ public class ServiceAdapter extends ArrayAdapter<Service> {
         }
 
 
-        if(s.getStatus().equals("pending") && !s.getProvider_id().equals("none")){
+        if(s.getStatus().equals("pending") && !s.getProvider_id().equals("none") ){
             anotherPerson.setVisibility(View.VISIBLE);
             acceptedMessage.setVisibility(View.VISIBLE);
         }
