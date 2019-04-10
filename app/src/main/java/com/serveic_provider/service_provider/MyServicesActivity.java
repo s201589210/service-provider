@@ -2,6 +2,7 @@ package com.serveic_provider.service_provider;
 
 import android.content.Intent;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -12,6 +13,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.serveic_provider.service_provider.adapters.ViewPagerAdapter;
 import com.serveic_provider.service_provider.fragments.DeletedFragment;
 import com.serveic_provider.service_provider.fragments.FinishedFragment;
@@ -27,6 +35,7 @@ public class MyServicesActivity extends AppCompatActivity {
     InProgressFragment inProgressFragment = new InProgressFragment();
     FinishedFragment finishedFragment = new FinishedFragment();
     DeletedFragment deletedFragment = new DeletedFragment();
+    FirebaseDatabase mDatabase  = FirebaseDatabase.getInstance();;
 
 
     @Override
@@ -53,8 +62,50 @@ public class MyServicesActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-                Intent i = new Intent(MyServicesActivity.this,WaitingScreen.class);
-                startActivity(i);
+
+        //current user id
+        String currnetUserId ;
+        //auth table reference
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();;
+        //user reference
+        FirebaseUser FBuser;
+        //dRef
+        DatabaseReference userProfileRef_type;
+        //get user
+        FBuser = mAuth.getCurrentUser();
+        //get id
+        currnetUserId = FBuser.getUid();
+        userProfileRef_type = mDatabase.getReference("user_profiles").child(currnetUserId).child("type");
+        userProfileRef_type.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String type = dataSnapshot.getValue(String.class);
+
+                if(type.equals("provider")){
+
+                    Intent i = new Intent(MyServicesActivity.this,WaitingScreen.class);
+                    startActivity(i);
+
+                }
+                else{
+
+                finish();
+                }
+
+            }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                }
+
+            });
+
+
+
+
+
+
+
     }
 
     @Override
