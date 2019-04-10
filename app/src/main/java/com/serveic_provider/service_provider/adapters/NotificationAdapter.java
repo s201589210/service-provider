@@ -2,6 +2,8 @@ package com.serveic_provider.service_provider.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +19,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.serveic_provider.service_provider.ConfirmationActivity;
 import com.serveic_provider.service_provider.R;
 import com.serveic_provider.service_provider.firebase_notification.Notification;
 
@@ -25,6 +28,7 @@ import java.util.ArrayList;
 public class NotificationAdapter extends ArrayAdapter<Notification> {
 
     Context context;
+
 
     public NotificationAdapter(Activity context, ArrayList<Notification> words, int color) {
         super(context, 0, words);
@@ -51,6 +55,8 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
         setSenderName(notification.getFrom(),listItemView);
         serviceIDTextView.setText(notification.getServiceId());
         messageTextView.setText(notification.getMessage());
+        // set the listner
+        setNotificationListener(notification.getServiceId(), listItemView);
 
         // Return the whole list item layout (containing 2 TextViews and an ImageView)
         // so that it can be shown in the ListView
@@ -77,5 +83,17 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
             }
 
         });//end of getting requester name
+    }
+
+    public void setNotificationListener(final String serviceID, final View listItemView){
+        final Intent intent1 = new Intent(context, ConfirmationActivity.class);
+        listItemView.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                final Bundle bundle1 = new Bundle();
+                bundle1.putString("serviceID", serviceID);
+                intent1.putExtras(bundle1);
+                context.startActivity(intent1);
+            }
+        });
     }
 }

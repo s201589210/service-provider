@@ -158,7 +158,7 @@ public class PendingFragment extends Fragment {
                                         String job = service.getJob();
                                         String status = service.getStatus();
 
-                                        if (status.equals("pinding") && service.getProvider_id().equals(userId)) {
+                                        if (status.equals("pending") && service.getProvider_id().equals(userId)) {
                                             penddingServices.add(service);
                                         }
 
