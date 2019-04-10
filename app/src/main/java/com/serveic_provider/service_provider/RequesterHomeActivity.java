@@ -3,6 +3,7 @@ package com.serveic_provider.service_provider;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,6 +13,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -19,11 +22,16 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.serveic_provider.service_provider.serviceProvider.User;
+import com.squareup.picasso.Picasso;
 
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.TextView;
+
+import java.util.concurrent.atomic.AtomicMarkableReference;
 
 
 public class RequesterHomeActivity extends Activity {
@@ -95,6 +103,7 @@ public class RequesterHomeActivity extends Activity {
                 drawer.closeDrawer(GravityCompat.START);
             }
         });
+
         //auth table reference
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         //user reference
@@ -115,6 +124,28 @@ public class RequesterHomeActivity extends Activity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
+
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+        storageReference.child("userImages/"+userId+"/profileImage").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                if(uri!=null) {
+
+                    // Got the download URL for ''
+                    Log.w("imageLink", uri.toString());
+                    String imgUrl = uri.toString();
+                    Picasso.get()
+                            .load(imgUrl)
+                            .into((ImageView) findViewById(R.id.drawer_user_profile_photo));
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+            }
+        });
+
 
     }
 
