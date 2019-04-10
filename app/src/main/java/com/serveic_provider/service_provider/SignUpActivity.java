@@ -149,11 +149,15 @@ public class SignUpActivity extends AppCompatActivity {
                                 user.setName(firstName);
                                 user.setLastName(lastName);
                                 user.setReg_date(getCurrentDate());
-
+                                //check if type is requester activate automatically
+                                if(type.equals("requester")) {
+                                    user.setIs_active(1);
+                                }
                                 // Using both the unique userId and user object to write the type and location under user_profiles/$userId
                                 writeUserToFBDB(userId, user);
 
                                 if(type.equals("requester")) {
+
                                     updateUI(FBuser);
 
                                     // Notifying the user
