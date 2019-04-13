@@ -1,6 +1,7 @@
 package com.serveic_provider.service_provider.fragments;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -39,6 +40,7 @@ public class DeletedFragment extends Fragment {
     DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
     String userType;
     android.support.v4.widget.SwipeRefreshLayout pullToRefresh ;
+    boolean isRefreshing = false;
 
 
     public DeletedFragment() {
@@ -57,8 +59,11 @@ public class DeletedFragment extends Fragment {
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                clearHistory();
-                refresh();
+                if(!isRefreshing) {
+                    clearHistory();
+                    refresh();
+                }
+                pullToRefresh.setRefreshing(false);
 
 
 
@@ -76,7 +81,19 @@ public class DeletedFragment extends Fragment {
     public void refresh(){
         Utils.updateServiceStatus();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.detach(this).attach(this).commit();
+        ft.detach(this).attach(this).commit();isRefreshing = true;
+        isRefreshing = true;
+        new CountDownTimer(3000,3000){
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                isRefreshing = false;
+            }
+        }.start();
 
 
     }

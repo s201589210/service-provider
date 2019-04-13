@@ -1,6 +1,7 @@
 package com.serveic_provider.service_provider.fragments;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -23,6 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.serveic_provider.service_provider.R;
+import com.serveic_provider.service_provider.Utils;
 import com.serveic_provider.service_provider.adapters.ProviderServiceAdapter;
 import com.serveic_provider.service_provider.adapters.ServiceAdapter;
 import com.serveic_provider.service_provider.serviceProvider.Service;
@@ -41,6 +43,7 @@ public class InProgressFragment extends Fragment   {
     DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
     String userType;
     android.support.v4.widget.SwipeRefreshLayout pullToRefresh ;
+    boolean isRefreshing = false;
 
     public InProgressFragment() {
 
@@ -58,8 +61,10 @@ public class InProgressFragment extends Fragment   {
             @Override
             public void onRefresh() {
                 //update code
-                clearHistory();
-                refresh();
+                if(!isRefreshing) {
+                    clearHistory();
+                    refresh();
+                }
                 pullToRefresh.setRefreshing(false);
             }
         });
@@ -68,8 +73,21 @@ public class InProgressFragment extends Fragment   {
 
 
     public void refresh(){
+        Utils.updateServiceStatus();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.detach(this).attach(this).commit();
+        ft.detach(this).attach(this).commit();isRefreshing = true;
+        isRefreshing = true;
+        new CountDownTimer(3000,3000){
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                isRefreshing = false;
+            }
+        }.start();
 
 
     }

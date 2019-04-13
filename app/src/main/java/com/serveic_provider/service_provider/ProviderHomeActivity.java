@@ -1,6 +1,7 @@
 package com.serveic_provider.service_provider;
 
 import android.content.Intent;
+import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -35,6 +36,7 @@ public class ProviderHomeActivity extends AppCompatActivity {
     ArrayList<Service> pendingServices = new ArrayList<Service>();
     ImageView profile_button;
     android.support.v4.widget.SwipeRefreshLayout pullToRefresh ;
+    boolean isRefreshing = false;
 
 
     @Override
@@ -47,8 +49,12 @@ public class ProviderHomeActivity extends AppCompatActivity {
             @Override
             public void onRefresh() {
                 //update code
-                clearList();
-                buildList();
+                Log.v("MyTag",isRefreshing+"");
+                if(!isRefreshing) {
+                    clearList();
+                    buildList();
+                }
+                pullToRefresh.setRefreshing(false);
             }
         });
 
@@ -84,6 +90,19 @@ public class ProviderHomeActivity extends AppCompatActivity {
 
 
     private void buildList() {
+
+        isRefreshing = true;
+        new CountDownTimer(3000,3000){
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                isRefreshing = false;
+            }
+        }.start();
         //user reference
         FirebaseUser FBuser;
         //get user
