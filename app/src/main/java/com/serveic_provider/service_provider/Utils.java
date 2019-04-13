@@ -115,7 +115,7 @@ public class Utils {
             if (isTimePassed(service)) {
                 //if it does have a provider then it becomes "in progress"
                 if (!service.getProvider_id().equals("none")){
-                    requesterServicesRef.child(service.getService_id()).child("status").setValue("in progress");
+                    requesterServicesRef.child("status").setValue("in progress");
                 }
                 //it it does not have a provider then it becomes "deleted"
                 else{
