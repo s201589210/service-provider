@@ -1,6 +1,7 @@
 package com.serveic_provider.service_provider;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -79,7 +80,7 @@ public class Utils {
                     String requesterId = serviceId.substring(0,serviceId.indexOf("_"));
                     String serviceNumber = serviceId.substring(serviceId.indexOf("_")+1);
                     //getting the service using the service id
-                    updateServiceStatus(requesterId, serviceNumber);
+                    updateServicesForRequester(requesterId);
                 }
 
             }

@@ -65,6 +65,7 @@ public class PendingFragment extends Fragment {
     }
 
     public void refresh(){
+        Utils.updateServiceStatus();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.detach(this).attach(this).commit();
 
