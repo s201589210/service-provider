@@ -64,9 +64,10 @@ public class MyServicesActivity extends AppCompatActivity {
     public void onBackPressed() {
 
         //current user id
-        String currnetUserId ;
+        String currnetUserId;
         //auth table reference
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();;
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        ;
         //user reference
         FirebaseUser FBuser;
         //dRef
@@ -81,54 +82,22 @@ public class MyServicesActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String type = dataSnapshot.getValue(String.class);
 
-                if(type.equals("provider")){
+                if (type.equals("provider")) {
 
-                    Intent i = new Intent(MyServicesActivity.this,WaitingScreen.class);
+                    Intent i = new Intent(MyServicesActivity.this, WaitingScreen.class);
                     startActivity(i);
 
-                }
-                else{
+                } else {
 
-                finish();
-                }
-
-            }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    finish();
                 }
 
-            });
-
-
-
-
-
-
-
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.my_services_page, menu);
-
-        MenuItem searchItem = menu.findItem(R.id.app_bar_search);
-        SearchView searchView = (SearchView) searchItem.getActionView();
-       /*// searchView.setQueryHint(getString(R.string.searchServices));
-       // searchView.setIconifiedByDefault(true);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                return false;
             }
 
             @Override
-            public boolean onQueryTextChange(String s) {
-                return false;
+            public void onCancelled(@NonNull DatabaseError databaseError) {
             }
+
         });
-*/
-        return true;
     }
 }
