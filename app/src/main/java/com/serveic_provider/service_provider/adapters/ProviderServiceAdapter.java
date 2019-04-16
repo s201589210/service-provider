@@ -1,6 +1,7 @@
 package com.serveic_provider.service_provider.adapters;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -156,8 +157,22 @@ public class ProviderServiceAdapter extends ArrayAdapter<Service> {
     }
 
     private void assignServiceToProvider(String requesterId, String serviceNumber) {
-        DatabaseReference serviceRef = FirebaseDatabase.getInstance().getReference().child("requester_services").child(requesterId).child(serviceNumber);
-        serviceRef.child("provider_id").setValue(userId);
+        final DatabaseReference serviceRef = FirebaseDatabase.getInstance().getReference().child("requester_services").child(requesterId).child(serviceNumber);
+        serviceRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Service currentService = dataSnapshot.getValue(Service.class);
+                if(currentService.getProvider_id().equals("none")){
+                    serviceRef.child("provider_id").setValue(userId);
+                }else {
+                    new AlertDialog.Builder(context).setMessage("Sorry the service has been accepted by another provider").show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
     }
 
     private void makeItemsVisible() {
