@@ -80,7 +80,7 @@ public class Utils {
                     String requesterId = serviceId.substring(0,serviceId.indexOf("_"));
                     String serviceNumber = serviceId.substring(serviceId.indexOf("_")+1);
                     //getting the service using the service id
-                    updateServicesForRequester(requesterId);
+                    updateServiceStatus(requesterId,serviceNumber);
                 }
 
             }
@@ -115,7 +115,7 @@ public class Utils {
             if (isTimePassed(service)) {
                 //if it does have a provider then it becomes "in progress"
                 if (!service.getProvider_id().equals("none")){
-                    requesterServicesRef.child("status").setValue("in progress");
+                    requesterServicesRef.child(service.getService_id()).child("status").setValue("in progress");
                 }
                 //it it does not have a provider then it becomes "deleted"
                 else{

@@ -53,7 +53,7 @@ public class InProgressFragment extends Fragment   {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.services_fragment, container, false);
 
-        updateServicesStatus();
+       // updateServicesStatus();
         buildHistory();
 
         pullToRefresh=(android.support.v4.widget.SwipeRefreshLayout) view.findViewById(R.id.pullToRefresh);
